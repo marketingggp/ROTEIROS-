@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GGP · Âme Conteúdos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --offwhite: #F5F0EB;
+    --areia: #C8B8A2;
+    --taupe: #9E8E7E;
+    --cafe: #4A3728;
+    --preto: #1A1410;
+    --surface: #EDE6DC;
+    --surface2: #E4DDD3;
+    --muted: #7A6E65;
+    --green: #5A7A5C;
+    --amber: #8A6830;
+  }
+  body { background: var(--offwhite); color: var(--preto); font-family: 'Poppins', sans-serif; font-weight: 300; min-height: 100vh; padding-bottom: 80px; }
+
+  /* HEADER */
+  .header { padding: 48px 24px 32px; background: var(--cafe); position: relative; }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--areia), transparent); }
+  .header-eyebrow { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--areia); margin-bottom: 12px; font-weight: 400; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 400; line-height: 1.1; color: var(--offwhite); }
+  .header-title em { font-style: italic; color: var(--areia); }
+  .header-sub { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--areia); margin-top: 8px; font-weight: 300; }
+  .header-perfis { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+  .perfil-chip { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); border: 1px solid rgba(200,184,162,0.35); padding: 4px 10px; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--areia); }
+  .stat { padding: 18px 12px; text-align: center; background: var(--surface); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cafe); line-height: 1; }
+  .stat-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--taupe); margin-top: 4px; line-height: 1.4; }
+
+  /* TABS */
+  .tabs { display: flex; gap: 2px; padding: 14px 16px; overflow-x: auto; scrollbar-width: none; background: var(--surface2); border-bottom: 1px solid var(--areia); }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--taupe); padding: 7px 12px; border: 1px solid transparent; cursor: pointer; background: none; font-family: 'Poppins', sans-serif; transition: all 0.2s; }
+  .tab.active { color: var(--cafe); border-color: var(--areia); background: var(--offwhite); }
+
+  /* SECTION TITLE */
+  .section-title { padding: 28px 20px 0; }
+  .section-title h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; color: var(--cafe); }
+  .section-title h2 em { font-style: italic; }
+  .section-title p { font-size: 10px; letter-spacing: 0.15em; color: var(--taupe); margin-top: 4px; text-transform: uppercase; }
+
+  /* VIDEOS GERAIS */
+  .videos-gerais { margin: 16px 16px 0; background: white; border-left: 3px solid var(--cafe); }
+  .videos-btn { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; background: var(--surface); border-bottom: 1px solid var(--surface2); }
+  .videos-btn-left { display: flex; align-items: center; gap: 8px; }
+  .videos-btn-icon { font-size: 14px; }
+  .videos-btn-title { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cafe); font-weight: 500; }
+  .videos-btn-right { display: flex; align-items: center; gap: 8px; }
+  .videos-cta { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); }
+  .videos-arrow { font-size: 10px; color: var(--cafe); transition: transform 0.25s; }
+  .videos-arrow.open { transform: rotate(180deg); }
+  .videos-body { display: none; padding: 16px; }
+  .videos-body.open { display: block; }
+  .videos-grupo { margin-bottom: 16px; }
+  .videos-grupo:last-child { margin-bottom: 0; }
+  .videos-grupo-label { font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--areia); font-weight: 500; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--surface2); }
+  .video-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--surface2); cursor: pointer; }
+  .video-item:last-child { border-bottom: none; }
+  .video-check { width: 18px; height: 18px; border: 1.5px solid var(--areia); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.2s; }
+  .video-check.checked { background: var(--green); border-color: var(--green); }
+  .video-check.checked::after { content: '✓'; font-size: 10px; color: white; font-weight: 600; }
+  .video-texto { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .video-item.checked .video-texto { color: var(--areia); text-decoration: line-through; }
+  .video-obs { font-size: 10px; color: var(--areia); font-style: italic; margin-top: 2px; }
+
+  /* SERIE LABEL */
+  .serie-label { padding: 24px 20px 8px; display: flex; align-items: center; gap: 12px; }
+  .serie-line { flex: 1; height: 1px; background: var(--areia); opacity: 0.4; }
+  .serie-name { font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--taupe); white-space: nowrap; }
+
+  /* CARDS */
+  .cards { padding: 0 16px; display: flex; flex-direction: column; gap: 2px; }
+  .card { background: white; padding: 20px; border-left: 3px solid var(--green); }
+
+  /* ESTILO TAG */
+  .card-estilo { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .estilo-tag { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; padding: 3px 10px; border: 1px solid; }
+  .tag-topo { color: #8A6830; border-color: rgba(138,104,48,0.35); background: rgba(138,104,48,0.06); }
+  .tag-autoridade { color: #4A3728; border-color: rgba(74,55,40,0.3); background: rgba(74,55,40,0.05); }
+  .tag-atencao { color: #5A7A5C; border-color: rgba(90,122,92,0.35); background: rgba(90,122,92,0.06); }
+  .tag-engajamento { color: #6A5A8A; border-color: rgba(106,90,138,0.35); background: rgba(106,90,138,0.06); }
+  .tag-conversao { color: #8A3A3A; border-color: rgba(138,58,58,0.35); background: rgba(138,58,58,0.06); }
+
+  .card-ep { font-size: 9px; font-weight: 500; color: var(--taupe); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; }
+  .card-gancho { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; font-style: italic; color: var(--preto); line-height: 1.25; margin-bottom: 8px; }
+  .card-ideia { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .badge { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; padding: 2px 8px; border: 1px solid; font-family: 'Poppins', sans-serif; }
+  .badge-reel { color: var(--cafe); border-color: rgba(74,55,40,0.25); background: rgba(74,55,40,0.04); }
+  .badge-aprovado { color: #3A6A3C; border-color: rgba(58,106,60,0.35); background: rgba(58,106,60,0.06); }
+  .card-perfis { display: flex; gap: 6px; flex-wrap: wrap; }
+  .card-perfil { font-size: 7px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--taupe); padding: 2px 8px; border: 1px solid var(--areia); background: var(--offwhite); }
+
+  /* ROTEIRO */
+  .roteiro-toggle { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--surface2); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .roteiro-toggle-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--taupe); }
+  .roteiro-cta { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); }
+  .roteiro-arrow { font-size: 10px; color: var(--cafe); transition: transform 0.25s; }
+  .roteiro-arrow.open { transform: rotate(180deg); }
+  .roteiro-body { display: none; margin-top: 12px; padding: 16px; background: var(--offwhite); border: 1px solid var(--surface2); }
+  .roteiro-body.open { display: block; }
+  .roteiro-linha { font-size: 12px; color: var(--muted); line-height: 1.9; font-style: italic; }
+  .roteiro-cena { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cafe); margin: 12px 0 4px; font-weight: 500; }
+  .roteiro-cena:first-child { margin-top: 0; }
+
+  .footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--areia); margin-top: 32px; background: var(--surface); }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: var(--cafe); margin-bottom: 6px; }
+  .footer-text { font-size: 7px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--taupe); }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<section class="header">
+  <p class="header-eyebrow">Ecossistema Estratégico GGP · Gislaine Amorim</p>
+  <h1 class="header-title">Séries &<br><em>Roteiros</em></h1>
+  <p class="header-sub">Aline Prado Sakamoto</p>
+  <div class="header-perfis">
+    <span class="perfil-chip">@alinepradoo__</span>
+    <span class="perfil-chip">@vistaamee</span>
+    <span class="perfil-chip">@amewellness.co</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><p class="stat-num">9</p><p class="stat-label">Conteúdos</p></div>
+  <div class="stat"><p class="stat-num">4</p><p class="stat-label">Séries</p></div>
+  <div class="stat"><p class="stat-num">3</p><p class="stat-label">Perfis</p></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="filtrar('todos', this)">Conteúdos</button>
+  <button class="tab" onclick="filtrar('a-aline', this)">A Aline</button>
+  <button class="tab" onclick="filtrar('closet', this)">Closet</button>
+  <button class="tab" onclick="filtrar('wellness', this)">Wellness</button>
+  <button class="tab" onclick="filtrar('rotina', this)">Rotina</button>
+</div>
+
+<!-- SEÇÃO 1: VÍDEOS QUE A ALINE PRECISA GRAVAR -->
+<div class="section-title">
+  <h2>Vídeos que a <em>Aline</em> precisa gravar</h2>
+  <p>banco de takes para edição</p>
+</div>
+
+<div class="videos-gerais">
+  <div class="videos-btn" onclick="toggleVideos(this)">
+    <div class="videos-btn-left">
+      <span class="videos-btn-icon">📹</span>
+      <span class="videos-btn-title">Ver todos os vídeos necessários</span>
+    </div>
+    <div class="videos-btn-right">
+      <span class="videos-cta">clique aqui</span>
+      <span class="videos-arrow">▾</span>
+    </div>
+  </div>
+  <div class="videos-body">
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Lifestyle · Rotina</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Na frente do espelho olhando o look completo</p>
+          <p class="video-obs">Vídeo longo — vários ângulos, frente e perfil</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Andando em algum lugar — rua, shopping, parque</p>
+          <p class="video-obs">Câmera acompanhando, passo natural e confiante</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">No carro dirigindo e cantando</p>
+          <p class="video-obs">Vídeo longo — música, energia, natural</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Café da manhã — preparando ou tomando</p>
+          <p class="video-obs">Vídeo longo — mesa arrumada, ambiente bonito</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Almoço e janta — fotos e vídeos do prato</p>
+          <p class="video-obs">Ambiente, comida, ela à mesa</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Cozinhando ou fazendo algo que gosta</p>
+          <p class="video-obs">Vídeo longo — processo, mãos, resultado</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Família</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Com o filho — cenas do dia a dia</p>
+          <p class="video-obs">Natural, espontâneo, sem forçar</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Com o marido — cenas do dia a dia e Dia dos Namorados</p>
+          <p class="video-obs">Jantar, passeio, momentos reais</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Academia</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Entrando na academia</p>
+          <p class="video-obs">Porta, chegada, foco — vídeo longo</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Executando séries — ângulo lateral e frontal</p>
+          <p class="video-obs">Vídeos longos de cada exercício</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Close nas mãos, pés e peça da Wellness em movimento</p>
+          <p class="video-obs">Detalhes do corpo e do activewear</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Vista Âme · Showroom</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Takes do showroom — visão geral do espaço</p>
+          <p class="video-obs">Araras, peças, ambiente — vídeo longo</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Ela tocando nas peças — tecido, detalhes, tag</p>
+          <p class="video-obs">Close nas mãos segurando cada peça</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Closet</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Câmera no tripé gravando o closet completo</p>
+          <p class="video-obs">Vídeo longo — ela escolhendo peças, organizando</p>
+        </div>
+      </div>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Montando looks — ela trocando peças ao vivo</p>
+          <p class="video-obs">Transições, espelho, detalhes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="videos-grupo">
+      <p class="videos-grupo-label">Obra · Âme House</p>
+      <div class="video-item" onclick="toggleVideo(this)">
+        <div class="video-check"></div>
+        <div>
+          <p class="video-texto">Ela na obra do novo espaço — andando, olhando</p>
+          <p class="video-obs">Vídeo longo — espaço, estrutura, ela no meio</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SEÇÃO 2: EPISÓDIOS -->
+<div class="section-title" style="margin-top:24px;">
+  <h2>Episódios & <em>Roteiros</em></h2>
+  <p>conteúdo aprovado por série</p>
+</div>
+
+<!-- TABS FILTRO -->
+<div class="tabs" style="margin-top:8px;">
+  <button class="tab active" onclick="filtrar('todos', this)">Todos</button>
+  <button class="tab" onclick="filtrar('a-aline', this)">A Aline</button>
+  <button class="tab" onclick="filtrar('closet', this)">Closet</button>
+  <button class="tab" onclick="filtrar('wellness', this)">Wellness</button>
+  <button class="tab" onclick="filtrar('rotina', this)">Rotina</button>
+</div>
+
+<div class="cards" id="cards">
+
+  <!-- SÉRIE: A ALINE -->
+  <div class="serie-label" data-serie="a-aline">
+    <span class="serie-name">Série · A Aline</span>
+    <div class="serie-line"></div>
+  </div>
+
+  <!-- EP 01 -->
+  <div class="card" data-serie="a-aline">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-atencao">Atenção</span>
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+      <span class="estilo-tag tag-topo">Topo de Funil</span>
+    </div>
+    <p class="card-ep">EP 01</p>
+    <p class="card-gancho">"eu saí do CLT e não olhei para trás"</p>
+    <p class="card-ideia">Ela se apresenta — conta sua história real, de onde veio, por que empreendeu e o que está construindo. Ancora o perfil e cria conexão imediata.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"eu saí do CLT e não olhei para trás"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Eu comecei a trabalhar com 14 anos. Vendedora. Família humilde, sem atalho, sem ninguém para fazer por mim.<br><br>Fui crescendo, virei gestora, viajava, visitava operação — mas por dentro eu sabia que queria algo meu.<br><br>Saí do CLT, apostei na moda, abri a Vista Âme. E esse ano eu amadureci de um jeito que eu não esperava.<br><br>Cuidei mais de mim, do meu corpo, da minha rotina — e nasceu uma segunda marca.<br><br>Aqui eu vou mostrar tudo. A rotina real, as marcas, as conquistas e o que ainda estou construindo.<br><br>Bem-vinda."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"founder @vistaamee e @amewellness.co"</p>
+    </div>
+  </div>
+
+  <!-- EP 02 -->
+  <div class="card" data-serie="a-aline">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+      <span class="estilo-tag tag-atencao">Atenção</span>
+    </div>
+    <p class="card-ep">EP 02</p>
+    <p class="card-gancho">"1 ano. e isso é só o começo."</p>
+    <p class="card-ideia">Ela marca o aniversário de 1 ano da Vista Âme e anuncia a nova era — a Âme House. Gera curiosidade e antecipação.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+      <span class="card-perfil">@vistaamee</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"1 ano. e isso é só o começo."</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Há um ano eu abri as portas da Vista Âme.<br><br>Um showroom, uma seleção, um sonho que eu coloquei de pé com as minhas mãos.<br><br>Mas eu também mudei. Amadureci. E quando você amadurece, você enxerga maior.<br><br>Por isso hoje eu anuncio uma nova era. A Âme House.<br><br>Um espaço que vai unir a Vista Âme e meu novo projeto — a Âme Wellness.<br><br>Moda e movimento. No mesmo lugar. Com o mesmo cuidado.<br><br>E você vai acompanhar tudo isso. A nova versão da Vista Âme é a construção de uma marca do zero — que entrega exclusividade e conforto em cada detalhe.<br><br>Essa é a nova era. E ela começa agora."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"Âme House. em breve."</p>
+    </div>
+  </div>
+
+  <!-- SÉRIE: CLOSET -->
+  <div class="serie-label" data-serie="closet">
+    <span class="serie-name">Série · Closet da Aline</span>
+    <div class="serie-line"></div>
+  </div>
+
+  <!-- CLOSET 01 -->
+  <div class="card" data-serie="closet">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-atencao">Atenção</span>
+      <span class="estilo-tag tag-engajamento">Engajamento</span>
+    </div>
+    <p class="card-ep">01</p>
+    <p class="card-gancho">"o erro que toda mulher comete ao montar um look"</p>
+    <p class="card-ideia">Ela mostra ao vivo o erro mais comum — duas peças fortes juntas — e corrige na hora. Gera salvamento e compartilhamento.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+      <span class="card-perfil">@vistaamee</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"o erro que toda mulher comete ao montar um look"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Eu vejo isso o tempo todo — e já cometi esse erro também.<br><br>A mulher pega uma peça incrível, combina com outra peça incrível — e o look não funciona.<br><br>O problema não é a roupa. É o equilíbrio.<br><br>Uma peça tem que ser a protagonista. A outra, suporte.<br><br>Olha aqui — [mostra o look errado] — duas peças fortes brigando.<br><br>Agora olha assim — [troca uma peça] — mesma roupa, outra história.<br><br>Salva esse vídeo. Você vai usar."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"moda com intenção. @vistaamee"</p>
+    </div>
+  </div>
+
+  <!-- CLOSET 02 -->
+  <div class="card" data-serie="closet">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+      <span class="estilo-tag tag-conversao">Conversão</span>
+    </div>
+    <p class="card-ep">02</p>
+    <p class="card-gancho">"as peças que eu nunca devolvo"</p>
+    <p class="card-ideia">Ela mostra 3 peças da Vista Âme que usa todo dia. Fala do tecido, do caimento. Termina chamando para DM. Gera desejo e venda direta.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+      <span class="card-perfil">@vistaamee</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"as peças que eu nunca devolvo"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Tem peças que você compra e usa uma vez. E tem peças que viram parte de você.<br><br>Eu vou te mostrar três que nunca saem do meu armário.<br><br>[pega a primeira peça] Essa aqui — o tecido cai de um jeito que qualquer corpo fica bem.<br><br>[pega a segunda peça] Simples, mas faz o look.<br><br>[pega a terceira peça] Foi a primeira que escolhi pra Vista Âme. Ela resume tudo que eu acredito em moda.<br><br>Se você quer saber onde encontrar — manda DM. Tenho pra você."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"peças que ficam. @vistaamee"</p>
+    </div>
+  </div>
+
+  <!-- SÉRIE: WELLNESS -->
+  <div class="serie-label" data-serie="wellness">
+    <span class="serie-name">Série · Âme Wellness</span>
+    <div class="serie-line"></div>
+  </div>
+
+  <!-- WELLNESS EP 01 -->
+  <div class="card" data-serie="wellness">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+      <span class="estilo-tag tag-topo">Topo de Funil</span>
+    </div>
+    <p class="card-ep">EP 01</p>
+    <p class="card-gancho">"eu criei a marca que eu sempre quis usar"</p>
+    <p class="card-ideia">Ela conta por que criou a Âme Wellness — o problema que não encontrou solução e decidiu resolver. Posiciona a marca com propósito real.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@amewellness.co</span>
+      <span class="card-perfil">@alinepradoo__</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"eu criei a marca que eu sempre quis usar"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Eu treino há anos. E por anos eu usei activewear que prometia muito e entregava pouco.<br><br>Eu queria uma peça minimalista, com tecnologia real, compressão de verdade — que você coloca e sente a diferença.<br><br>Aí eu decidi criar.<br><br>A Âme Wellness nasceu disso. De uma mulher que não encontrou o que queria e resolveu fazer.<br><br>Cada peça está sendo criada a dedo. Tecnologia nacional, conforto e uma estética que vai com tudo.<br><br>Em breve você vai poder sentir isso também."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"feito a dedo. pra você. @amewellness.co"</p>
+    </div>
+  </div>
+
+  <!-- WELLNESS EP 02 — TOP 3 EXERCÍCIOS -->
+  <div class="card" data-serie="wellness">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-engajamento">Engajamento</span>
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+    </div>
+    <p class="card-ep">EP 02</p>
+    <p class="card-gancho">"os 3 exercícios que mudaram meu corpo de verdade"</p>
+    <p class="card-ideia">Ela fala dos top 3 exercícios que sente os resultados na pele — com dica prática de cada um. Conteúdo de valor que gera salvamento e seguidores novos.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+      <span class="card-perfil">@amewellness.co</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"os 3 exercícios que mudaram meu corpo de verdade"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Eu já tentei de tudo. E quando eu comecei a focar nesses três — eu vi resultado de verdade.<br><br>Número 1 — [exercício escolhido pela Aline]. A dica que não pode faltar: [dica dela].<br><br>Número 2 — [exercício]. Sem esse aqui não tem como. [dica].<br><br>Número 3 — [exercício]. Esse foi o que mais mudou. [dica].<br><br>Salva esse vídeo e começa essa semana. O resultado aparece."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"movimento com intenção. @amewellness.co"</p>
+    </div>
+  </div>
+
+  <!-- SÉRIE: ROTINA -->
+  <div class="serie-label" data-serie="rotina">
+    <span class="serie-name">Série · Rotina Real</span>
+    <div class="serie-line"></div>
+  </div>
+
+  <!-- ROTINA 01 -->
+  <div class="card" data-serie="rotina">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-atencao">Atenção</span>
+      <span class="estilo-tag tag-topo">Topo de Funil</span>
+    </div>
+    <p class="card-ep">01</p>
+    <p class="card-gancho">"5h30. começa o dia."</p>
+    <p class="card-ideia">Morning routine real — do acorda ao treino. Sem narração, só música e texto na tela. Mostra o lifestyle e atrai o público certo.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver estrutura de edição</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Cena 01]</p><p class="roteiro-linha">Acordando · "5h30. começa o dia."</p>
+      <p class="roteiro-cena">[Cena 02]</p><p class="roteiro-linha">Skincare · "rotina que não abro mão."</p>
+      <p class="roteiro-cena">[Cena 03]</p><p class="roteiro-linha">Look no espelho · "Vista Âme. do jeito certo."</p>
+      <p class="roteiro-cena">[Cena 04]</p><p class="roteiro-linha">Elevador · "pronta."</p>
+      <p class="roteiro-cena">[Cena 05]</p><p class="roteiro-linha">Carro cantando · "esse é o mood."</p>
+      <p class="roteiro-cena">[Cena 06]</p><p class="roteiro-linha">Entrando na academia · "sem desculpa."</p>
+      <p class="roteiro-cena">[Cena 07]</p><p class="roteiro-linha">Treino · "o treino não negocia."</p>
+      <p class="roteiro-cena">[Última cena]</p><p class="roteiro-linha">"essa é minha rotina. e ela está mudando."</p>
+    </div>
+  </div>
+
+  <!-- ROTINA 02 - SKINCARE -->
+  <div class="card" data-serie="rotina">
+    <div class="card-estilo">
+      <span class="estilo-tag tag-engajamento">Engajamento</span>
+      <span class="estilo-tag tag-autoridade">Autoridade</span>
+    </div>
+    <p class="card-ep">02</p>
+    <p class="card-gancho">"o que mudou minha pele — e eu precisava te contar"</p>
+    <p class="card-ideia">Ela fala do produto que transformou sua pele — escolhe o produto ela mesma — e dá dicas reais de quem usa. Conteúdo de menina para menina, gera muito compartilhamento.</p>
+    <div class="card-badges">
+      <span class="badge badge-reel">Reel</span>
+      <span class="badge badge-aprovado">✓ Aprovado</span>
+    </div>
+    <div class="card-perfis">
+      <span class="card-perfil">@alinepradoo__</span>
+    </div>
+    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
+      <span class="roteiro-toggle-label">Ver roteiro</span>
+      <span class="roteiro-cta">clique aqui</span>
+      <span class="roteiro-arrow">▾</span>
+    </div>
+    <div class="roteiro-body">
+      <p class="roteiro-cena">[Gancho na tela]</p>
+      <p class="roteiro-linha">"o que mudou minha pele — e eu precisava te contar"</p>
+      <p class="roteiro-cena">[Ela fala]</p>
+      <p class="roteiro-linha">"Eu testei muita coisa. Muito produto que promete e não entrega.<br><br>Mas quando eu comecei a usar [produto escolhido pela Aline] — eu vi diferença real.<br><br>Minha pele ficou [resultado dela]. E eu precisava contar pra vocês.<br><br>A dica que não pode faltar: [dica de como ela usa].<br><br>Manda nos comentários se vocês já usaram — ou me conta o que vocês estão usando."</p>
+      <p class="roteiro-cena">[Última cena]</p>
+      <p class="roteiro-linha">"dicas de quem usa. @alinepradoo__"</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p class="footer-brand">âme</p>
+  <p class="footer-text">Ecossistema Estratégico GGP · Gislaine Amorim · @gislaineamorims.mkt</p>
+</footer>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.video-item').forEach(function(item, idx) {
+      item.dataset.idx = 'v_' + idx;
+    });
+  });
+
+  function filtrar(serie, btn) {
+    const allTabs = btn.closest('.tabs').querySelectorAll('.tab');
+    allTabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.card, .serie-label').forEach(el => {
+      if (serie === 'todos') { el.classList.remove('hidden'); }
+      else { el.classList.toggle('hidden', el.dataset.serie !== serie); }
+    });
+  }
+
+  function toggleVideos(btn) {
+    const arrow = btn.querySelector('.videos-arrow');
+    const body = btn.nextElementSibling;
+    arrow.classList.toggle('open');
+    body.classList.toggle('open');
+    const cta = btn.querySelector('.videos-cta');
+    if (cta) cta.textContent = body.classList.contains('open') ? 'fechar' : 'clique aqui';
+  }
+
+  function toggleVideo(item) {
+    const check = item.querySelector('.video-check');
+    check.classList.toggle('checked');
+    item.classList.toggle('checked');
+  }
+
+  function toggleRoteiro(toggle) {
+    const arrow = toggle.querySelector('.roteiro-arrow');
+    const body = toggle.nextElementSibling;
+    arrow.classList.toggle('open');
+    body.classList.toggle('open');
+    const cta = toggle.querySelector('.roteiro-cta');
+    if (cta) cta.textContent = body.classList.contains('open') ? 'fechar' : 'clique aqui';
+  }
+</script>
+</body>
+</html>
