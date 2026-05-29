@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Âme Hub · GGP Assessoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F5F0EA;--sand:#E8DDD0;--taupe:#C4B5A5;--esp:#3A2F28;--gold:#B8965A;--white:#FDFCFA;--muted:#8A7B6E;--green:#3D7A52;--gl:#E6F2EB;--red:#8A3A2A;--rl:#F2E8E8;--blue:#2A5A8A;--bl:#E0EAF5;--purple:#6A4A8A;--pl:#EDE8F5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--esp);min-height:100vh;}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--esp);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:28px;}
+.login-brand{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--cream);letter-spacing:10px;text-align:center;}
+.login-brand span{color:var(--gold);}
+.login-sub{font-size:10px;letter-spacing:5px;color:var(--taupe);text-transform:uppercase;text-align:center;margin-top:-20px;}
+.login-box{background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,162,0.2);padding:40px;width:340px;display:flex;flex-direction:column;gap:14px;}
+.login-roles{display:flex;gap:8px;}
+.role-btn{flex:1;padding:10px;border:1px solid rgba(200,184,162,0.25);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.role-btn.active{background:rgba(184,150,90,.2);border-color:var(--gold);color:var(--gold);}
+.login-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);}
+.login-input{width:100%;padding:12px 14px;background:rgba(255,255,255,0.07);border:1px solid rgba(200,184,162,0.25);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:var(--gold);}
+.login-input::placeholder{color:rgba(196,181,165,0.35);}
+.login-btn{padding:14px;background:var(--gold);color:var(--esp);border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;}
+.login-btn:hover{background:var(--cream);}
+.login-err{font-size:11px;color:#E88;text-align:center;display:none;padding:8px;background:rgba(200,80,80,.1);border-radius:2px;}
+
+/* APP */
+#app{display:none;min-height:100vh;flex-direction:column;}
+#app.visible{display:flex;}
+
+/* TOPBAR */
+.topbar{background:var(--esp);padding:0 28px;display:flex;align-items:center;gap:0;height:54px;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(184,150,90,.2);}
+.tb-logo{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--cream);letter-spacing:4px;flex-shrink:0;padding-right:24px;border-right:1px solid rgba(200,184,162,.15);margin-right:4px;}
+.tb-logo span{color:var(--gold);}
+.tb-nav{display:flex;gap:0;flex:1;overflow-x:auto;scrollbar-width:none;}
+.tb-nav::-webkit-scrollbar{display:none;}
+.tb-btn{padding:0 16px;height:54px;border:none;background:transparent;color:rgba(196,181,165,.6);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.tb-btn:hover{color:var(--cream);}
+.tb-btn.active{color:var(--cream);border-bottom-color:var(--gold);}
+.tb-right{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-left:16px;border-left:1px solid rgba(200,184,162,.15);}
+.tb-user{font-size:10px;letter-spacing:1px;color:var(--taupe);text-transform:uppercase;}
+.tb-role{padding:3px 10px;border-radius:20px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.role-ggp{background:rgba(184,150,90,.2);color:var(--gold);}
+.role-cliente{background:rgba(61,122,82,.2);color:var(--green);}
+.tb-logout{padding:5px 10px;border:1px solid rgba(200,184,162,.2);background:transparent;color:var(--taupe);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.tb-logout:hover{color:var(--cream);border-color:var(--taupe);}
+
+/* VIEWS */
+.view{display:none;flex:1;}
+.view.active{display:block;}
+.view-inner{padding:28px 36px;display:flex;flex-direction:column;gap:24px;}
+
+/* DASHBOARD */
+.dash-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.metric-card{background:var(--white);border:1px solid var(--sand);padding:20px 18px;border-radius:2px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:6px;}
+.metric-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(58,47,40,.1);border-color:var(--taupe);}
+.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.mc-reels::before{background:linear-gradient(90deg,var(--gold),#D4A870);}
+.mc-posts::before{background:linear-gradient(90deg,var(--green),#5AAA7A);}
+.mc-roteiros::before{background:linear-gradient(90deg,var(--blue),#5A8ABB);}
+.mc-aprovados::before{background:linear-gradient(90deg,var(--purple),#9A7ABB);}
+.mc-pendentes::before{background:linear-gradient(90deg,var(--red),#BA6A5A);}
+.mc-ideias::before{background:linear-gradient(90deg,#7A6A2A,#BAA050);}
+.mc-moodboard::before{background:linear-gradient(90deg,#6A8A7A,#9ABBA5);}
+.metric-n{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--esp);line-height:1;}
+.metric-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.metric-hint{font-size:10px;color:var(--muted);margin-top:2px;}
+.metric-arrow{position:absolute;bottom:10px;right:12px;font-size:14px;color:var(--taupe);opacity:.5;}
+
+.dash-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.dash-block{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.db-header{padding:12px 16px;border-bottom:1px solid var(--sand);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--esp);font-weight:700;}
+.db-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.act-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--sand);}
+.act-row:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.act-g{background:var(--green);}
+.act-gold{background:var(--gold);}
+.act-r{background:var(--red);}
+.act-txt{font-size:11px;color:var(--muted);flex:1;line-height:1.5;}
+.act-time{font-size:9px;color:var(--taupe);white-space:nowrap;letter-spacing:.5px;}
+.prog-wrap{display:flex;flex-direction:column;gap:4px;}
+.prog-head{display:flex;justify-content:space-between;align-items:center;}
+.prog-label{font-size:11px;color:var(--muted);}
+.prog-pct{font-size:10px;color:var(--taupe);font-weight:600;}
+.prog-bar{height:4px;background:var(--sand);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;transition:width .6s ease;}
+
+/* BLOCKS */
+.block{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.block-header{padding:14px 20px;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.block-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--esp);font-weight:700;}
+.block-body{padding:20px;}
+
+/* ROTEIROS */
+.rot-filter{display:flex;gap:6px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--sand);background:var(--cream);}
+.rf-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.rf-btn.active,.rf-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.rot-list{display:flex;flex-direction:column;gap:0;}
+.rot-card{border-bottom:1px solid var(--sand);}
+.rot-card:last-child{border-bottom:none;}
+.rot-head{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s;}
+.rot-head:hover{background:var(--cream);}
+.rot-emoji{font-size:16px;flex-shrink:0;}
+.rot-info{flex:1;min-width:0;}
+.rot-ep{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.rot-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.3;}
+.rot-format{font-size:10px;color:var(--muted);}
+.rot-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+.rot-prio{font-size:9px;font-weight:600;}
+.prio-urg{color:var(--red);}
+.prio-sem{color:#8A7A2A;}
+.prio-prx{color:var(--green);}
+.rot-status-pill{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;font-weight:600;}
+.rsp-rascunho{background:var(--sand);color:var(--muted);}
+.rsp-aprovado{background:var(--gl);color:var(--green);}
+.rsp-alteracao{background:var(--rl);color:var(--red);}
+.rot-chevron{font-size:10px;color:var(--taupe);transition:transform .2s;flex-shrink:0;}
+.rot-card.open .rot-chevron{transform:rotate(90deg);}
+.rot-body{display:none;padding:0 20px 20px;background:var(--cream);border-top:1px solid var(--sand);}
+.rot-card.open .rot-body{display:flex;flex-direction:column;gap:14px;padding-top:16px;}
+.rot-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.rot-tag{font-size:9px;color:var(--muted);background:var(--white);border:1px solid var(--sand);padding:2px 8px;border-radius:2px;}
+.rot-pre{font-size:12px;line-height:1.9;color:var(--muted);white-space:pre-wrap;background:var(--white);padding:14px;border-radius:2px;border:1px solid var(--sand);}
+.rot-pre strong{color:var(--esp);font-weight:600;}
+.leg-box{display:flex;flex-direction:column;gap:4px;}
+.leg-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.leg-ta{width:100%;min-height:80px;border:1px solid var(--sand);border-radius:2px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--esp);resize:vertical;outline:none;line-height:1.7;background:var(--white);transition:border-color .2s;}
+.leg-ta:focus{border-color:var(--gold);}
+.cl-list{display:flex;flex-direction:column;gap:6px;}
+.cl-row{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.cl-box{width:16px;height:16px;border:1.5px solid var(--taupe);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cl-row.done .cl-box{background:var(--esp);border-color:var(--esp);}
+.cl-row.done .cl-box::after{content:'';width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block;}
+.cl-row.done .cl-txt{text-decoration:line-through;color:var(--taupe);}
+.cl-txt{font-size:11px;color:var(--muted);}
+.aprov-wrap{display:flex;flex-direction:column;gap:8px;}
+.aprov-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.aprov-note{flex:1;min-width:140px;border:1px solid var(--sand);border-radius:2px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.aprov-note:focus{border-color:var(--gold);}
+.aprov-note::placeholder{color:var(--taupe);}
+.btn-aprv{padding:8px 16px;background:var(--green);color:white;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-aprv:hover{background:#2A5A3A;}
+.btn-alt{padding:8px 14px;background:transparent;color:var(--red);border:1.5px solid var(--red);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-alt:hover{background:var(--rl);}
+.aprov-log{display:flex;flex-direction:column;gap:6px;}
+.aprov-entry{padding:8px 10px;border-radius:2px;font-size:11px;line-height:1.5;}
+.aprov-entry.ok{background:var(--gl);border-left:3px solid var(--green);}
+.aprov-entry.nok{background:var(--rl);border-left:3px solid var(--red);}
+.aprov-who{font-weight:700;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;}
+.aprov-time{font-size:9px;color:var(--taupe);margin-top:2px;}
+.divider-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);padding-bottom:6px;border-bottom:1px solid var(--sand);}
+
+/* CRIAÇÃO */
+.criacao-tabs{display:flex;gap:0;border-bottom:1px solid var(--sand);}
+.ct-btn{padding:12px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .2s;}
+.ct-btn.active{color:var(--esp);border-bottom-color:var(--gold);}
+.ct-panel{display:none;padding:20px;}
+.ct-panel.active{display:flex;flex-direction:column;gap:16px;}
+.upload-zone{border:2px dashed var(--sand);border-radius:2px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(184,150,90,.04);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.uz-icon{font-size:28px;margin-bottom:10px;opacity:.35;}
+.uz-txt{font-size:12px;color:var(--muted);line-height:1.7;}
+.uz-txt strong{color:var(--esp);}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.ci-item{border:1px solid var(--sand);border-radius:2px;overflow:hidden;background:var(--white);}
+.ci-thumb{aspect-ratio:1;overflow:hidden;position:relative;background:var(--sand);cursor:pointer;}
+.ci-thumb img{width:100%;height:100%;object-fit:cover;}
+.ci-info{padding:8px 10px;}
+.ci-name{font-size:9px;color:var(--taupe);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ci-sp{display:flex;align-items:center;justify-content:space-between;gap:4px;}
+.ci-badge{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:10px;font-weight:600;}
+.cb-pend{background:var(--sand);color:var(--muted);}
+.cb-ok{background:var(--gl);color:var(--green);}
+.cb-alt{background:var(--rl);color:var(--red);}
+.ci-btns{display:flex;gap:4px;padding:0 8px 8px;}
+.btn-xs{padding:4px 8px;border-radius:2px;border:none;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s;}
+.bx-ok{background:var(--gl);color:var(--green);}
+.bx-ok:hover{background:var(--green);color:white;}
+.bx-nok{background:var(--rl);color:var(--red);}
+.bx-nok:hover{background:var(--red);color:white;}
+.bx-rm{background:var(--sand);color:var(--muted);}
+.bx-rm:hover{background:var(--esp);color:var(--cream);}
+
+/* VÍDEOS / LINKS */
+.video-links-list{display:flex;flex-direction:column;gap:10px;}
+.vl-card{background:var(--white);border:1px solid var(--sand);border-radius:2px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+.vl-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.vl-body{flex:1;min-width:200px;display:flex;flex-direction:column;gap:6px;}
+.vl-titulo-input{width:100%;border:none;border-bottom:1px solid var(--sand);padding:4px 0;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--esp);outline:none;background:transparent;transition:border-color .2s;}
+.vl-titulo-input:focus{border-bottom-color:var(--gold);}
+.vl-titulo-input::placeholder{color:var(--taupe);}
+.vl-desc-input{width:100%;border:none;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);outline:none;background:transparent;}
+.vl-desc-input::placeholder{color:var(--taupe);}
+.vl-link-row{display:flex;gap:8px;align-items:center;}
+.vl-link-input{flex:1;border:1px solid var(--sand);border-radius:2px;padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--esp);outline:none;background:var(--cream);transition:border-color .2s;}
+.vl-link-input:focus{border-color:var(--gold);}
+.vl-link-input::placeholder{color:var(--taupe);}
+.btn-watch{padding:8px 14px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.btn-watch:hover{background:#2A1F18;}
+.btn-watch.off{background:var(--sand);color:var(--taupe);cursor:default;pointer-events:none;}
+.btn-rm-vl{width:28px;height:28px;border:1px solid var(--sand);background:transparent;border-radius:2px;cursor:pointer;color:var(--taupe);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.btn-rm-vl:hover{background:var(--rl);border-color:var(--red);color:var(--red);}
+.vl-aprov-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.vl-badge{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:10px;font-weight:600;}
+.btn-add-vl{padding:8px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;align-self:flex-start;}
+.btn-add-vl:hover{border-color:var(--gold);color:var(--esp);}
+
+/* MOODBOARD */
+.mood-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--sand);background:var(--cream);align-items:center;}
+.mc-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.mc-btn.active,.mc-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.mood-upload-btn{padding:5px 14px;border:1px dashed var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;position:relative;overflow:hidden;}
+.mood-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.mood-upload-btn:hover{border-color:var(--gold);}
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:20px;}
+.mood-item{position:relative;border-radius:2px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .2s;aspect-ratio:1;background:var(--sand);}
+.mood-item:hover{border-color:var(--gold);}
+.mood-item.approved{border-color:var(--green);}
+.mood-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.mood-overlay{position:absolute;inset:0;background:rgba(58,47,40,0);transition:background .2s;display:flex;flex-direction:column;justify-content:space-between;padding:8px;}
+.mood-item:hover .mood-overlay{background:rgba(58,47,40,.45);}
+.mood-top-actions{display:flex;justify-content:flex-end;gap:4px;opacity:0;transition:opacity .2s;}
+.mood-item:hover .mood-top-actions{opacity:1;}
+.ma-btn{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ma-ok{background:rgba(61,122,82,.9);color:white;}
+.ma-del{background:rgba(138,58,42,.9);color:white;}
+.mood-cat-tag{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:rgba(58,47,40,.75);color:var(--cream);opacity:0;transition:opacity .2s;align-self:flex-start;}
+.mood-item:hover .mood-cat-tag{opacity:1;}
+.mood-ok-badge{position:absolute;top:6px;left:6px;width:22px;height:22px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:700;}
+.mood-empty{text-align:center;padding:60px 20px;color:var(--taupe);grid-column:1/-1;}
+.mood-empty .ico{font-size:36px;margin-bottom:10px;}
+.mood-empty p{font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+
+/* FEED PREVIEW */
+.feed-selector-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.fp-btn{padding:7px 16px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.fp-btn.active,.fp-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.feed-layout{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start;}
+.ig-mock{background:var(--white);border:1px solid #dbdbdb;border-radius:4px;overflow:hidden;width:320px;}
+.ig-topbar{padding:10px 14px;border-bottom:1px solid #dbdbdb;display:flex;align-items:center;gap:10px;}
+.ig-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--taupe));display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:700;overflow:hidden;flex-shrink:0;}
+.ig-av img{width:100%;height:100%;object-fit:cover;}
+.ig-uname{font-size:12px;font-weight:700;color:#262626;}
+.ig-media{width:100%;aspect-ratio:1;background:var(--sand);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.ig-media img{width:100%;height:100%;object-fit:cover;}
+.ig-media-ph{text-align:center;opacity:.25;}
+.ig-media-ph .ico{font-size:36px;display:block;margin-bottom:6px;}
+.ig-media-ph p{font-size:9px;letter-spacing:2px;text-transform:uppercase;}
+.ig-actions{padding:8px 14px;display:flex;gap:12px;}
+.ig-icon{font-size:20px;cursor:pointer;}
+.ig-icon.right{margin-left:auto;}
+.ig-likes{padding:0 14px;font-size:12px;font-weight:700;color:#262626;margin-bottom:2px;}
+.ig-cap{padding:0 14px 8px;font-size:12px;color:#262626;line-height:1.5;white-space:pre-wrap;}
+.ig-cap strong{font-weight:700;}
+.ig-time{padding:0 14px 12px;font-size:10px;color:#8e8e8e;text-transform:uppercase;letter-spacing:.5px;}
+.feed-right-panel{display:flex;flex-direction:column;gap:16px;}
+.feed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:420px;}
+.fg-cell{aspect-ratio:1;background:var(--sand);overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;transition:border-color .2s;}
+.fg-cell:hover,.fg-cell.selected{border-color:var(--gold);}
+.fg-cell img,.fg-cell video{width:100%;height:100%;object-fit:cover;}
+.fg-empty{display:flex;align-items:center;justify-content:center;font-size:18px;opacity:.2;height:100%;cursor:pointer;position:relative;}
+.fg-empty input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.fg-status{position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
+.fgs-ok{background:var(--green);color:white;}
+.fgs-pend{background:var(--gold);color:white;}
+.feed-add-zone{border:2px dashed var(--sand);aspect-ratio:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;cursor:pointer;position:relative;transition:all .2s;}
+.feed-add-zone:hover{border-color:var(--gold);}
+.feed-add-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.feed-add-zone span{font-size:18px;color:var(--taupe);}
+.feed-add-zone p{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);}
+
+/* IDEIAS */
+.ideias-search{display:flex;gap:10px;align-items:center;}
+.ideias-input{flex:1;padding:10px 14px;border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.ideias-input:focus{border-color:var(--gold);}
+.ideias-input::placeholder{color:var(--taupe);}
+.ideias-filters{display:flex;gap:6px;flex-wrap:wrap;}
+.if-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.if-btn.active,.if-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.ideias-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.ideia-card{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;transition:box-shadow .2s;}
+.ideia-card:hover{box-shadow:0 8px 28px rgba(58,47,40,.08);}
+.ic-thumb{height:150px;background:var(--sand);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ic-thumb img{width:100%;height:100%;object-fit:cover;}
+.ic-thumb-ph{text-align:center;opacity:.3;}
+.ic-thumb-ph span{font-size:32px;display:block;margin-bottom:4px;}
+.ic-thumb-ph p{font-size:8px;letter-spacing:2px;text-transform:uppercase;}
+.ic-type-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:10px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.ict-roteiro{background:var(--bl);color:var(--blue);}
+.ict-video{background:rgba(58,47,40,.8);color:var(--cream);}
+.ict-foto{background:rgba(184,150,90,.9);color:var(--esp);}
+.ict-referencia{background:var(--pl);color:var(--purple);}
+.ic-body{padding:14px 16px;}
+.ic-serie{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:3px;}
+.ic-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.3;margin-bottom:6px;}
+.ic-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:8px;}
+.ic-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;}
+.ic-tag{font-size:9px;color:var(--muted);background:var(--cream);border:1px solid var(--sand);padding:2px 7px;border-radius:2px;}
+.ic-footer{padding:10px 16px;border-top:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.btn-watch-ic{padding:6px 12px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;transition:all .2s;}
+.btn-watch-ic:hover{background:#2A1F18;}
+.btn-expand{padding:6px 12px;background:transparent;color:var(--muted);border:1px solid var(--sand);border-radius:2px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-expand:hover{background:var(--cream);}
+.ic-rot-body{display:none;padding:0 16px 16px;}
+.ic-rot-body.open{display:block;}
+.ic-rot-pre{font-size:11px;line-height:1.9;color:var(--muted);white-space:pre-wrap;background:var(--cream);padding:12px;border-radius:2px;}
+.ic-rot-pre strong{color:var(--esp);font-weight:600;}
+
+/* ADD IDEIA */
+.add-ideia-btn{padding:7px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.add-ideia-btn:hover{border-color:var(--gold);color:var(--esp);}
+.add-form{background:var(--white);border:1px solid var(--sand);border-radius:2px;padding:20px;display:none;flex-direction:column;gap:12px;}
+.add-form.open{display:flex;}
+.af-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.af-field{display:flex;flex-direction:column;gap:4px;}
+.af-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.af-input,.af-select,.af-ta{width:100%;padding:8px 10px;border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.af-input:focus,.af-select:focus,.af-ta:focus{border-color:var(--gold);}
+.af-input::placeholder,.af-ta::placeholder{color:var(--taupe);}
+.af-ta{min-height:80px;resize:vertical;line-height:1.6;}
+.af-btns{display:flex;gap:8px;justify-content:flex-end;}
+.btn-primary{padding:9px 20px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-primary:hover{background:#2A1F18;}
+.btn-secondary{padding:9px 14px;background:transparent;color:var(--muted);border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-secondary:hover{background:var(--sand);}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(58,47,40,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-ov.open{display:flex;}
+.modal-box{background:var(--white);max-width:500px;width:100%;border-radius:2px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column;}
+.modal-hdr{padding:14px 18px;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;}
+.modal-ttl{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;}
+.modal-cls{width:26px;height:26px;border:none;background:var(--sand);border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.modal-bdy{padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.modal-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;}
+.modal-btns{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* NOTIF */
+.notif{position:fixed;bottom:20px;right:20px;padding:12px 20px;border-radius:2px;font-size:12px;font-weight:500;z-index:9999;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none;}
+.notif.show{transform:translateY(0);opacity:1;}
+.notif-ok{background:var(--green);color:white;}
+.notif-info{background:var(--esp);color:var(--cream);}
+.notif-warn{background:var(--gold);color:var(--esp);}
+
+/* MISC */
+.empty-state{text-align:center;padding:48px 20px;color:var(--taupe);}
+.empty-state .ico{font-size:32px;margin-bottom:10px;}
+.empty-state p{font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+
+@media(max-width:900px){
+  .topbar{padding:0 14px;}
+  .view-inner{padding:16px;}
+  .dash-row{grid-template-columns:1fr;}
+  .feed-layout{grid-template-columns:1fr;}
+  .ig-mock{width:100%;}
+  .af-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-brand">Â<span>me</span></div>
+  <div class="login-sub">Hub · GGP Assessoria</div>
+  <div class="login-box">
+    <div class="login-roles">
+      <button class="role-btn active" onclick="selectRole('ggp',this)">GGP · Equipe</button>
+      <button class="role-btn" onclick="selectRole('cliente',this)">Aline · Cliente</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div class="login-label">Senha</div>
+      <input class="login-input" type="password" id="senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="login-err">Senha incorreta. Tente novamente.</div>
+    <button class="login-btn" onclick="doLogin()">Entrar na plataforma →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="tb-logo">Â<span>me</span></div>
+    <div class="tb-nav">
+      <button class="tb-btn active" data-view="dashboard" onclick="showView('dashboard',this)">📊 Dashboard</button>
+      <button class="tb-btn" data-view="roteiros" onclick="showView('roteiros',this)">📝 Roteiros</button>
+      <button class="tb-btn" data-view="criacao" onclick="showView('criacao',this)">🎨 Criação</button>
+      <button class="tb-btn" data-view="moodboard" onclick="showView('moodboard',this)">🖼 Moodboard</button>
+      <button class="tb-btn" data-view="feed" onclick="showView('feed',this)">📱 Feed Preview</button>
+      <button class="tb-btn" data-view="ideias" onclick="showView('ideias',this)">💡 Ideias</button>
+    </div>
+    <div class="tb-right">
+      <span class="tb-user" id="tb-user">—</span>
+      <span class="tb-role" id="tb-role"></span>
+      <button class="tb-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="view-inner">
+      <div class="dash-metrics">
+        <div class="metric-card mc-reels" onclick="showView('roteiros',null,'reels')" title="Ver Reels">
+          <div class="metric-n">9</div><div class="metric-l">Reels</div><div class="metric-hint">planejados</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-posts" onclick="showView('roteiros',null,'feed')" title="Ver Posts">
+          <div class="metric-n">3</div><div class="metric-l">Posts · Carrossel</div><div class="metric-hint">planejados</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-roteiros" onclick="showView('roteiros',null,'todos')" title="Ver todos os roteiros">
+          <div class="metric-n">12</div><div class="metric-l">Roteiros</div><div class="metric-hint">escritos</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-aprovados" onclick="showView('criacao',null)" title="Ver criação">
+          <div class="metric-n" id="m-aprovados">0</div><div class="metric-l">Aprovados</div><div class="metric-hint">pela Aline</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-pendentes" onclick="showView('criacao',null)" title="Ver pendentes">
+          <div class="metric-n" id="m-pendentes">0</div><div class="metric-l">Pendentes</div><div class="metric-hint">aguardando</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-moodboard" onclick="showView('moodboard',null)" title="Ver moodboard">
+          <div class="metric-n" id="m-mood">0</div><div class="metric-l">Moodboard</div><div class="metric-hint">referências</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-ideias" onclick="showView('ideias',null)" title="Ver ideias">
+          <div class="metric-n" id="m-ideias">5</div><div class="metric-l">Ideias</div><div class="metric-hint">no banco</div>
+          <span class="metric-arrow">→</span>
+        </div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-block">
+          <div class="db-header">Atividade Recente</div>
+          <div class="db-body">
+            <div class="act-row"><div class="act-dot act-g"></div><span class="act-txt">Plataforma Âme Hub criada e publicada</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-gold"></div><span class="act-txt">12 roteiros escritos e estruturados</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-gold"></div><span class="act-txt">Drop 01 · estratégia de aquecimento ativa</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-g"></div><span class="act-txt">Séries A, Closet, Wellness e Rotina definidas</span><span class="act-time">hoje</span></div>
+          </div>
+        </div>
+        <div class="dash-block">
+          <div class="db-header">Progresso Geral</div>
+          <div class="db-body">
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Roteiros escritos</span><span class="prog-pct">12/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--blue)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Conteúdo aprovado</span><span class="prog-pct" id="pp-aprov">0/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-aprov" style="width:0%;background:var(--green)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Criativos enviados</span><span class="prog-pct" id="pp-cri">0/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-cri" style="width:0%;background:var(--gold)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Drop 01 · aquecimento</span><span class="prog-pct">Sem 1/3</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:33%;background:var(--red)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Moodboard aprovado</span><span class="prog-pct" id="pp-mood">0/0</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-mood" style="width:0%;background:var(--purple)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROTEIROS -->
+  <div class="view" id="view-roteiros">
+    <div class="rot-filter">
+      <button class="rf-btn active" onclick="filterRot('todos',this)">Todos (12)</button>
+      <button class="rf-btn" onclick="filterRot('reels',this)">🎬 Reels (9)</button>
+      <button class="rf-btn" onclick="filterRot('feed',this)">🖼 Feed / Carrossel (3)</button>
+      <button class="rf-btn" onclick="filterRot('urgente',this)">🔴 Urgente</button>
+      <button class="rf-btn" onclick="filterRot('esta-semana',this)">🟡 Esta semana</button>
+      <button class="rf-btn" onclick="filterRot('proximo',this)">🟢 Próximas semanas</button>
+    </div>
+    <div class="rot-list" id="rot-list"></div>
+  </div>
+
+  <!-- CRIAÇÃO -->
+  <div class="view" id="view-criacao">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">🎨 Criativos & Fotos</div>
+          <span style="font-size:10px;color:var(--taupe)">GGP faz upload · Aline aprova</span>
+        </div>
+        <div class="criacao-tabs">
+          <button class="ct-btn active" onclick="switchCriacaoTab('fotos',this)">📸 Fotos e Artes</button>
+          <button class="ct-btn" onclick="switchCriacaoTab('videos',this)">🎬 Vídeos · Links Drive</button>
+        </div>
+        <div class="ct-panel active" id="ct-fotos">
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" accept="image/*,video/*" multiple onchange="handleUpload(event)">
+            <div class="uz-icon">⬆</div>
+            <div class="uz-txt"><strong>Arraste fotos e artes aqui</strong><br>Fotos de IA, mockups, criativos, identidade visual<br><span style="font-size:10px;color:var(--taupe)">JPG, PNG, GIF, MP4</span></div>
+          </div>
+          <div class="items-grid" id="items-grid">
+            <div class="empty-state" style="grid-column:1/-1"><div class="ico">📸</div><p>Nenhum criativo ainda</p></div>
+          </div>
+        </div>
+        <div class="ct-panel" id="ct-videos">
+          <p style="font-size:12px;color:var(--muted);line-height:1.7;padding:4px 0 8px;">Cole links do <strong>Google Drive</strong>, YouTube ou Instagram. Aline clica e assiste direto, sem precisar baixar nada.</p>
+          <div class="video-links-list" id="video-links-list"></div>
+          <button class="btn-add-vl" onclick="addVideoLink()">+ Adicionar link de vídeo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOODBOARD -->
+  <div class="view" id="view-moodboard">
+    <div class="block" style="margin:0;">
+      <div class="block-header">
+        <div class="block-title">🖼 Moodboard de Referências</div>
+        <span style="font-size:10px;color:var(--taupe)" id="mood-count">0 referências · 0 aprovadas</span>
+      </div>
+      <div class="mood-toolbar">
+        <button class="mc-btn active" onclick="filterMood('todos',this)">Todos</button>
+        <button class="mc-btn" onclick="filterMood('feed',this)">Feed</button>
+        <button class="mc-btn" onclick="filterMood('reels',this)">Reels</button>
+        <button class="mc-btn" onclick="filterMood('identidade',this)">Identidade</button>
+        <button class="mc-btn" onclick="filterMood('referencia',this)">Referência</button>
+        <button class="mc-btn" onclick="filterMood('produto',this)">Produto</button>
+        <div class="mood-upload-btn">
+          <input type="file" accept="image/*" multiple onchange="handleMoodUpload(event)">
+          ＋ Adicionar fotos
+        </div>
+      </div>
+      <div class="mood-grid" id="mood-grid">
+        <div class="mood-empty"><div class="ico">🖼</div><p>Faça upload de referências acima</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEED PREVIEW -->
+  <div class="view" id="view-feed">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">📱 Feed Preview — Como vai ficar</div>
+        </div>
+        <div class="block-body" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="feed-selector-tabs">
+            <button class="fp-btn active" onclick="switchFeedPerfil('alinepradoo__',this)">@alinepradoo__</button>
+            <button class="fp-btn" onclick="switchFeedPerfil('vistaamee',this)">@vistaamee</button>
+            <button class="fp-btn" onclick="switchFeedPerfil('amewellness.co',this)">@amewellness.co</button>
+          </div>
+          <div class="feed-layout">
+            <div class="ig-mock">
+              <div class="ig-topbar">
+                <div class="ig-av" id="ig-av">A</div>
+                <div>
+                  <div class="ig-uname" id="ig-uname">alinepradoo__</div>
+                  <div style="font-size:10px;color:#8e8e8e;">· agora</div>
+                </div>
+                <div style="margin-left:auto;font-size:18px;color:#262626;">···</div>
+              </div>
+              <div class="ig-media" id="ig-media">
+                <div class="ig-media-ph"><span class="ico">📷</span><p>Selecione um post</p></div>
+              </div>
+              <div class="ig-actions">
+                <span class="ig-icon">🤍</span><span class="ig-icon">💬</span><span class="ig-icon">📤</span><span class="ig-icon right">🔖</span>
+              </div>
+              <div class="ig-likes">142 curtidas</div>
+              <div class="ig-cap" id="ig-cap"><strong id="ig-cap-user">alinepradoo__</strong> Selecione um post ao lado</div>
+              <div class="ig-time">há 2 horas</div>
+            </div>
+            <div class="feed-right-panel">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);">Clique em um post para visualizar</div>
+              <div class="feed-grid" id="feed-grid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEIAS -->
+  <div class="view" id="view-ideias">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">💡 Banco de Ideias & Referências</div>
+          <button class="add-ideia-btn" onclick="toggleAddForm()">+ Adicionar</button>
+        </div>
+        <div class="block-body" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="add-form" id="add-form">
+            <div class="af-row">
+              <div class="af-field"><div class="af-lbl">Título</div><input class="af-input" id="ni-titulo" placeholder="Nome do conteúdo"></div>
+              <div class="af-field"><div class="af-lbl">Tipo</div>
+                <select class="af-select" id="ni-tipo">
+                  <option value="roteiro">📝 Roteiro</option>
+                  <option value="video">🎬 Vídeo de referência</option>
+                  <option value="foto">📸 Foto de referência</option>
+                  <option value="referencia">🎯 Referência geral</option>
+                </select>
+              </div>
+            </div>
+            <div class="af-row">
+              <div class="af-field"><div class="af-lbl">Série</div><input class="af-input" id="ni-serie" placeholder="Ex: Série A, Drop 01..."></div>
+              <div class="af-field"><div class="af-lbl">Link (Drive, YouTube, Instagram)</div><input class="af-input" id="ni-link" placeholder="https://drive.google.com/..."></div>
+            </div>
+            <div class="af-field"><div class="af-lbl">Descrição / Roteiro completo</div><textarea class="af-ta" id="ni-desc" placeholder="Descreva a ideia ou cole o roteiro..."></textarea></div>
+            <div class="af-field"><div class="af-lbl">Tags (separadas por vírgula)</div><input class="af-input" id="ni-tags" placeholder="luz natural, bastidor, câmera lenta..."></div>
+            <div class="af-field">
+              <div class="af-lbl">Imagem de referência (opcional)</div>
+              <div class="upload-zone" style="padding:16px;">
+                <input type="file" accept="image/*" onchange="handleIdeiaImg(event)">
+                <div class="uz-txt">Clique para adicionar imagem</div>
+              </div>
+              <div id="ni-img-prev"></div>
+            </div>
+            <div class="af-btns">
+              <button class="btn-secondary" onclick="toggleAddForm()">Cancelar</button>
+              <button class="btn-primary" onclick="saveIdeia()">Salvar ideia</button>
+            </div>
+          </div>
+          <div class="ideias-search"><input class="ideias-input" id="ideias-search" placeholder="Buscar por título, série ou tag..." oninput="filterIdeias()"></div>
+          <div class="ideias-filters">
+            <button class="if-btn active" onclick="filterIdeiasType('todos',this)">Todos</button>
+            <button class="if-btn" onclick="filterIdeiasType('roteiro',this)">📝 Roteiros</button>
+            <button class="if-btn" onclick="filterIdeiasType('video',this)">🎬 Vídeos</button>
+            <button class="if-btn" onclick="filterIdeiasType('foto',this)">📸 Fotos</button>
+            <button class="if-btn" onclick="filterIdeiasType('referencia',this)">🎯 Referências</button>
+          </div>
+          <div class="ideias-grid" id="ideias-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div class="modal-ttl" id="modal-ttl">Visualizar</div>
+      <button class="modal-cls" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-bdy" id="modal-bdy"></div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// AUTH
+const SENHAS={ggp:'ggp2024ame',cliente:'aline2024'};
+let currentRole='ggp';
+
+function selectRole(r,btn){
+  currentRole=r;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function doLogin(){
+  const s=document.getElementById('senha').value;
+  const err=document.getElementById('login-err');
+  if(s===SENHAS[currentRole]){
+    err.style.display='none';
+    document.getElementById('tb-user').textContent=currentRole==='ggp'?'Gislaine · GGP':'Aline · Cliente';
+    const rb=document.getElementById('tb-role');
+    rb.textContent=currentRole==='ggp'?'GGP':'Cliente';
+    rb.className='tb-role '+(currentRole==='ggp'?'role-ggp':'role-cliente');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    renderAll();
+    notify('Bem-vinda! 👋','ok');
+  } else {
+    err.style.display='block';
+    document.getElementById('senha').value='';
+  }
+}
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('senha').value='';
+}
+
+// VIEWS
+function showView(name,btn,filter){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tb-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  const tb=document.querySelector(`.tb-btn[data-view="${name}"]`);
+  if(tb)tb.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='roteiros'&&filter){
+    const rfBtn=document.querySelector(`.rf-btn[data-filter="${filter}"]`);
+    if(rfBtn){filterRot(filter,rfBtn);}
+  }
+  if(name==='feed')renderFeedGrid();
+  if(name==='dashboard')updateDashboard();
+}
+
+// NOTIFY
+function notify(msg,type='ok'){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.className='notif notif-'+type+' show';
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+
+// ═══ ROTEIROS DATA ═══
+const ROTEIROS=[
+  {id:1,tipo:'reels',ep:'Série A · EP01',emoji:'🎬',fmt:'Reel · 60s',titulo:'De onde eu vim e onde estou — a virada de chave',perfil:'@alinepradoo__',prio:'esta-semana',tags:['luz natural suave','câmera lenta','close de detalhes','voz íntima em off'],legenda:'Tem dias que eu ainda não acredito que saí.\nMas eu sei exatamente por que saí.\n\nA história completa tá no vídeo.',roteiro:'GANCHO (0–3s)\n"Eu já tive medo de falar sobre isso. Mas chegou a hora."\n\nDESENVOLVIMENTO (3–45s)\n"Trabalhei anos pra alguém. Acordava cedo, entregava resultado, voltava pra casa pensando no negócio dos outros. Não era ruim. Mas não era meu.\n\nSaí do CLT sem ter certeza. Só tinha uma coisa clara: eu sabia vender. Sabia curar. Sabia o que uma mulher sente quando veste algo que é dela de verdade.\n\nA Vista Âme nasceu disso. Não de um plano perfeito — de uma decisão.\n\nE hoje, construindo a Âme Wellness, entendi que não mudei de caminho. Só fui ficando mais inteira."\n\nFECHAMENTO (45–60s)\n"Isso aqui não é sobre duas marcas. É sobre uma mulher que decidiu parar de construir pra outros.\n\nSe você chegou até aqui — fica. Porque isso tá só começando."',checklist:['Roteiro revisado e aprovado','Locação definida (casa / closet)','Look escolhido (neutro, elegante)','Gravação realizada','Edição e legenda entregues'],status:'rascunho',comments:[]},
+  {id:2,tipo:'reels',ep:'Série A · EP02',emoji:'🎬',fmt:'Reel · 45s',titulo:'Construindo o ecossistema Âme — duas marcas, uma visão',perfil:'@alinepradoo__',prio:'esta-semana',tags:['walking shot','showroom ao fundo','tons neutros','corte ritmado'],legenda:'Não são duas marcas separadas.\nÉ um ecossistema inteiro — construído em cima de uma mulher só.\n\n@vistaamee e @amewellness.co — marca os dois.',roteiro:'GANCHO (0–3s)\nWalking shot entrando no showroom:\n"Duas marcas. Um público. Uma visão. Deixa eu te explicar."\n\nDESENVOLVIMENTO (3–35s)\n"A Vista Âme existe há anos. Showroom físico, curadoria exclusiva, cliente que volta porque sente a diferença.\n\nA Âme Wellness nasceu da minha rotina. Nunca encontrei uma peça que fosse premium de verdade. Então criei.\n\nUma audiência. Dois produtos. Uma só identidade."\n\nFECHAMENTO (35–45s)\n"É isso que estou construindo. E você está assistindo de dentro.\nSegue os dois perfis pra não perder nada."',checklist:['Roteiro revisado e aprovado','Gravar no showroom Vista Âme','Peças da Wellness visíveis no plano','Gravação realizada','Edição e legenda entregues'],status:'rascunho',comments:[]},
+  {id:3,tipo:'feed',ep:'Closet Âme · 01',emoji:'👗',fmt:'Reel · 30s (feed)',titulo:'O que estou usando esta semana — 3 looks, 1 peça Vista Âme',perfil:'@alinepradoo__ · @vistaamee',prio:'esta-semana',tags:['espelho corpo inteiro','transição rápida','luz de janela','fundo limpo'],legenda:'Três looks. Uma semana.\nA última peça você encontra no showroom — ou manda um DM.\n\nLink na bio → @vistaamee',roteiro:'LOOK 1 — Abertura\nPose no espelho, câmera lenta.\nTexto: "segunda" · Close no detalhe.\n\nLOOK 2 — Meio\nTransição rápida. Pose lateral.\nTexto: "quarta" · Close no tecido.\n\nLOOK 3 — Fechamento (peça Vista Âme)\nPose frontal + giro.\nTexto: "sexta — @vistaamee"\nClose na etiqueta ou detalhe exclusivo.',checklist:['3 looks montados e aprovados','1 peça Vista Âme inclusa','Locação: quarto ou closet','Gravação realizada','Marcação @vistaamee na legenda'],status:'rascunho',comments:[]},
+  {id:4,tipo:'feed',ep:'Closet Âme · 02',emoji:'👗',fmt:'Carrossel · 5 fotos',titulo:'Peças que valem o investimento — curadoria da semana',perfil:'@alinepradoo__ · @vistaamee',prio:'proximo',tags:['flat lay','detalhe de tecido','paleta neutra','textura'],legenda:'Não compro por tendência.\nCompro pelo que vai durar — no armário e no corpo.\n\nDM pra saber sobre disponibilidade → @vistaamee',roteiro:'FOTO 1 — Capa\nLook completo. Texto: "peças que valem cada centavo"\n\nFOTO 2 — Detalhe de tecido. Sem texto.\n\nFOTO 3 — Detalhe de acabamento. Costura ou botão.\n\nFOTO 4 — Flat lay. Texto: "curadoria @vistaamee"\n\nFOTO 5 — Aline com a peça. Texto: "quer saber onde encontrar? DM aberto."',checklist:['Peças selecionadas e separadas','Sessão de fotos flat lay','5 fotos editadas na paleta Âme','Legenda e CTA aprovados'],status:'rascunho',comments:[]},
+  {id:5,tipo:'reels',ep:'Wellness · EP01',emoji:'🤸‍♀️',fmt:'Reel · 30s',titulo:'Minha rotina de movimento — por que fitness é parte do meu negócio',perfil:'@alinepradoo__ · @amewellness.co',prio:'urgente',tags:['academia ou parque','câmera lenta 60fps','look activewear','luz quente'],legenda:'Minha rotina de movimento sempre foi séria.\nA roupa que uso durante ela — agora também é.\n\n@amewellness.co · lista VIP aberta — link na bio.',roteiro:'GANCHO (0–3s)\n"Fitness não é hobby pra mim. É parte do que eu construo."\n\nDESENVOLVIMENTO (3–22s)\nClips de treino + voz em off:\n"Eu treino porque me faz pensar melhor. Decidir melhor.\n\nE por anos usei peças que não acompanhavam isso. Então parei de procurar e comecei a criar."\n\nFECHAMENTO (22–30s)\n"O que você está vendo vai virar produto em breve.\nLista VIP na bio — quem entra primeiro, garante primeiro."',checklist:['Peça Âme Wellness selecionada','Locação: academia ou parque','Câmera em 60fps configurada','Gravação realizada','CTA para lista VIP na legenda'],status:'rascunho',comments:[]},
+  {id:6,tipo:'reels',ep:'Wellness · EP02',emoji:'🤸‍♀️',fmt:'Reel · 45s',titulo:'Apresentando a Âme Wellness — a marca que nasceu da minha rotina',perfil:'@alinepradoo__ · @amewellness.co',prio:'urgente',tags:['unboxing de protótipo','detalhe de costura','close nas mãos','expressão genuína'],legenda:'Esse é o protótipo da Âme Wellness.\nPrimeiro registro público.\n\nTecnologia nacional. Caimento premium. Meu nome atrás.\n\nLista VIP aberta — link na bio.\n@amewellness.co',roteiro:'GANCHO (0–3s)\n"Esse é o protótipo. Primeira vez que apareço com ele aqui."\n\nDESENVOLVIMENTO (3–35s)\n"Esse tecido foi desenvolvido no Brasil. Compressão real.\n\nEu coloquei meu nome nisso. Âme Wellness não é dropshipping. É meu."\n\nFECHAMENTO (35–45s)\n"Drop 01 chegando. Lista VIP na bio.\nQuem está lá dentro vai saber antes de todo mundo."',checklist:['Protótipo disponível para filmagem','Superfície neutra preparada','Gravação de close no tecido','Gravação realizada','CTA lista VIP ativo na bio'],status:'rascunho',comments:[]},
+  {id:7,tipo:'reels',ep:'Rotina Real · 01',emoji:'☀️',fmt:'Reel · 30s · sem voz',titulo:'Manhã de founder — do café à primeira reunião',perfil:'@alinepradoo__',prio:'esta-semana',tags:['câmera subjetiva','morning light','clips de 2–3s','trilha ambiente'],legenda:'Não existe manhã perfeita.\nExiste decisão de aparecer — todos os dias.',roteiro:'CLIP 1 — 3s: Mão segurando café. Texto: "6h30"\nCLIP 2 — 3s: Espelho. Texto: "antes de qualquer reunião, cuido de mim"\nCLIP 3 — 3s: Mesa de trabalho. Texto: "agenda do dia"\nCLIP 4 — 3s: Walking shot chegando. Texto: "a founder entra em cena"\nCLIP 5 — 3s: Showroom. Texto: "@vistaamee"\nCLIP 6 — 3s: Aline olha pra câmera. Texto: "é assim todo dia"',checklist:['Lista de momentos a filmar','Trilha selecionada','Gravação ao longo de 1 dia real','Edição com texto sobreposto','Publicação aprovada'],status:'rascunho',comments:[]},
+  {id:8,tipo:'feed',ep:'Rotina Real · 02',emoji:'🌙',fmt:'Reel · 25s (feed)',titulo:'Fim de tarde no showroom — o que ninguém vê por trás das peças',perfil:'@alinepradoo__',prio:'proximo',tags:['luz dourada','showroom Vista Âme','câmera lenta suave','bastidor real'],legenda:'Bastidor real.\nSem filtro, sem roteiro, sem encenação.\n\n@vistaamee · DM pra visitar o showroom',roteiro:'GANCHO (0–3s): Luz dourada no showroom. Texto: "16h — o que você não vê"\n\nSEQUÊNCIA (3–20s):\nClip 1: Mãos organizando peças. Texto: "cada peça passou pela minha curadoria"\nClip 2: Aline olhando peça contra a luz. Texto: "antes de chegar até você"\nClip 3: Arara completa. Sem texto.\nClip 4: Aline olha pra câmera. Texto: "isso é a Vista Âme"\n\nFECHAMENTO: Texto: "showroom SP · DM aberto"',checklist:['Agendar gravação no showroom','Horário: 16h–18h','Showroom organizado','Gravação realizada','Edição aprovada'],status:'rascunho',comments:[]},
+  {id:9,tipo:'reels',ep:'Drop 01 · Semana 1',emoji:'🔒',fmt:'Reel · 15s · Teaser',titulo:'Algo está chegando — teaser visual sem revelar o produto',perfil:'@amewellness.co',prio:'urgente',tags:['foco desfocado','sombra de peça','close de tecido','trilha tensa'],legenda:'.',roteiro:'SEM FALA. Só imagem + texto na tela + trilha.\n\nCLIP 1: Câmera desfocada sobre tecido.\nCLIP 2: Sombra de uma peça na parede.\nCLIP 3: Close extremo em costura.\nCLIP 4: Mãos segurando algo. Câmera corta antes de revelar.\nCLIP 5: Tela preta. Texto: "algo está chegando." + "lista VIP — link na bio"\n\nTRILHA: Piano minimalista ou ambient tenso.',checklist:['Link lista VIP ativo na bio','Protótipo disponível','Texto de tela aprovado','Gravação realizada','Publicação agendada'],status:'rascunho',comments:[]},
+  {id:10,tipo:'reels',ep:'Drop 01 · Semana 2',emoji:'📋',fmt:'Reel · 20s + Story',titulo:'Lista VIP aberta — quem entrar primeiro tem acesso exclusivo',perfil:'@amewellness.co · @alinepradoo__',prio:'urgente',tags:['câmera frontal','tom íntimo','fundo clean','story com link'],legenda:'Lista VIP aberta.\nDrop 01 chegando — peças limitadas.\n\nQuem entra primeiro, garante primeiro.\nLink na bio → @amewellness.co',roteiro:'GANCHO (0–3s): "A lista VIP da Âme Wellness está aberta."\n\nDESENVOLVIMENTO (3–15s): "Quem entra agora — sabe antes. Compra antes. Garante antes.\nDrop 01 é limitado. Não vou repor na mesma semana."\n\nFECHAMENTO (15–20s): "É isso. Simples assim." (sorriso, corta)\n\nSTORY (publicar junto): Fundo escuro. Texto: "entrou na lista?" Sticker de link → "ENTRAR NA LISTA VIP"',checklist:['Formulário lista VIP ativo','Roteiro aprovado','Reel gravado (câmera frontal)','Story com sticker de link','Publicado nos dois perfis'],status:'rascunho',comments:[]},
+  {id:11,tipo:'reels',ep:'Drop 01 · Semana 3',emoji:'✨',fmt:'Reel · 45s · Reveal',titulo:'Drop 01 — o primeiro reveal oficial da Âme Wellness',perfil:'@amewellness.co · @alinepradoo__',prio:'urgente',tags:['produto completo','Aline vestindo a peça','câmera 360','close no acabamento'],legenda:'Drop 01 — ao vivo.\n\nTecnologia nacional. Caimento premium. Edição limitada.\n\nLink na bio → garante o seu.\n@amewellness.co',roteiro:'GANCHO (0–3s): "Esse é o Drop 01. E eu vou te contar tudo sobre ele."\n\nDESENVOLVIMENTO (3–35s): "Tecnologia nacional. Compressão que segura sem apertar. Costura que não abre.\n\nEu usei por semanas antes de aprovar. Só lancei quando ficou exatamente como eu queria.\n\nIsso é a Âme Wellness. Activewear premium — feita aqui, pensada por mim."\n\nFECHAMENTO (35–45s): Câmera 360: "Link na bio pra garantir o seu."',checklist:['Produto final disponível','Locação premium preparada','Câmera 60fps + tripé','Gravação realizada','Link de compra ativo na bio'],status:'rascunho',comments:[]},
+  {id:12,tipo:'reels',ep:'Âme House · Especial',emoji:'🏛️',fmt:'Reel · 30s',titulo:'A casa que vai unir tudo — primeiro olhar para a Âme House',perfil:'@alinepradoo__ + ambas as marcas',prio:'proximo',tags:['espaço em transformação','voz em off emocional','câmera lenta','enquadramento amplo'],legenda:'Tem um projeto novo.\nAinda não acabou. Mas já está acontecendo.\n\nÂme House — em breve.\n@vistaamee · @amewellness.co',roteiro:'GANCHO (0–3s): Espaço em obras. Voz: "Eu quero te mostrar alguma coisa."\n\nDESENVOLVIMENTO (3–22s): "Esse lugar ainda está tomando forma. Mas já tem nome. Já tem propósito.\n\nÂme House — onde a Vista Âme e a Âme Wellness vão existir juntas.\n\nE você está vendo antes de qualquer pessoa."\n\nFECHAMENTO: "Quando estiver pronto — você vai ser a primeira a saber."\nTexto: "Âme House · em breve"',checklist:['Espaço disponível para filmagem','Roteiro emocional aprovado','Gravação realizada','Trilha selecionada','Publicado nos 3 perfis'],status:'rascunho',comments:[]}
+];
+
+const PRIO_C={urgente:'prio-urg',['esta-semana']:'prio-sem',proximo:'prio-prx'};
+const PRIO_L={urgente:'🔴 Urgente',['esta-semana']:'🟡 Esta semana',proximo:'🟢 Próximas semanas'};
+const ST_L={rascunho:'Rascunho',aprovado:'Aprovado ✓',alteracao:'Alteração pedida'};
+const ST_C={rascunho:'rsp-rascunho',aprovado:'rsp-aprovado',alteracao:'rsp-alteracao'};
+
+let rotFilter='todos';
+
+function filterRot(f,btn){
+  rotFilter=f;
+  document.querySelectorAll('.rf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoteiros();
+}
+
+function renderRoteiros(){
+  const list=ROTEIROS.filter(r=>{
+    if(rotFilter==='todos')return true;
+    if(rotFilter==='reels')return r.tipo==='reels';
+    if(rotFilter==='feed')return r.tipo==='feed';
+    return r.prio===rotFilter;
+  });
+  const el=document.getElementById('rot-list');
+  if(!list.length){el.innerHTML='<div class="empty-state"><div class="ico">📝</div><p>Nenhum roteiro neste filtro</p></div>';return;}
+  el.innerHTML=list.map(r=>`
+    <div class="rot-card" id="rc-${r.id}">
+      <div class="rot-head" onclick="toggleRot(${r.id})">
+        <span class="rot-emoji">${r.emoji}</span>
+        <div class="rot-info">
+          <div class="rot-ep">${r.ep} · ${r.fmt}</div>
+          <div class="rot-title">${r.titulo}</div>
+          <div class="rot-format">${r.perfil}</div>
+        </div>
+        <div class="rot-meta">
+          <span class="rot-status-pill ${ST_C[r.status]}">${ST_L[r.status]}</span>
+          <span class="rot-prio ${PRIO_C[r.prio]}">${PRIO_L[r.prio]}</span>
+        </div>
+        <span class="rot-chevron">▶</span>
+      </div>
+      <div class="rot-body">
+        <div class="rot-tags">${r.tags.map(t=>`<span class="rot-tag">${t}</span>`).join('')}</div>
+        <div>
+          <div class="divider-lbl">Legenda</div>
+          <div style="margin-top:8px;">
+            <textarea class="leg-ta" id="leg-${r.id}" oninput="updateLC(${r.id})">${r.legenda}</textarea>
+            <div style="font-size:10px;color:var(--taupe);text-align:right;margin-top:2px;"><span id="lc-${r.id}">${r.legenda.length}</span> caracteres</div>
+          </div>
+        </div>
+        <div>
+          <div class="divider-lbl" style="margin-bottom:8px;">Roteiro completo</div>
+          <div class="rot-pre">${fmtRot(r.roteiro)}</div>
+        </div>
+        <div>
+          <div class="divider-lbl" style="margin-bottom:8px;">Checklist de produção</div>
+          <div class="cl-list" id="cl-${r.id}">
+            ${r.checklist.map((it,i)=>`<div class="cl-row${r.cd&&r.cd[i]?' done':''}" onclick="toggleCl(${r.id},${i})"><div class="cl-box"></div><span class="cl-txt">${it}</span></div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="divider-lbl" style="margin-bottom:8px;">Aprovação</div>
+          <div class="aprov-wrap">
+            <div class="aprov-row">
+              <input class="aprov-note" id="an-${r.id}" placeholder="Comentário ou pedido de alteração...">
+              <button class="btn-aprv" onclick="approveRot(${r.id},'aprovado')">✓ Aprovar</button>
+              <button class="btn-alt" onclick="approveRot(${r.id},'alteracao')">↺ Pedir alteração</button>
+            </div>
+            <div class="aprov-log" id="al-${r.id}">
+              ${(r.comments||[]).map(c=>`<div class="aprov-entry ${c.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${c.t==='aprovado'?'✓ Aprovado':'↺ Alteração'}</div><div>${c.txt}</div><div class="aprov-time">${c.ts}</div></div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+  // Set data-filter attr on filter buttons for programmatic use
+  document.querySelectorAll('.rf-btn').forEach((b,i)=>{
+    const fs=['todos','reels','feed','urgente','esta-semana','proximo'];
+    b.setAttribute('data-filter',fs[i]||'todos');
+  });
+}
+
+function toggleRot(id){document.getElementById('rc-'+id)?.classList.toggle('open');}
+function updateLC(id){const ta=document.getElementById('leg-'+id);if(ta)document.getElementById('lc-'+id).textContent=ta.value.length;}
+function toggleCl(rid,idx){
+  const r=ROTEIROS.find(x=>x.id===rid);if(!r)return;
+  if(!r.cd)r.cd={};r.cd[idx]=!r.cd[idx];
+  const rows=document.querySelectorAll(`#cl-${rid} .cl-row`);
+  if(rows[idx])rows[idx].classList.toggle('done',r.cd[idx]);
+}
+function approveRot(rid,type){
+  const r=ROTEIROS.find(x=>x.id===rid);if(!r)return;
+  r.status=type;
+  const note=document.getElementById('an-'+rid)?.value.trim()||(type==='aprovado'?'Aprovado.':'Pede revisão.');
+  if(!r.comments)r.comments=[];
+  const ts=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' · hoje';
+  r.comments.unshift({t:type,txt:note,ts});
+  document.getElementById('an-'+rid).value='';
+  document.getElementById('al-'+rid).innerHTML=r.comments.map(c=>`<div class="aprov-entry ${c.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${c.t==='aprovado'?'✓ Aprovado':'↺ Alteração'}</div><div>${c.txt}</div><div class="aprov-time">${c.ts}</div></div>`).join('');
+  const sp=document.querySelector(`#rc-${rid} .rot-status-pill`);
+  if(sp){sp.textContent=ST_L[type];sp.className='rot-status-pill '+ST_C[type];}
+  updateDashboard();
+  notify(type==='aprovado'?'Roteiro aprovado ✓':'Alteração solicitada');
+}
+function fmtRot(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/^([A-ZÇÉÊ0-9][A-ZÇÉÊ\s·\-–\/()0-9]+:?)$/gm,'<strong>$1</strong>');}
+
+// CRIAÇÃO — FOTOS
+let creationItems=[];
+function handleUpload(e){
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{creationItems.push({id:Date.now()+Math.random(),src:ev.target.result,name:f.name,isVideo:f.type.startsWith('video'),status:'pendente',note:''});renderCreation();updateDashboard();};
+    r.readAsDataURL(f);
+  });e.target.value='';
+}
+function renderCreation(){
+  const g=document.getElementById('items-grid');
+  if(!creationItems.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ico">📸</div><p>Nenhum criativo ainda</p></div>';return;}
+  const sc={pendente:'cb-pend',aprovado:'cb-ok',alteracao:'cb-alt'};
+  const sl={pendente:'Pendente',aprovado:'Aprovado',alteracao:'Alteração'};
+  g.innerHTML=creationItems.map(item=>`
+    <div class="ci-item">
+      <div class="ci-thumb" onclick="openCriacaoModal('${item.id}')">
+        ${item.isVideo?`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:32px;opacity:.4;">🎬</div>`:
+        `<img src="${item.src}" alt="">`}
+      </div>
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-sp">
+          <span class="ci-badge ${sc[item.status]}">${sl[item.status]}</span>
+        </div>
+      </div>
+      <div class="ci-btns">
+        <button class="btn-xs bx-ok" onclick="setCriStatus('${item.id}','aprovado')">✓</button>
+        <button class="btn-xs bx-nok" onclick="setCriStatus('${item.id}','alteracao')">↺</button>
+        <button class="btn-xs bx-rm" onclick="removeCri('${item.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+function setCriStatus(id,s){const item=creationItems.find(x=>x.id==id);if(item){item.status=s;renderCreation();updateDashboard();notify(s==='aprovado'?'Aprovado ✓':'Alteração solicitada');}}
+function removeCri(id){creationItems=creationItems.filter(x=>x.id!=id);renderCreation();updateDashboard();}
+function openCriacaoModal(id){
+  const item=creationItems.find(x=>x.id==id);if(!item)return;
+  document.getElementById('modal-ttl').textContent=item.name;
+  document.getElementById('modal-bdy').innerHTML=`
+    ${item.isVideo?`<video src="${item.src}" controls style="width:100%;border-radius:2px;"></video>`:`<img src="${item.src}" class="modal-img" alt="">`}
+    <div class="modal-btns">
+      <button class="btn-primary" onclick="setCriStatus('${item.id}','aprovado');closeModalDirect();">✓ Aprovar</button>
+      <button class="btn-secondary" style="color:var(--red);border-color:var(--red);" onclick="setCriStatus('${item.id}','alteracao');closeModalDirect();">↺ Pedir alteração</button>
+    </div>`;
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+// CRIAÇÃO — VÍDEOS / LINKS
+let videoLinks=[
+  {id:1,titulo:'Referência 1 — @gyoparanaiba bastidor',desc:'Série pessoal, founder content emocional',link:'',status:'pendente'},
+  {id:2,titulo:'Referência 2 — @tieactive treino',desc:'Founder usando activewear, câmera lenta',link:'',status:'pendente'},
+];
+function renderVideoLinks(){
+  const el=document.getElementById('video-links-list');
+  const sc={pendente:'cb-pend',aprovado:'cb-ok',alteracao:'cb-alt'};
+  const sl={pendente:'Pendente',aprovado:'Aprovada',alteracao:'Alteração'};
+  el.innerHTML=videoLinks.map(v=>`
+    <div class="vl-card" id="vl-${v.id}">
+      <div class="vl-icon">🎬</div>
+      <div class="vl-body">
+        <input class="vl-titulo-input" placeholder="Nome da referência ou vídeo..." value="${v.titulo}" oninput="updateVLTitulo(${v.id},this.value)">
+        <input class="vl-desc-input" placeholder="Breve descrição..." value="${v.desc}" oninput="updateVLDesc(${v.id},this.value)">
+        <div class="vl-link-row">
+          <input class="vl-link-input" placeholder="Link do Google Drive, YouTube ou Instagram..." value="${v.link}" oninput="updateVLLink(${v.id},this.value)">
+          <button class="btn-watch${v.link?'':' off'}" onclick="openVL(${v.id})">▶ Abrir</button>
+          <button class="btn-rm-vl" onclick="removeVL(${v.id})">✕</button>
+        </div>
+        <div class="vl-aprov-row">
+          <span class="vl-badge ci-badge ${sc[v.status]}">${sl[v.status]}</span>
+          <button class="btn-xs bx-ok" onclick="setVLStatus(${v.id},'aprovado')">✓ Aprovar</button>
+          <button class="btn-xs bx-nok" onclick="setVLStatus(${v.id},'alteracao')">↺ Alteração</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function updateVLTitulo(id,v){const vl=videoLinks.find(x=>x.id===id);if(vl)vl.titulo=v;}
+function updateVLDesc(id,v){const vl=videoLinks.find(x=>x.id===id);if(vl)vl.desc=v;}
+function updateVLLink(id,v){
+  const vl=videoLinks.find(x=>x.id===id);if(!vl)return;
+  vl.link=v.trim();
+  const btn=document.querySelector(`#vl-${id} .btn-watch`);
+  if(btn)btn.classList.toggle('off',!vl.link);
+}
+function openVL(id){const vl=videoLinks.find(x=>x.id===id);if(vl&&vl.link)window.open(vl.link,'_blank');}
+function removeVL(id){videoLinks=videoLinks.filter(x=>x.id!==id);renderVideoLinks();}
+function setVLStatus(id,s){const vl=videoLinks.find(x=>x.id===id);if(vl){vl.status=s;renderVideoLinks();notify(s==='aprovado'?'Referência aprovada ✓':'Alteração solicitada');}}
+function addVideoLink(){videoLinks.push({id:Date.now(),titulo:'',desc:'',link:'',status:'pendente'});renderVideoLinks();}
+function switchCriacaoTab(tab,btn){
+  document.querySelectorAll('.ct-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ct-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ct-'+tab).classList.add('active');
+}
+
+// MOODBOARD
+let moodItems=[];
+let moodFilter='todos';
+function handleMoodUpload(e){
+  const cat=moodFilter==='todos'?'referencia':moodFilter;
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{moodItems.push({id:Date.now()+Math.random(),src:ev.target.result,cat,approved:false});renderMood();updateDashboard();};
+    r.readAsDataURL(f);
+  });e.target.value='';
+}
+function filterMood(f,btn){
+  moodFilter=f;
+  document.querySelectorAll('.mc-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMood();
+}
+function renderMood(){
+  const g=document.getElementById('mood-grid');
+  const list=moodFilter==='todos'?moodItems:moodItems.filter(x=>x.cat===moodFilter);
+  const total=moodItems.length;
+  const appr=moodItems.filter(x=>x.approved).length;
+  document.getElementById('mood-count').textContent=total+' referências · '+appr+' aprovadas';
+  if(!list.length){g.innerHTML='<div class="mood-empty"><div class="ico">🖼</div><p>Nenhuma referência nesta categoria</p></div>';return;}
+  g.innerHTML=list.map(item=>`
+    <div class="mood-item${item.approved?' approved':''}" onclick="openMoodModal('${item.id}')">
+      <img src="${item.src}" alt="">
+      ${item.approved?'<div class="mood-ok-badge">✓</div>':''}
+      <div class="mood-overlay">
+        <div class="mood-top-actions">
+          <button class="ma-btn ma-ok" onclick="toggleMoodApprove(event,'${item.id}')">✓</button>
+          <button class="ma-btn ma-del" onclick="removeMood(event,'${item.id}')">✕</button>
+        </div>
+        <span class="mood-cat-tag">${item.cat}</span>
+      </div>
+    </div>`).join('');
+}
+function toggleMoodApprove(e,id){
+  e.stopPropagation();
+  const item=moodItems.find(x=>x.id==id);if(!item)return;
+  item.approved=!item.approved;renderMood();updateDashboard();
+  notify(item.approved?'Referência aprovada ✓':'Aprovação removida','info');
+}
+function removeMood(e,id){e.stopPropagation();moodItems=moodItems.filter(x=>x.id!=id);renderMood();updateDashboard();}
+function openMoodModal(id){
+  const item=moodItems.find(x=>x.id==id);if(!item)return;
+  document.getElementById('modal-ttl').textContent='Moodboard · '+item.cat;
+  document.getElementById('modal-bdy').innerHTML=`
+    <img src="${item.src}" class="modal-img" alt="">
+    <div class="modal-btns">
+      <button class="btn-primary" onclick="toggleMoodApprove({stopPropagation:()=>{}},'${item.id}');closeModalDirect();">${item.approved?'↺ Remover aprovação':'✓ Aprovar referência'}</button>
+    </div>`;
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+// FEED PREVIEW
+const FEED_PERFIS={
+  'alinepradoo__':{av:'A',bio:'moda e movimento — do jeito certo\nfounder @vistaamee e @amewellness.co'},
+  'vistaamee':{av:'V',bio:'moda feminina premium · showroom SP\ncuradoria exclusiva · DM aberto'},
+  'amewellness.co':{av:'Â',bio:'activewear minimalista · Drop 01 chegando\n@alinepradoo__'}
+};
+let feedPosts={'alinepradoo__':[],'vistaamee':[],'amewellness.co':[]};
+let feedPerfil='alinepradoo__';
+let selectedPost=null;
+
+function switchFeedPerfil(h,btn){
+  feedPerfil=h;
+  document.querySelectorAll('.fp-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const p=FEED_PERFIS[h];
+  document.getElementById('ig-av').textContent=p.av;
+  document.getElementById('ig-uname').textContent=h;
+  document.getElementById('ig-cap-user').textContent=h;
+  selectedPost=null;
+  document.getElementById('ig-media').innerHTML='<div class="ig-media-ph"><span class="ico">📷</span><p>Selecione um post</p></div>';
+  document.getElementById('ig-cap').innerHTML=`<strong>${h}</strong> Selecione um post ao lado`;
+  renderFeedGrid();
+}
+function renderFeedGrid(){
+  const g=document.getElementById('feed-grid');
+  const posts=feedPosts[feedPerfil]||[];
+  let html='';
+  for(let i=0;i<9;i++){
+    if(i<posts.length){
+      const p=posts[i];
+      const sv=p.src&&(p.src.startsWith('data:video'));
+      html+=`<div class="fg-cell${selectedPost===i?' selected':''}" onclick="selectFeedPost(${i})">
+        ${sv?`<video src="${p.src}" muted style="width:100%;height:100%;object-fit:cover;"></video>`:`<img src="${p.src}" alt="">`}
+        ${p.status==='aprovado'?'<div class="fg-status fgs-ok">✓</div>':''}
+      </div>`;
+    } else if(i===posts.length){
+      html+=`<div class="feed-add-zone"><input type="file" accept="image/*,video/*" onchange="handleFeedUpload(event)"><span>＋</span><p>Adicionar</p></div>`;
+    } else {
+      html+=`<div class="fg-cell"><div class="fg-empty">·</div></div>`;
+    }
+  }
+  g.innerHTML=html;
+}
+function handleFeedUpload(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    if(!feedPosts[feedPerfil])feedPosts[feedPerfil]=[];
+    feedPosts[feedPerfil].push({src:ev.target.result,legenda:'',status:'pendente',isVideo:f.type.startsWith('video')});
+    renderFeedGrid();notify('Post adicionado ao feed');
+  };
+  r.readAsDataURL(f);e.target.value='';
+}
+function selectFeedPost(i){
+  selectedPost=i;
+  const posts=feedPosts[feedPerfil]||[];
+  const p=posts[i];if(!p)return;
+  const area=document.getElementById('ig-media');
+  area.innerHTML=p.isVideo
+    ?`<video src="${p.src}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video>`
+    :`<img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+  document.getElementById('ig-cap').innerHTML=`<strong>${feedPerfil}</strong> ${p.legenda||'Sem legenda ainda. Clique para editar.'}`;
+  renderFeedGrid();
+}
+
+// IDEIAS
+let ideias=[
+  {id:1,tipo:'roteiro',serie:'Série A',titulo:'De onde eu vim — virada de chave',desc:'Roteiro de Reel 60s. Aline conta como saiu do CLT.',tags:['história','pessoal','bastidor'],link:'',img:null,roteiro:'GANCHO\n"Eu já tive medo de falar sobre isso. Mas chegou a hora."\n\nDESENVOLVIMENTO\n"Trabalhei anos pra alguém. A Vista Âme nasceu de uma decisão."\n\nFECHAMENTO\n"Isso tá só começando."'},
+  {id:2,tipo:'video',serie:'Drop 01',titulo:'Teaser cinematográfico de produto',desc:'Como fazer um teaser sem revelar o produto. Foco em texturas e sombras.',tags:['teaser','produto','minimalista'],link:'',img:null,roteiro:''},
+  {id:3,tipo:'roteiro',serie:'Drop 01',titulo:'Lista VIP — anúncio direto para câmera',desc:'Reel 20s câmera frontal anunciando a abertura da lista VIP.',tags:['Drop 01','lista VIP','câmera frontal'],link:'',img:null,roteiro:'GANCHO\n"A lista VIP da Âme Wellness está aberta."\n\nDESENVOLVIMENTO\n"Quem entra agora — sabe antes. Garante antes."\n\nFECHAMENTO\n"É isso. Simples assim."'},
+  {id:4,tipo:'referencia',serie:'Identidade',titulo:'Paleta de cores — Âme Wellness',desc:'Creme, areia, espresso, dourado. Minimalismo premium.',tags:['paleta','identidade visual','minimalista'],link:'',img:null,roteiro:''},
+  {id:5,tipo:'roteiro',serie:'Wellness',titulo:'Primeiro reveal do protótipo',desc:'Reel 45s. Aline apresenta o protótipo com orgulho de founder.',tags:['produto','founder','reveal'],link:'',img:null,roteiro:'GANCHO\n"Esse é o protótipo. Primeira vez que apareço com ele aqui."\n\nDESENVOLVIMENTO\n"Esse tecido foi desenvolvido no Brasil. Eu coloquei meu nome nisso."\n\nFECHAMENTO\n"Lista VIP na bio."'},
+];
+let ideiasType='todos';
+let ideiasQ='';
+let newIdeiaImg=null;
+let showAddForm=false;
+
+function toggleAddForm(){showAddForm=!showAddForm;document.getElementById('add-form').classList.toggle('open',showAddForm);}
+function handleIdeiaImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{newIdeiaImg=ev.target.result;document.getElementById('ni-img-prev').innerHTML=`<img src="${ev.target.result}" style="width:100%;max-height:160px;object-fit:cover;border-radius:2px;margin-top:8px;">`};
+  r.readAsDataURL(f);e.target.value='';
+}
+function saveIdeia(){
+  const titulo=document.getElementById('ni-titulo').value.trim();
+  if(!titulo){notify('Preencha o título','warn');return;}
+  const tags=document.getElementById('ni-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  ideias.unshift({id:Date.now(),tipo:document.getElementById('ni-tipo').value,serie:document.getElementById('ni-serie').value,titulo,desc:document.getElementById('ni-desc').value,tags,link:document.getElementById('ni-link').value,img:newIdeiaImg,roteiro:document.getElementById('ni-desc').value});
+  ['ni-titulo','ni-serie','ni-link','ni-tags'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('ni-desc').value='';
+  document.getElementById('ni-img-prev').innerHTML='';
+  newIdeiaImg=null;showAddForm=false;
+  document.getElementById('add-form').classList.remove('open');
+  renderIdeias();updateDashboard();notify('Ideia adicionada ✓');
+}
+function filterIdeiasType(t,btn){ideiasType=t;document.querySelectorAll('.if-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderIdeias();}
+function filterIdeias(){ideiasQ=document.getElementById('ideias-search').value.toLowerCase();renderIdeias();}
+function renderIdeias(){
+  const g=document.getElementById('ideias-grid');
+  let list=ideias;
+  if(ideiasType!=='todos')list=list.filter(x=>x.tipo===ideiasType);
+  if(ideiasQ)list=list.filter(x=>x.titulo.toLowerCase().includes(ideiasQ)||x.serie.toLowerCase().includes(ideiasQ)||(x.tags||[]).some(t=>t.includes(ideiasQ)));
+  if(!list.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ico">💡</div><p>Nenhuma ideia encontrada</p></div>';return;}
+  const tm={roteiro:'ict-roteiro',video:'ict-video',foto:'ict-foto',referencia:'ict-referencia'};
+  const tl={roteiro:'Roteiro',video:'Vídeo ref.',foto:'Foto ref.',referencia:'Referência'};
+  const te={roteiro:'📝',video:'🎬',foto:'📸',referencia:'🎯'};
+  g.innerHTML=list.map(item=>`
+    <div class="ideia-card">
+      <div class="ic-thumb">
+        ${item.img?`<img src="${item.img}" alt="">`:`<div class="ic-thumb-ph"><span>${te[item.tipo]||'💡'}</span><p>${tl[item.tipo]}</p></div>`}
+        <span class="ic-type-badge ${tm[item.tipo]}">${tl[item.tipo]}</span>
+      </div>
+      <div class="ic-body">
+        <div class="ic-serie">${item.serie}</div>
+        <div class="ic-title">${item.titulo}</div>
+        <div class="ic-desc">${item.desc}</div>
+        <div class="ic-tags">${(item.tags||[]).map(t=>`<span class="ic-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="ic-footer">
+        ${item.link?`<button class="btn-watch-ic" onclick="window.open('${item.link}','_blank')">▶ Abrir link</button>`:`<span style="font-size:10px;color:var(--taupe);">Sem link</span>`}
+        ${item.roteiro?`<button class="btn-expand" onclick="document.getElementById('ir-${item.id}').classList.toggle('open')">Ver roteiro</button>`:`<span></span>`}
+      </div>
+      ${item.roteiro?`<div class="ic-rot-body" id="ir-${item.id}"><div class="ic-rot-pre">${fmtRot(item.roteiro)}</div></div>`:''}
+    </div>`).join('');
+  document.getElementById('m-ideias').textContent=ideias.length;
+}
+
+// DASHBOARD
+function updateDashboard(){
+  const aprovados=ROTEIROS.filter(x=>x.status==='aprovado').length;
+  const pendentes=ROTEIROS.filter(x=>x.status==='rascunho'||x.status==='alteracao').length;
+  document.getElementById('m-aprovados').textContent=aprovados;
+  document.getElementById('m-pendentes').textContent=pendentes;
+  const moodTotal=moodItems.length;
+  const moodAppr=moodItems.filter(x=>x.approved).length;
+  document.getElementById('m-mood').textContent=moodTotal;
+  document.getElementById('m-ideias').textContent=ideias.length;
+  const total=12;
+  document.getElementById('pp-aprov').textContent=aprovados+'/'+total;
+  document.getElementById('pf-aprov').style.width=Math.round((aprovados/total)*100)+'%';
+  document.getElementById('pp-cri').textContent=creationItems.length+'/'+total;
+  document.getElementById('pf-cri').style.width=Math.min(Math.round((creationItems.length/total)*100),100)+'%';
+  document.getElementById('pp-mood').textContent=moodAppr+'/'+(moodTotal||0);
+  document.getElementById('pf-mood').style.width=(moodTotal?Math.round((moodAppr/moodTotal)*100):0)+'%';
+}
+
+// MODAL
+function closeModal(e){if(e.target===document.getElementById('modal-ov'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modal-ov').classList.remove('open');}
+
+// INIT
+function renderAll(){
+  renderRoteiros();
+  renderCreation();
+  renderVideoLinks();
+  renderMood();
+  renderFeedGrid();
+  renderIdeias();
+  updateDashboard();
+}
+// Set data-filter on rf-btns after DOM ready
+document.addEventListener('DOMContentLoaded',()=>{
+  const fs=['todos','reels','feed','urgente','esta-semana','proximo'];
+  document.querySelectorAll('.rf-btn').forEach((b,i)=>{if(fs[i])b.setAttribute('data-filter',fs[i]);});
+});
+</script>
+</body>
+</html>
