@@ -2,658 +2,1198 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>GGP · Âme Conteúdos</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Âme Hub · GGP Assessoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --offwhite: #F5F0EB;
-    --areia: #C8B8A2;
-    --taupe: #9E8E7E;
-    --cafe: #4A3728;
-    --preto: #1A1410;
-    --surface: #EDE6DC;
-    --surface2: #E4DDD3;
-    --muted: #7A6E65;
-    --green: #5A7A5C;
-    --amber: #8A6830;
-  }
-  body { background: var(--offwhite); color: var(--preto); font-family: 'Poppins', sans-serif; font-weight: 300; min-height: 100vh; padding-bottom: 80px; }
+:root{--cream:#F5F0EA;--sand:#E8DDD0;--taupe:#C4B5A5;--esp:#3A2F28;--gold:#B8965A;--white:#FDFCFA;--muted:#8A7B6E;--green:#3D7A52;--gl:#E6F2EB;--red:#8A3A2A;--rl:#F2E8E8;--blue:#2A5A8A;--bl:#E0EAF5;--purple:#6A4A8A;--pl:#EDE8F5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--esp);min-height:100vh;}
 
-  /* HEADER */
-  .header { padding: 48px 24px 32px; background: var(--cafe); position: relative; }
-  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--areia), transparent); }
-  .header-eyebrow { font-size: 8px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--areia); margin-bottom: 12px; font-weight: 400; }
-  .header-title { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 400; line-height: 1.1; color: var(--offwhite); }
-  .header-title em { font-style: italic; color: var(--areia); }
-  .header-sub { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--areia); margin-top: 8px; font-weight: 300; }
-  .header-perfis { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
-  .perfil-chip { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); border: 1px solid rgba(200,184,162,0.35); padding: 4px 10px; }
+/* LOGIN */
+#login-screen{position:fixed;inset:0;background:var(--esp);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:28px;}
+.login-brand{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--cream);letter-spacing:10px;text-align:center;}
+.login-brand span{color:var(--gold);}
+.login-sub{font-size:10px;letter-spacing:5px;color:var(--taupe);text-transform:uppercase;text-align:center;margin-top:-20px;}
+.login-box{background:rgba(255,255,255,0.05);border:1px solid rgba(200,184,162,0.2);padding:40px;width:340px;display:flex;flex-direction:column;gap:14px;}
+.login-roles{display:flex;gap:8px;}
+.role-btn{flex:1;padding:10px;border:1px solid rgba(200,184,162,0.25);background:transparent;color:var(--taupe);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.role-btn.active{background:rgba(184,150,90,.2);border-color:var(--gold);color:var(--gold);}
+.login-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);}
+.login-input{width:100%;padding:12px 14px;background:rgba(255,255,255,0.07);border:1px solid rgba(200,184,162,0.25);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:var(--gold);}
+.login-input::placeholder{color:rgba(196,181,165,0.35);}
+.login-btn{padding:14px;background:var(--gold);color:var(--esp);border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px;}
+.login-btn:hover{background:var(--cream);}
+.login-err{font-size:11px;color:#E88;text-align:center;display:none;padding:8px;background:rgba(200,80,80,.1);border-radius:2px;}
 
-  /* STATS */
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--areia); }
-  .stat { padding: 18px 12px; text-align: center; background: var(--surface); }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--cafe); line-height: 1; }
-  .stat-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--taupe); margin-top: 4px; line-height: 1.4; }
+/* APP */
+#app{display:none;min-height:100vh;flex-direction:column;}
+#app.visible{display:flex;}
 
-  /* TABS */
-  .tabs { display: flex; gap: 2px; padding: 14px 16px; overflow-x: auto; scrollbar-width: none; background: var(--surface2); border-bottom: 1px solid var(--areia); }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--taupe); padding: 7px 12px; border: 1px solid transparent; cursor: pointer; background: none; font-family: 'Poppins', sans-serif; transition: all 0.2s; }
-  .tab.active { color: var(--cafe); border-color: var(--areia); background: var(--offwhite); }
+/* TOPBAR */
+.topbar{background:var(--esp);padding:0 28px;display:flex;align-items:center;gap:0;height:54px;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(184,150,90,.2);}
+.tb-logo{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--cream);letter-spacing:4px;flex-shrink:0;padding-right:24px;border-right:1px solid rgba(200,184,162,.15);margin-right:4px;}
+.tb-logo span{color:var(--gold);}
+.tb-nav{display:flex;gap:0;flex:1;overflow-x:auto;scrollbar-width:none;}
+.tb-nav::-webkit-scrollbar{display:none;}
+.tb-btn{padding:0 16px;height:54px;border:none;background:transparent;color:rgba(196,181,165,.6);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.tb-btn:hover{color:var(--cream);}
+.tb-btn.active{color:var(--cream);border-bottom-color:var(--gold);}
+.tb-right{display:flex;align-items:center;gap:10px;flex-shrink:0;padding-left:16px;border-left:1px solid rgba(200,184,162,.15);}
+.tb-user{font-size:10px;letter-spacing:1px;color:var(--taupe);text-transform:uppercase;}
+.tb-role{padding:3px 10px;border-radius:20px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.role-ggp{background:rgba(184,150,90,.2);color:var(--gold);}
+.role-cliente{background:rgba(61,122,82,.2);color:var(--green);}
+.tb-logout{padding:5px 10px;border:1px solid rgba(200,184,162,.2);background:transparent;color:var(--taupe);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.tb-logout:hover{color:var(--cream);border-color:var(--taupe);}
 
-  /* SECTION TITLE */
-  .section-title { padding: 28px 20px 0; }
-  .section-title h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; color: var(--cafe); }
-  .section-title h2 em { font-style: italic; }
-  .section-title p { font-size: 10px; letter-spacing: 0.15em; color: var(--taupe); margin-top: 4px; text-transform: uppercase; }
+/* VIEWS */
+.view{display:none;flex:1;}
+.view.active{display:block;}
+.view-inner{padding:28px 36px;display:flex;flex-direction:column;gap:24px;}
 
-  /* VIDEOS GERAIS */
-  .videos-gerais { margin: 16px 16px 0; background: white; border-left: 3px solid var(--cafe); }
-  .videos-btn { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; background: var(--surface); border-bottom: 1px solid var(--surface2); }
-  .videos-btn-left { display: flex; align-items: center; gap: 8px; }
-  .videos-btn-icon { font-size: 14px; }
-  .videos-btn-title { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cafe); font-weight: 500; }
-  .videos-btn-right { display: flex; align-items: center; gap: 8px; }
-  .videos-cta { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); }
-  .videos-arrow { font-size: 10px; color: var(--cafe); transition: transform 0.25s; }
-  .videos-arrow.open { transform: rotate(180deg); }
-  .videos-body { display: none; padding: 16px; }
-  .videos-body.open { display: block; }
-  .videos-grupo { margin-bottom: 16px; }
-  .videos-grupo:last-child { margin-bottom: 0; }
-  .videos-grupo-label { font-size: 7px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--areia); font-weight: 500; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid var(--surface2); }
-  .video-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--surface2); cursor: pointer; }
-  .video-item:last-child { border-bottom: none; }
-  .video-check { width: 18px; height: 18px; border: 1.5px solid var(--areia); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.2s; }
-  .video-check.checked { background: var(--green); border-color: var(--green); }
-  .video-check.checked::after { content: '✓'; font-size: 10px; color: white; font-weight: 600; }
-  .video-texto { font-size: 12px; color: var(--muted); line-height: 1.5; }
-  .video-item.checked .video-texto { color: var(--areia); text-decoration: line-through; }
-  .video-obs { font-size: 10px; color: var(--areia); font-style: italic; margin-top: 2px; }
+/* DASHBOARD */
+.dash-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.metric-card{background:var(--white);border:1px solid var(--sand);padding:20px 18px;border-radius:2px;position:relative;overflow:hidden;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:6px;}
+.metric-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(58,47,40,.1);border-color:var(--taupe);}
+.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.mc-reels::before{background:linear-gradient(90deg,var(--gold),#D4A870);}
+.mc-posts::before{background:linear-gradient(90deg,var(--green),#5AAA7A);}
+.mc-roteiros::before{background:linear-gradient(90deg,var(--blue),#5A8ABB);}
+.mc-aprovados::before{background:linear-gradient(90deg,var(--purple),#9A7ABB);}
+.mc-pendentes::before{background:linear-gradient(90deg,var(--red),#BA6A5A);}
+.mc-ideias::before{background:linear-gradient(90deg,#7A6A2A,#BAA050);}
+.mc-moodboard::before{background:linear-gradient(90deg,#6A8A7A,#9ABBA5);}
+.metric-n{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--esp);line-height:1;}
+.metric-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.metric-hint{font-size:10px;color:var(--muted);margin-top:2px;}
+.metric-arrow{position:absolute;bottom:10px;right:12px;font-size:14px;color:var(--taupe);opacity:.5;}
 
-  /* SERIE LABEL */
-  .serie-label { padding: 24px 20px 8px; display: flex; align-items: center; gap: 12px; }
-  .serie-line { flex: 1; height: 1px; background: var(--areia); opacity: 0.4; }
-  .serie-name { font-size: 8px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--taupe); white-space: nowrap; }
+.dash-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.dash-block{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.db-header{padding:12px 16px;border-bottom:1px solid var(--sand);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--esp);font-weight:700;}
+.db-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.act-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--sand);}
+.act-row:last-child{border-bottom:none;}
+.act-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.act-g{background:var(--green);}
+.act-gold{background:var(--gold);}
+.act-r{background:var(--red);}
+.act-txt{font-size:11px;color:var(--muted);flex:1;line-height:1.5;}
+.act-time{font-size:9px;color:var(--taupe);white-space:nowrap;letter-spacing:.5px;}
+.prog-wrap{display:flex;flex-direction:column;gap:4px;}
+.prog-head{display:flex;justify-content:space-between;align-items:center;}
+.prog-label{font-size:11px;color:var(--muted);}
+.prog-pct{font-size:10px;color:var(--taupe);font-weight:600;}
+.prog-bar{height:4px;background:var(--sand);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;transition:width .6s ease;}
 
-  /* CARDS */
-  .cards { padding: 0 16px; display: flex; flex-direction: column; gap: 2px; }
-  .card { background: white; padding: 20px; border-left: 3px solid var(--green); }
+/* BLOCKS */
+.block{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.block-header{padding:14px 20px;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.block-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--esp);font-weight:700;}
+.block-body{padding:20px;}
 
-  /* ESTILO TAG */
-  .card-estilo { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-  .estilo-tag { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; padding: 3px 10px; border: 1px solid; }
-  .tag-topo { color: #8A6830; border-color: rgba(138,104,48,0.35); background: rgba(138,104,48,0.06); }
-  .tag-autoridade { color: #4A3728; border-color: rgba(74,55,40,0.3); background: rgba(74,55,40,0.05); }
-  .tag-atencao { color: #5A7A5C; border-color: rgba(90,122,92,0.35); background: rgba(90,122,92,0.06); }
-  .tag-engajamento { color: #6A5A8A; border-color: rgba(106,90,138,0.35); background: rgba(106,90,138,0.06); }
-  .tag-conversao { color: #8A3A3A; border-color: rgba(138,58,58,0.35); background: rgba(138,58,58,0.06); }
+/* ROTEIROS */
+.rot-filter{display:flex;gap:6px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--sand);background:var(--cream);}
+.rf-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.rf-btn.active,.rf-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.rot-list{display:flex;flex-direction:column;gap:0;}
+.rot-card{border-bottom:1px solid var(--sand);}
+.rot-card:last-child{border-bottom:none;}
+.rot-head{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background .15s;}
+.rot-head:hover{background:var(--cream);}
+.rot-emoji{font-size:16px;flex-shrink:0;}
+.rot-info{flex:1;min-width:0;}
+.rot-ep{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.rot-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.3;}
+.rot-format{font-size:10px;color:var(--muted);}
+.rot-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+.rot-prio{font-size:9px;font-weight:600;}
+.prio-urg{color:var(--red);}
+.prio-sem{color:#8A7A2A;}
+.prio-prx{color:var(--green);}
+.rot-status-pill{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:10px;font-weight:600;}
+.rsp-rascunho{background:var(--sand);color:var(--muted);}
+.rsp-aprovado{background:var(--gl);color:var(--green);}
+.rsp-alteracao{background:var(--rl);color:var(--red);}
+.rot-chevron{font-size:10px;color:var(--taupe);transition:transform .2s;flex-shrink:0;}
+.rot-card.open .rot-chevron{transform:rotate(90deg);}
+.rot-body{display:none;padding:0 20px 20px;background:var(--cream);border-top:1px solid var(--sand);}
+.rot-card.open .rot-body{display:flex;flex-direction:column;gap:14px;padding-top:16px;}
+.rot-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.rot-tag{font-size:9px;color:var(--muted);background:var(--white);border:1px solid var(--sand);padding:2px 8px;border-radius:2px;}
+.rot-pre{font-size:12px;line-height:1.9;color:var(--muted);white-space:pre-wrap;background:var(--white);padding:14px;border-radius:2px;border:1px solid var(--sand);}
+.rot-pre strong{color:var(--esp);font-weight:600;}
+.leg-box{display:flex;flex-direction:column;gap:4px;}
+.leg-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.leg-ta{width:100%;min-height:80px;border:1px solid var(--sand);border-radius:2px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--esp);resize:vertical;outline:none;line-height:1.7;background:var(--white);transition:border-color .2s;}
+.leg-ta:focus{border-color:var(--gold);}
+.cl-list{display:flex;flex-direction:column;gap:6px;}
+.cl-row{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.cl-box{width:16px;height:16px;border:1.5px solid var(--taupe);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cl-row.done .cl-box{background:var(--esp);border-color:var(--esp);}
+.cl-row.done .cl-box::after{content:'';width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block;}
+.cl-row.done .cl-txt{text-decoration:line-through;color:var(--taupe);}
+.cl-txt{font-size:11px;color:var(--muted);}
+.aprov-wrap{display:flex;flex-direction:column;gap:8px;}
+.aprov-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.aprov-note{flex:1;min-width:140px;border:1px solid var(--sand);border-radius:2px;padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.aprov-note:focus{border-color:var(--gold);}
+.aprov-note::placeholder{color:var(--taupe);}
+.btn-aprv{padding:8px 16px;background:var(--green);color:white;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-aprv:hover{background:#2A5A3A;}
+.btn-alt{padding:8px 14px;background:transparent;color:var(--red);border:1.5px solid var(--red);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-alt:hover{background:var(--rl);}
+.aprov-log{display:flex;flex-direction:column;gap:6px;}
+.aprov-entry{padding:8px 10px;border-radius:2px;font-size:11px;line-height:1.5;}
+.aprov-entry.ok{background:var(--gl);border-left:3px solid var(--green);}
+.aprov-entry.nok{background:var(--rl);border-left:3px solid var(--red);}
+.aprov-who{font-weight:700;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;}
+.aprov-time{font-size:9px;color:var(--taupe);margin-top:2px;}
+.divider-lbl{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);padding-bottom:6px;border-bottom:1px solid var(--sand);}
 
-  .card-ep { font-size: 9px; font-weight: 500; color: var(--taupe); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; }
-  .card-gancho { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 400; font-style: italic; color: var(--preto); line-height: 1.25; margin-bottom: 8px; }
-  .card-ideia { font-size: 11px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
-  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
-  .badge { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; padding: 2px 8px; border: 1px solid; font-family: 'Poppins', sans-serif; }
-  .badge-reel { color: var(--cafe); border-color: rgba(74,55,40,0.25); background: rgba(74,55,40,0.04); }
-  .badge-aprovado { color: #3A6A3C; border-color: rgba(58,106,60,0.35); background: rgba(58,106,60,0.06); }
-  .card-perfis { display: flex; gap: 6px; flex-wrap: wrap; }
-  .card-perfil { font-size: 7px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--taupe); padding: 2px 8px; border: 1px solid var(--areia); background: var(--offwhite); }
+/* CRIAÇÃO */
+.criacao-tabs{display:flex;gap:0;border-bottom:1px solid var(--sand);}
+.ct-btn{padding:12px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .2s;}
+.ct-btn.active{color:var(--esp);border-bottom-color:var(--gold);}
+.ct-panel{display:none;padding:20px;}
+.ct-panel.active{display:flex;flex-direction:column;gap:16px;}
+.upload-zone{border:2px dashed var(--sand);border-radius:2px;padding:36px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(184,150,90,.04);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.uz-icon{font-size:28px;margin-bottom:10px;opacity:.35;}
+.uz-txt{font-size:12px;color:var(--muted);line-height:1.7;}
+.uz-txt strong{color:var(--esp);}
+.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.ci-item{border:1px solid var(--sand);border-radius:2px;overflow:hidden;background:var(--white);}
+.ci-thumb{aspect-ratio:1;overflow:hidden;position:relative;background:var(--sand);cursor:pointer;}
+.ci-thumb img{width:100%;height:100%;object-fit:cover;}
+.ci-info{padding:8px 10px;}
+.ci-name{font-size:9px;color:var(--taupe);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ci-sp{display:flex;align-items:center;justify-content:space-between;gap:4px;}
+.ci-badge{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:10px;font-weight:600;}
+.cb-pend{background:var(--sand);color:var(--muted);}
+.cb-ok{background:var(--gl);color:var(--green);}
+.cb-alt{background:var(--rl);color:var(--red);}
+.ci-btns{display:flex;gap:4px;padding:0 8px 8px;}
+.btn-xs{padding:4px 8px;border-radius:2px;border:none;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s;}
+.bx-ok{background:var(--gl);color:var(--green);}
+.bx-ok:hover{background:var(--green);color:white;}
+.bx-nok{background:var(--rl);color:var(--red);}
+.bx-nok:hover{background:var(--red);color:white;}
+.bx-rm{background:var(--sand);color:var(--muted);}
+.bx-rm:hover{background:var(--esp);color:var(--cream);}
 
-  /* ROTEIRO */
-  .roteiro-toggle { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--surface2); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
-  .roteiro-toggle-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--taupe); }
-  .roteiro-cta { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--areia); }
-  .roteiro-arrow { font-size: 10px; color: var(--cafe); transition: transform 0.25s; }
-  .roteiro-arrow.open { transform: rotate(180deg); }
-  .roteiro-body { display: none; margin-top: 12px; padding: 16px; background: var(--offwhite); border: 1px solid var(--surface2); }
-  .roteiro-body.open { display: block; }
-  .roteiro-linha { font-size: 12px; color: var(--muted); line-height: 1.9; font-style: italic; }
-  .roteiro-cena { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cafe); margin: 12px 0 4px; font-weight: 500; }
-  .roteiro-cena:first-child { margin-top: 0; }
+/* VÍDEOS / LINKS */
+.video-links-list{display:flex;flex-direction:column;gap:10px;}
+.vl-card{background:var(--white);border:1px solid var(--sand);border-radius:2px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+.vl-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.vl-body{flex:1;min-width:200px;display:flex;flex-direction:column;gap:6px;}
+.vl-titulo-input{width:100%;border:none;border-bottom:1px solid var(--sand);padding:4px 0;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--esp);outline:none;background:transparent;transition:border-color .2s;}
+.vl-titulo-input:focus{border-bottom-color:var(--gold);}
+.vl-titulo-input::placeholder{color:var(--taupe);}
+.vl-desc-input{width:100%;border:none;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);outline:none;background:transparent;}
+.vl-desc-input::placeholder{color:var(--taupe);}
+.vl-link-row{display:flex;gap:8px;align-items:center;}
+.vl-link-input{flex:1;border:1px solid var(--sand);border-radius:2px;padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--esp);outline:none;background:var(--cream);transition:border-color .2s;}
+.vl-link-input:focus{border-color:var(--gold);}
+.vl-link-input::placeholder{color:var(--taupe);}
+.btn-watch{padding:8px 14px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-weight:600;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.btn-watch:hover{background:#2A1F18;}
+.btn-watch.off{background:var(--sand);color:var(--taupe);cursor:default;pointer-events:none;}
+.btn-rm-vl{width:28px;height:28px;border:1px solid var(--sand);background:transparent;border-radius:2px;cursor:pointer;color:var(--taupe);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.btn-rm-vl:hover{background:var(--rl);border-color:var(--red);color:var(--red);}
+.vl-aprov-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.vl-badge{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:10px;font-weight:600;}
+.btn-add-vl{padding:8px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;align-self:flex-start;}
+.btn-add-vl:hover{border-color:var(--gold);color:var(--esp);}
 
-  .footer { text-align: center; padding: 32px 24px; border-top: 1px solid var(--areia); margin-top: 32px; background: var(--surface); }
-  .footer-brand { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: var(--cafe); margin-bottom: 6px; }
-  .footer-text { font-size: 7px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--taupe); }
+/* MOODBOARD */
+.mood-toolbar{display:flex;gap:6px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid var(--sand);background:var(--cream);align-items:center;}
+.mc-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.mc-btn.active,.mc-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.mood-upload-btn{padding:5px 14px;border:1px dashed var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;position:relative;overflow:hidden;}
+.mood-upload-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.mood-upload-btn:hover{border-color:var(--gold);}
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:20px;}
+.mood-item{position:relative;border-radius:2px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:all .2s;aspect-ratio:1;background:var(--sand);}
+.mood-item:hover{border-color:var(--gold);}
+.mood-item.approved{border-color:var(--green);}
+.mood-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.mood-overlay{position:absolute;inset:0;background:rgba(58,47,40,0);transition:background .2s;display:flex;flex-direction:column;justify-content:space-between;padding:8px;}
+.mood-item:hover .mood-overlay{background:rgba(58,47,40,.45);}
+.mood-top-actions{display:flex;justify-content:flex-end;gap:4px;opacity:0;transition:opacity .2s;}
+.mood-item:hover .mood-top-actions{opacity:1;}
+.ma-btn{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.ma-ok{background:rgba(61,122,82,.9);color:white;}
+.ma-del{background:rgba(138,58,42,.9);color:white;}
+.mood-cat-tag{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:rgba(58,47,40,.75);color:var(--cream);opacity:0;transition:opacity .2s;align-self:flex-start;}
+.mood-item:hover .mood-cat-tag{opacity:1;}
+.mood-ok-badge{position:absolute;top:6px;left:6px;width:22px;height:22px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:700;}
+.mood-empty{text-align:center;padding:60px 20px;color:var(--taupe);grid-column:1/-1;}
+.mood-empty .ico{font-size:36px;margin-bottom:10px;}
+.mood-empty p{font-size:10px;letter-spacing:2px;text-transform:uppercase;}
 
-  .hidden { display: none !important; }
+/* FEED PREVIEW */
+.feed-selector-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.fp-btn{padding:7px 16px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.fp-btn.active,.fp-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.feed-layout{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start;}
+.ig-mock{background:var(--white);border:1px solid #dbdbdb;border-radius:4px;overflow:hidden;width:320px;}
+.ig-topbar{padding:10px 14px;border-bottom:1px solid #dbdbdb;display:flex;align-items:center;gap:10px;}
+.ig-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--taupe));display:flex;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:700;overflow:hidden;flex-shrink:0;}
+.ig-av img{width:100%;height:100%;object-fit:cover;}
+.ig-uname{font-size:12px;font-weight:700;color:#262626;}
+.ig-media{width:100%;aspect-ratio:1;background:var(--sand);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.ig-media img{width:100%;height:100%;object-fit:cover;}
+.ig-media-ph{text-align:center;opacity:.25;}
+.ig-media-ph .ico{font-size:36px;display:block;margin-bottom:6px;}
+.ig-media-ph p{font-size:9px;letter-spacing:2px;text-transform:uppercase;}
+.ig-actions{padding:8px 14px;display:flex;gap:12px;}
+.ig-icon{font-size:20px;cursor:pointer;}
+.ig-icon.right{margin-left:auto;}
+.ig-likes{padding:0 14px;font-size:12px;font-weight:700;color:#262626;margin-bottom:2px;}
+.ig-cap{padding:0 14px 8px;font-size:12px;color:#262626;line-height:1.5;white-space:pre-wrap;}
+.ig-cap strong{font-weight:700;}
+.ig-time{padding:0 14px 12px;font-size:10px;color:#8e8e8e;text-transform:uppercase;letter-spacing:.5px;}
+.feed-right-panel{display:flex;flex-direction:column;gap:16px;}
+.feed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:420px;}
+.fg-cell{aspect-ratio:1;background:var(--sand);overflow:hidden;position:relative;cursor:pointer;border:2px solid transparent;transition:border-color .2s;}
+.fg-cell:hover,.fg-cell.selected{border-color:var(--gold);}
+.fg-cell img,.fg-cell video{width:100%;height:100%;object-fit:cover;}
+.fg-empty{display:flex;align-items:center;justify-content:center;font-size:18px;opacity:.2;height:100%;cursor:pointer;position:relative;}
+.fg-empty input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.fg-status{position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
+.fgs-ok{background:var(--green);color:white;}
+.fgs-pend{background:var(--gold);color:white;}
+.feed-add-zone{border:2px dashed var(--sand);aspect-ratio:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;cursor:pointer;position:relative;transition:all .2s;}
+.feed-add-zone:hover{border-color:var(--gold);}
+.feed-add-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.feed-add-zone span{font-size:18px;color:var(--taupe);}
+.feed-add-zone p{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);}
+
+/* IDEIAS */
+.ideias-search{display:flex;gap:10px;align-items:center;}
+.ideias-input{flex:1;padding:10px 14px;border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.ideias-input:focus{border-color:var(--gold);}
+.ideias-input::placeholder{color:var(--taupe);}
+.ideias-filters{display:flex;gap:6px;flex-wrap:wrap;}
+.if-btn{padding:5px 14px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.if-btn.active,.if-btn:hover{background:var(--esp);border-color:var(--esp);color:var(--cream);}
+.ideias-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.ideia-card{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;transition:box-shadow .2s;}
+.ideia-card:hover{box-shadow:0 8px 28px rgba(58,47,40,.08);}
+.ic-thumb{height:150px;background:var(--sand);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.ic-thumb img{width:100%;height:100%;object-fit:cover;}
+.ic-thumb-ph{text-align:center;opacity:.3;}
+.ic-thumb-ph span{font-size:32px;display:block;margin-bottom:4px;}
+.ic-thumb-ph p{font-size:8px;letter-spacing:2px;text-transform:uppercase;}
+.ic-type-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:10px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.ict-roteiro{background:var(--bl);color:var(--blue);}
+.ict-video{background:rgba(58,47,40,.8);color:var(--cream);}
+.ict-foto{background:rgba(184,150,90,.9);color:var(--esp);}
+.ict-referencia{background:var(--pl);color:var(--purple);}
+.ic-body{padding:14px 16px;}
+.ic-serie{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:3px;}
+.ic-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.3;margin-bottom:6px;}
+.ic-desc{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:8px;}
+.ic-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px;}
+.ic-tag{font-size:9px;color:var(--muted);background:var(--cream);border:1px solid var(--sand);padding:2px 7px;border-radius:2px;}
+.ic-footer{padding:10px 16px;border-top:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.btn-watch-ic{padding:6px 12px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;transition:all .2s;}
+.btn-watch-ic:hover{background:#2A1F18;}
+.btn-expand{padding:6px 12px;background:transparent;color:var(--muted);border:1px solid var(--sand);border-radius:2px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-expand:hover{background:var(--cream);}
+.ic-rot-body{display:none;padding:0 16px 16px;}
+.ic-rot-body.open{display:block;}
+.ic-rot-pre{font-size:11px;line-height:1.9;color:var(--muted);white-space:pre-wrap;background:var(--cream);padding:12px;border-radius:2px;}
+.ic-rot-pre strong{color:var(--esp);font-weight:600;}
+
+/* ADD IDEIA */
+.add-ideia-btn{padding:7px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.add-ideia-btn:hover{border-color:var(--gold);color:var(--esp);}
+.add-form{background:var(--white);border:1px solid var(--sand);border-radius:2px;padding:20px;display:none;flex-direction:column;gap:12px;}
+.add-form.open{display:flex;}
+.af-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.af-field{display:flex;flex-direction:column;gap:4px;}
+.af-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.af-input,.af-select,.af-ta{width:100%;padding:8px 10px;border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--esp);outline:none;background:var(--white);transition:border-color .2s;}
+.af-input:focus,.af-select:focus,.af-ta:focus{border-color:var(--gold);}
+.af-input::placeholder,.af-ta::placeholder{color:var(--taupe);}
+.af-ta{min-height:80px;resize:vertical;line-height:1.6;}
+.af-btns{display:flex;gap:8px;justify-content:flex-end;}
+.btn-primary{padding:9px 20px;background:var(--esp);color:var(--cream);border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .2s;}
+.btn-primary:hover{background:#2A1F18;}
+.btn-secondary{padding:9px 14px;background:transparent;color:var(--muted);border:1px solid var(--sand);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;}
+.btn-secondary:hover{background:var(--sand);}
+
+/* MODAL */
+.modal-ov{position:fixed;inset:0;background:rgba(58,47,40,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-ov.open{display:flex;}
+.modal-box{background:var(--white);max-width:500px;width:100%;border-radius:2px;overflow:hidden;max-height:90vh;display:flex;flex-direction:column;}
+.modal-hdr{padding:14px 18px;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;}
+.modal-ttl{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;}
+.modal-cls{width:26px;height:26px;border:none;background:var(--sand);border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.modal-bdy{padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.modal-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:2px;}
+.modal-btns{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* NOTIF */
+.notif{position:fixed;bottom:20px;right:20px;padding:12px 20px;border-radius:2px;font-size:12px;font-weight:500;z-index:9999;transform:translateY(60px);opacity:0;transition:all .3s;pointer-events:none;}
+.notif.show{transform:translateY(0);opacity:1;}
+.notif-ok{background:var(--green);color:white;}
+.notif-info{background:var(--esp);color:var(--cream);}
+.notif-warn{background:var(--gold);color:var(--esp);}
+
+/* MISC */
+.empty-state{text-align:center;padding:48px 20px;color:var(--taupe);}
+.empty-state .ico{font-size:32px;margin-bottom:10px;}
+.empty-state p{font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+
+@media(max-width:900px){
+  .topbar{padding:0 14px;}
+  .view-inner{padding:16px;}
+  .dash-row{grid-template-columns:1fr;}
+  .feed-layout{grid-template-columns:1fr;}
+  .ig-mock{width:100%;}
+  .af-row{grid-template-columns:1fr;}
+}
+
+.inner-tabs{display:flex;gap:0;border-bottom:1px solid var(--sand);background:var(--white);}
+.it-btn{padding:10px 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .2s;}
+.it-btn.active{color:var(--esp);border-bottom-color:var(--gold);}
+.inner-panel{display:none;}
+.inner-panel.active{display:block;}
+.take-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--sand);cursor:pointer;}
+.take-row:last-child{border-bottom:none;}
+.take-cb{width:18px;height:18px;border:1.5px solid var(--taupe);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-top:1px;}
+.take-row.done .take-cb{background:var(--green);border-color:var(--green);}
+.take-row.done .take-cb::after{content:'✓';font-size:10px;color:white;font-weight:700;}
+.take-row.done .take-txt{text-decoration:line-through;color:var(--taupe);}
+.take-txt{font-size:12px;color:var(--muted);line-height:1.5;}
+.cont-card-emoji{font-size:16px;flex-shrink:0;}
+.cont-card-ep{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.cont-card-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;font-style:italic;line-height:1.3;}
+.cont-card-format{font-size:10px;color:var(--muted);}
+.rot-status-pill{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:10px;font-weight:700;}
+.rsp-rascunho{background:var(--sand);color:var(--muted);}
+.rsp-aprovado{background:var(--gl);color:var(--green);}
+.rsp-alteracao{background:var(--rl);color:var(--red);}
+.rot-prio{font-size:9px;font-weight:600;}
+.prio-urg{color:var(--red);}
+.prio-sem{color:#8A7000;}
+.prio-prx{color:var(--green);}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<section class="header">
-  <p class="header-eyebrow">Ecossistema Estratégico GGP · Gislaine Amorim</p>
-  <h1 class="header-title">Séries &<br><em>Roteiros</em></h1>
-  <p class="header-sub">Aline Prado Sakamoto</p>
-  <div class="header-perfis">
-    <span class="perfil-chip">@alinepradoo__</span>
-    <span class="perfil-chip">@vistaamee</span>
-    <span class="perfil-chip">@amewellness.co</span>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat"><p class="stat-num">9</p><p class="stat-label">Conteúdos</p></div>
-  <div class="stat"><p class="stat-num">4</p><p class="stat-label">Séries</p></div>
-  <div class="stat"><p class="stat-num">3</p><p class="stat-label">Perfis</p></div>
-</div>
-
-<!-- TABS -->
-<div class="tabs">
-  <button class="tab active" onclick="filtrar('todos', this)">Conteúdos</button>
-  <button class="tab" onclick="filtrar('a-aline', this)">A Aline</button>
-  <button class="tab" onclick="filtrar('closet', this)">Closet</button>
-  <button class="tab" onclick="filtrar('wellness', this)">Wellness</button>
-  <button class="tab" onclick="filtrar('rotina', this)">Rotina</button>
-</div>
-
-<!-- SEÇÃO 1: VÍDEOS QUE A ALINE PRECISA GRAVAR -->
-<div class="section-title">
-  <h2>Vídeos que a <em>Aline</em> precisa gravar</h2>
-  <p>banco de takes para edição</p>
-</div>
-
-<div class="videos-gerais">
-  <div class="videos-btn" onclick="toggleVideos(this)">
-    <div class="videos-btn-left">
-      <span class="videos-btn-icon">📹</span>
-      <span class="videos-btn-title">Ver todos os vídeos necessários</span>
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-brand">Â<span>me</span></div>
+  <div class="login-sub">Hub · GGP Assessoria</div>
+  <div class="login-box">
+    <div class="login-roles">
+      <button class="role-btn active" onclick="selectRole('ggp',this)">GGP · Equipe</button>
+      <button class="role-btn" onclick="selectRole('cliente',this)">Aline · Cliente</button>
     </div>
-    <div class="videos-btn-right">
-      <span class="videos-cta">clique aqui</span>
-      <span class="videos-arrow">▾</span>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div class="login-label">Senha</div>
+      <input class="login-input" type="password" id="senha" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-  </div>
-  <div class="videos-body">
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Lifestyle · Rotina</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Na frente do espelho olhando o look completo</p>
-          <p class="video-obs">Vídeo longo — vários ângulos, frente e perfil</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Andando em algum lugar — rua, shopping, parque</p>
-          <p class="video-obs">Câmera acompanhando, passo natural e confiante</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">No carro dirigindo e cantando</p>
-          <p class="video-obs">Vídeo longo — música, energia, natural</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Café da manhã — preparando ou tomando</p>
-          <p class="video-obs">Vídeo longo — mesa arrumada, ambiente bonito</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Almoço e janta — fotos e vídeos do prato</p>
-          <p class="video-obs">Ambiente, comida, ela à mesa</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Cozinhando ou fazendo algo que gosta</p>
-          <p class="video-obs">Vídeo longo — processo, mãos, resultado</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Família</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Com o filho — cenas do dia a dia</p>
-          <p class="video-obs">Natural, espontâneo, sem forçar</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Com o marido — cenas do dia a dia e Dia dos Namorados</p>
-          <p class="video-obs">Jantar, passeio, momentos reais</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Academia</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Entrando na academia</p>
-          <p class="video-obs">Porta, chegada, foco — vídeo longo</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Executando séries — ângulo lateral e frontal</p>
-          <p class="video-obs">Vídeos longos de cada exercício</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Close nas mãos, pés e peça da Wellness em movimento</p>
-          <p class="video-obs">Detalhes do corpo e do activewear</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Vista Âme · Showroom</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Takes do showroom — visão geral do espaço</p>
-          <p class="video-obs">Araras, peças, ambiente — vídeo longo</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Ela tocando nas peças — tecido, detalhes, tag</p>
-          <p class="video-obs">Close nas mãos segurando cada peça</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Closet</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Câmera no tripé gravando o closet completo</p>
-          <p class="video-obs">Vídeo longo — ela escolhendo peças, organizando</p>
-        </div>
-      </div>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Montando looks — ela trocando peças ao vivo</p>
-          <p class="video-obs">Transições, espelho, detalhes</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="videos-grupo">
-      <p class="videos-grupo-label">Obra · Âme House</p>
-      <div class="video-item" onclick="toggleVideo(this)">
-        <div class="video-check"></div>
-        <div>
-          <p class="video-texto">Ela na obra do novo espaço — andando, olhando</p>
-          <p class="video-obs">Vídeo longo — espaço, estrutura, ela no meio</p>
-        </div>
-      </div>
-    </div>
-
+    <div class="login-err" id="login-err">Senha incorreta. Tente novamente.</div>
+    <button class="login-btn" onclick="doLogin()">Entrar na plataforma →</button>
   </div>
 </div>
 
-<!-- SEÇÃO 2: EPISÓDIOS -->
-<div class="section-title" style="margin-top:24px;">
-  <h2>Episódios & <em>Roteiros</em></h2>
-  <p>conteúdo aprovado por série</p>
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="tb-logo">Â<span>me</span></div>
+    <div class="tb-nav">
+      <button class="tb-btn active" data-view="dashboard" onclick="showView('dashboard',this)">📊 Dashboard</button>
+      <button class="tb-btn" data-view="roteiros" onclick="showView('roteiros',this)">📝 Roteiros</button>
+      <button class="tb-btn" data-view="criacao" onclick="showView('criacao',this)">🎨 Criação</button>
+      <button class="tb-btn" data-view="moodboard" onclick="showView('moodboard',this)">🖼 Moodboard</button>
+      <button class="tb-btn" data-view="feed" onclick="showView('feed',this)">📱 Feed Preview</button>
+      <button class="tb-btn" data-view="ideias" onclick="showView('ideias',this)">💡 Ideias</button>
+    </div>
+    <div class="tb-right">
+      <span class="tb-user" id="tb-user">—</span>
+      <span class="tb-role" id="tb-role"></span>
+      <button class="tb-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="view-inner">
+      <div class="dash-metrics">
+        <div class="metric-card mc-reels" onclick="showView('roteiros',null,'reels')" title="Ver Reels">
+          <div class="metric-n">9</div><div class="metric-l">Reels</div><div class="metric-hint">planejados</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-posts" onclick="showView('roteiros',null,'feed')" title="Ver Posts">
+          <div class="metric-n">3</div><div class="metric-l">Posts · Carrossel</div><div class="metric-hint">planejados</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-roteiros" onclick="showView('roteiros',null,'todos')" title="Ver todos os roteiros">
+          <div class="metric-n">12</div><div class="metric-l">Roteiros</div><div class="metric-hint">escritos</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-aprovados" onclick="showView('criacao',null)" title="Ver criação">
+          <div class="metric-n" id="m-aprovados">0</div><div class="metric-l">Aprovados</div><div class="metric-hint">pela Aline</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-pendentes" onclick="showView('criacao',null)" title="Ver pendentes">
+          <div class="metric-n" id="m-pendentes">0</div><div class="metric-l">Pendentes</div><div class="metric-hint">aguardando</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-moodboard" onclick="showView('moodboard',null)" title="Ver moodboard">
+          <div class="metric-n" id="m-mood">0</div><div class="metric-l">Moodboard</div><div class="metric-hint">referências</div>
+          <span class="metric-arrow">→</span>
+        </div>
+        <div class="metric-card mc-ideias" onclick="showView('ideias',null)" title="Ver ideias">
+          <div class="metric-n" id="m-ideias">5</div><div class="metric-l">Ideias</div><div class="metric-hint">no banco</div>
+          <span class="metric-arrow">→</span>
+        </div>
+      </div>
+      <div class="dash-row">
+        <div class="dash-block">
+          <div class="db-header">Atividade Recente</div>
+          <div class="db-body">
+            <div class="act-row"><div class="act-dot act-g"></div><span class="act-txt">Plataforma Âme Hub criada e publicada</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-gold"></div><span class="act-txt">12 roteiros escritos e estruturados</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-gold"></div><span class="act-txt">Drop 01 · estratégia de aquecimento ativa</span><span class="act-time">hoje</span></div>
+            <div class="act-row"><div class="act-dot act-g"></div><span class="act-txt">Séries A, Closet, Wellness e Rotina definidas</span><span class="act-time">hoje</span></div>
+          </div>
+        </div>
+        <div class="dash-block">
+          <div class="db-header">Progresso Geral</div>
+          <div class="db-body">
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Roteiros escritos</span><span class="prog-pct">12/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--blue)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Conteúdo aprovado</span><span class="prog-pct" id="pp-aprov">0/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-aprov" style="width:0%;background:var(--green)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Criativos enviados</span><span class="prog-pct" id="pp-cri">0/12</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-cri" style="width:0%;background:var(--gold)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Drop 01 · aquecimento</span><span class="prog-pct">Sem 1/3</span></div>
+              <div class="prog-bar"><div class="prog-fill" style="width:33%;background:var(--red)"></div></div>
+            </div>
+            <div class="prog-wrap">
+              <div class="prog-head"><span class="prog-label">Moodboard aprovado</span><span class="prog-pct" id="pp-mood">0/0</span></div>
+              <div class="prog-bar"><div class="prog-fill" id="pf-mood" style="width:0%;background:var(--purple)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROTEIROS -->
+  <div class="view" id="view-roteiros">
+    <div class="rot-filter">
+      <button class="rf-btn active" onclick="filterRot('todos',this)">Todos (12)</button>
+      <button class="rf-btn" onclick="filterRot('reels',this)">🎬 Reels (9)</button>
+      <button class="rf-btn" onclick="filterRot('feed',this)">🖼 Feed / Carrossel (3)</button>
+      <button class="rf-btn" onclick="filterRot('urgente',this)">🔴 Urgente</button>
+      <button class="rf-btn" onclick="filterRot('esta-semana',this)">🟡 Esta semana</button>
+      <button class="rf-btn" onclick="filterRot('proximo',this)">🟢 Próximas semanas</button>
+    </div>
+    <div class="rot-list" id="rot-list"></div>
+  </div>
+
+  <!-- CRIAÇÃO -->
+  <div class="view" id="view-criacao">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">🎨 Criativos & Fotos</div>
+          <span style="font-size:10px;color:var(--taupe)">GGP faz upload · Aline aprova</span>
+        </div>
+        <div class="criacao-tabs">
+          <button class="ct-btn active" onclick="switchCriacaoTab('fotos',this)">📸 Fotos e Artes</button>
+          <button class="ct-btn" onclick="switchCriacaoTab('videos',this)">🎬 Vídeos · Links Drive</button>
+        </div>
+        <div class="ct-panel active" id="ct-fotos">
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" accept="image/*,video/*" multiple onchange="handleUpload(event)">
+            <div class="uz-icon">⬆</div>
+            <div class="uz-txt"><strong>Arraste fotos e artes aqui</strong><br>Fotos de IA, mockups, criativos, identidade visual<br><span style="font-size:10px;color:var(--taupe)">JPG, PNG, GIF, MP4</span></div>
+          </div>
+          <div class="items-grid" id="items-grid">
+            <div class="empty-state" style="grid-column:1/-1"><div class="ico">📸</div><p>Nenhum criativo ainda</p></div>
+          </div>
+        </div>
+        <div class="ct-panel" id="ct-videos">
+          <p style="font-size:12px;color:var(--muted);line-height:1.7;padding:4px 0 8px;">Cole links do <strong>Google Drive</strong>, YouTube ou Instagram. Aline clica e assiste direto, sem precisar baixar nada.</p>
+          <div class="video-links-list" id="video-links-list"></div>
+          <button class="btn-add-vl" onclick="addVideoLink()">+ Adicionar link de vídeo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOODBOARD -->
+  <div class="view" id="view-moodboard">
+    <div class="block" style="margin:0;">
+      <div class="block-header">
+        <div class="block-title">🖼 Moodboard de Referências</div>
+        <span style="font-size:10px;color:var(--taupe)" id="mood-count">0 referências · 0 aprovadas</span>
+      </div>
+      <div class="mood-toolbar">
+        <button class="mc-btn active" onclick="filterMood('todos',this)">Todos</button>
+        <button class="mc-btn" onclick="filterMood('feed',this)">Feed</button>
+        <button class="mc-btn" onclick="filterMood('reels',this)">Reels</button>
+        <button class="mc-btn" onclick="filterMood('identidade',this)">Identidade</button>
+        <button class="mc-btn" onclick="filterMood('referencia',this)">Referência</button>
+        <button class="mc-btn" onclick="filterMood('produto',this)">Produto</button>
+        <div class="mood-upload-btn">
+          <input type="file" accept="image/*" multiple onchange="handleMoodUpload(event)">
+          ＋ Adicionar fotos
+        </div>
+      </div>
+      <div class="mood-grid" id="mood-grid">
+        <div class="mood-empty"><div class="ico">🖼</div><p>Faça upload de referências acima</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEED PREVIEW -->
+  <div class="view" id="view-feed">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">📱 Feed Preview — Como vai ficar</div>
+        </div>
+        <div class="block-body" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="feed-selector-tabs">
+            <button class="fp-btn active" onclick="switchFeedPerfil('alinepradoo__',this)">@alinepradoo__</button>
+            <button class="fp-btn" onclick="switchFeedPerfil('vistaamee',this)">@vistaamee</button>
+            <button class="fp-btn" onclick="switchFeedPerfil('amewellness.co',this)">@amewellness.co</button>
+          </div>
+          <div class="feed-layout">
+            <div class="ig-mock">
+              <div class="ig-topbar">
+                <div class="ig-av" id="ig-av">A</div>
+                <div>
+                  <div class="ig-uname" id="ig-uname">alinepradoo__</div>
+                  <div style="font-size:10px;color:#8e8e8e;">· agora</div>
+                </div>
+                <div style="margin-left:auto;font-size:18px;color:#262626;">···</div>
+              </div>
+              <div class="ig-media" id="ig-media">
+                <div class="ig-media-ph"><span class="ico">📷</span><p>Selecione um post</p></div>
+              </div>
+              <div class="ig-actions">
+                <span class="ig-icon">🤍</span><span class="ig-icon">💬</span><span class="ig-icon">📤</span><span class="ig-icon right">🔖</span>
+              </div>
+              <div class="ig-likes">142 curtidas</div>
+              <div class="ig-cap" id="ig-cap"><strong id="ig-cap-user">alinepradoo__</strong> Selecione um post ao lado</div>
+              <div class="ig-time">há 2 horas</div>
+            </div>
+            <div class="feed-right-panel">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);">Clique em um post para visualizar</div>
+              <div class="feed-grid" id="feed-grid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEIAS -->
+  <div class="view" id="view-ideias">
+    <div class="view-inner">
+      <div class="block">
+        <div class="block-header">
+          <div class="block-title">💡 Banco de Ideias & Referências</div>
+          <button class="add-ideia-btn" onclick="toggleAddForm()">+ Adicionar</button>
+        </div>
+        <div class="block-body" style="display:flex;flex-direction:column;gap:16px;">
+          <div class="add-form" id="add-form">
+            <div class="af-row">
+              <div class="af-field"><div class="af-lbl">Título</div><input class="af-input" id="ni-titulo" placeholder="Nome do conteúdo"></div>
+              <div class="af-field"><div class="af-lbl">Tipo</div>
+                <select class="af-select" id="ni-tipo">
+                  <option value="roteiro">📝 Roteiro</option>
+                  <option value="video">🎬 Vídeo de referência</option>
+                  <option value="foto">📸 Foto de referência</option>
+                  <option value="referencia">🎯 Referência geral</option>
+                </select>
+              </div>
+            </div>
+            <div class="af-row">
+              <div class="af-field"><div class="af-lbl">Série</div><input class="af-input" id="ni-serie" placeholder="Ex: Série A, Drop 01..."></div>
+              <div class="af-field"><div class="af-lbl">Link (Drive, YouTube, Instagram)</div><input class="af-input" id="ni-link" placeholder="https://drive.google.com/..."></div>
+            </div>
+            <div class="af-field"><div class="af-lbl">Descrição / Roteiro completo</div><textarea class="af-ta" id="ni-desc" placeholder="Descreva a ideia ou cole o roteiro..."></textarea></div>
+            <div class="af-field"><div class="af-lbl">Tags (separadas por vírgula)</div><input class="af-input" id="ni-tags" placeholder="luz natural, bastidor, câmera lenta..."></div>
+            <div class="af-field">
+              <div class="af-lbl">Imagem de referência (opcional)</div>
+              <div class="upload-zone" style="padding:16px;">
+                <input type="file" accept="image/*" onchange="handleIdeiaImg(event)">
+                <div class="uz-txt">Clique para adicionar imagem</div>
+              </div>
+              <div id="ni-img-prev"></div>
+            </div>
+            <div class="af-btns">
+              <button class="btn-secondary" onclick="toggleAddForm()">Cancelar</button>
+              <button class="btn-primary" onclick="saveIdeia()">Salvar ideia</button>
+            </div>
+          </div>
+          <div class="ideias-search"><input class="ideias-input" id="ideias-search" placeholder="Buscar por título, série ou tag..." oninput="filterIdeias()"></div>
+          <div class="ideias-filters">
+            <button class="if-btn active" onclick="filterIdeiasType('todos',this)">Todos</button>
+            <button class="if-btn" onclick="filterIdeiasType('roteiro',this)">📝 Roteiros</button>
+            <button class="if-btn" onclick="filterIdeiasType('video',this)">🎬 Vídeos</button>
+            <button class="if-btn" onclick="filterIdeiasType('foto',this)">📸 Fotos</button>
+            <button class="if-btn" onclick="filterIdeiasType('referencia',this)">🎯 Referências</button>
+          </div>
+          <div class="ideias-grid" id="ideias-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- TABS FILTRO -->
-<div class="tabs" style="margin-top:8px;">
-  <button class="tab active" onclick="filtrar('todos', this)">Todos</button>
-  <button class="tab" onclick="filtrar('a-aline', this)">A Aline</button>
-  <button class="tab" onclick="filtrar('closet', this)">Closet</button>
-  <button class="tab" onclick="filtrar('wellness', this)">Wellness</button>
-  <button class="tab" onclick="filtrar('rotina', this)">Rotina</button>
+<!-- MODAL -->
+<div class="modal-ov" id="modal-ov" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div class="modal-ttl" id="modal-ttl">Visualizar</div>
+      <button class="modal-cls" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-bdy" id="modal-bdy"></div>
+  </div>
 </div>
 
-<div class="cards" id="cards">
-
-  <!-- SÉRIE: A ALINE -->
-  <div class="serie-label" data-serie="a-aline">
-    <span class="serie-name">Série · A Aline</span>
-    <div class="serie-line"></div>
-  </div>
-
-  <!-- EP 01 -->
-  <div class="card" data-serie="a-aline">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-atencao">Atenção</span>
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-      <span class="estilo-tag tag-topo">Topo de Funil</span>
-    </div>
-    <p class="card-ep">EP 01</p>
-    <p class="card-gancho">"eu saí do CLT e não olhei para trás"</p>
-    <p class="card-ideia">Ela se apresenta — conta sua história real, de onde veio, por que empreendeu e o que está construindo. Ancora o perfil e cria conexão imediata.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"eu saí do CLT e não olhei para trás"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Eu comecei a trabalhar com 14 anos. Vendedora. Família humilde, sem atalho, sem ninguém para fazer por mim.<br><br>Fui crescendo, virei gestora, viajava, visitava operação — mas por dentro eu sabia que queria algo meu.<br><br>Saí do CLT, apostei na moda, abri a Vista Âme. E esse ano eu amadureci de um jeito que eu não esperava.<br><br>Cuidei mais de mim, do meu corpo, da minha rotina — e nasceu uma segunda marca.<br><br>Aqui eu vou mostrar tudo. A rotina real, as marcas, as conquistas e o que ainda estou construindo.<br><br>Bem-vinda."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"founder @vistaamee e @amewellness.co"</p>
-    </div>
-  </div>
-
-  <!-- EP 02 -->
-  <div class="card" data-serie="a-aline">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-      <span class="estilo-tag tag-atencao">Atenção</span>
-    </div>
-    <p class="card-ep">EP 02</p>
-    <p class="card-gancho">"1 ano. e isso é só o começo."</p>
-    <p class="card-ideia">Ela marca o aniversário de 1 ano da Vista Âme e anuncia a nova era — a Âme House. Gera curiosidade e antecipação.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-      <span class="card-perfil">@vistaamee</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"1 ano. e isso é só o começo."</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Há um ano eu abri as portas da Vista Âme.<br><br>Um showroom, uma seleção, um sonho que eu coloquei de pé com as minhas mãos.<br><br>Mas eu também mudei. Amadureci. E quando você amadurece, você enxerga maior.<br><br>Por isso hoje eu anuncio uma nova era. A Âme House.<br><br>Um espaço que vai unir a Vista Âme e meu novo projeto — a Âme Wellness.<br><br>Moda e movimento. No mesmo lugar. Com o mesmo cuidado.<br><br>E você vai acompanhar tudo isso. A nova versão da Vista Âme é a construção de uma marca do zero — que entrega exclusividade e conforto em cada detalhe.<br><br>Essa é a nova era. E ela começa agora."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"Âme House. em breve."</p>
-    </div>
-  </div>
-
-  <!-- SÉRIE: CLOSET -->
-  <div class="serie-label" data-serie="closet">
-    <span class="serie-name">Série · Closet da Aline</span>
-    <div class="serie-line"></div>
-  </div>
-
-  <!-- CLOSET 01 -->
-  <div class="card" data-serie="closet">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-atencao">Atenção</span>
-      <span class="estilo-tag tag-engajamento">Engajamento</span>
-    </div>
-    <p class="card-ep">01</p>
-    <p class="card-gancho">"o erro que toda mulher comete ao montar um look"</p>
-    <p class="card-ideia">Ela mostra ao vivo o erro mais comum — duas peças fortes juntas — e corrige na hora. Gera salvamento e compartilhamento.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-      <span class="card-perfil">@vistaamee</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"o erro que toda mulher comete ao montar um look"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Eu vejo isso o tempo todo — e já cometi esse erro também.<br><br>A mulher pega uma peça incrível, combina com outra peça incrível — e o look não funciona.<br><br>O problema não é a roupa. É o equilíbrio.<br><br>Uma peça tem que ser a protagonista. A outra, suporte.<br><br>Olha aqui — [mostra o look errado] — duas peças fortes brigando.<br><br>Agora olha assim — [troca uma peça] — mesma roupa, outra história.<br><br>Salva esse vídeo. Você vai usar."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"moda com intenção. @vistaamee"</p>
-    </div>
-  </div>
-
-  <!-- CLOSET 02 -->
-  <div class="card" data-serie="closet">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-      <span class="estilo-tag tag-conversao">Conversão</span>
-    </div>
-    <p class="card-ep">02</p>
-    <p class="card-gancho">"as peças que eu nunca devolvo"</p>
-    <p class="card-ideia">Ela mostra 3 peças da Vista Âme que usa todo dia. Fala do tecido, do caimento. Termina chamando para DM. Gera desejo e venda direta.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-      <span class="card-perfil">@vistaamee</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"as peças que eu nunca devolvo"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Tem peças que você compra e usa uma vez. E tem peças que viram parte de você.<br><br>Eu vou te mostrar três que nunca saem do meu armário.<br><br>[pega a primeira peça] Essa aqui — o tecido cai de um jeito que qualquer corpo fica bem.<br><br>[pega a segunda peça] Simples, mas faz o look.<br><br>[pega a terceira peça] Foi a primeira que escolhi pra Vista Âme. Ela resume tudo que eu acredito em moda.<br><br>Se você quer saber onde encontrar — manda DM. Tenho pra você."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"peças que ficam. @vistaamee"</p>
-    </div>
-  </div>
-
-  <!-- SÉRIE: WELLNESS -->
-  <div class="serie-label" data-serie="wellness">
-    <span class="serie-name">Série · Âme Wellness</span>
-    <div class="serie-line"></div>
-  </div>
-
-  <!-- WELLNESS EP 01 -->
-  <div class="card" data-serie="wellness">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-      <span class="estilo-tag tag-topo">Topo de Funil</span>
-    </div>
-    <p class="card-ep">EP 01</p>
-    <p class="card-gancho">"eu criei a marca que eu sempre quis usar"</p>
-    <p class="card-ideia">Ela conta por que criou a Âme Wellness — o problema que não encontrou solução e decidiu resolver. Posiciona a marca com propósito real.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@amewellness.co</span>
-      <span class="card-perfil">@alinepradoo__</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"eu criei a marca que eu sempre quis usar"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Eu treino há anos. E por anos eu usei activewear que prometia muito e entregava pouco.<br><br>Eu queria uma peça minimalista, com tecnologia real, compressão de verdade — que você coloca e sente a diferença.<br><br>Aí eu decidi criar.<br><br>A Âme Wellness nasceu disso. De uma mulher que não encontrou o que queria e resolveu fazer.<br><br>Cada peça está sendo criada a dedo. Tecnologia nacional, conforto e uma estética que vai com tudo.<br><br>Em breve você vai poder sentir isso também."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"feito a dedo. pra você. @amewellness.co"</p>
-    </div>
-  </div>
-
-  <!-- WELLNESS EP 02 — TOP 3 EXERCÍCIOS -->
-  <div class="card" data-serie="wellness">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-engajamento">Engajamento</span>
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-    </div>
-    <p class="card-ep">EP 02</p>
-    <p class="card-gancho">"os 3 exercícios que mudaram meu corpo de verdade"</p>
-    <p class="card-ideia">Ela fala dos top 3 exercícios que sente os resultados na pele — com dica prática de cada um. Conteúdo de valor que gera salvamento e seguidores novos.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-      <span class="card-perfil">@amewellness.co</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"os 3 exercícios que mudaram meu corpo de verdade"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Eu já tentei de tudo. E quando eu comecei a focar nesses três — eu vi resultado de verdade.<br><br>Número 1 — [exercício escolhido pela Aline]. A dica que não pode faltar: [dica dela].<br><br>Número 2 — [exercício]. Sem esse aqui não tem como. [dica].<br><br>Número 3 — [exercício]. Esse foi o que mais mudou. [dica].<br><br>Salva esse vídeo e começa essa semana. O resultado aparece."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"movimento com intenção. @amewellness.co"</p>
-    </div>
-  </div>
-
-  <!-- SÉRIE: ROTINA -->
-  <div class="serie-label" data-serie="rotina">
-    <span class="serie-name">Série · Rotina Real</span>
-    <div class="serie-line"></div>
-  </div>
-
-  <!-- ROTINA 01 -->
-  <div class="card" data-serie="rotina">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-atencao">Atenção</span>
-      <span class="estilo-tag tag-topo">Topo de Funil</span>
-    </div>
-    <p class="card-ep">01</p>
-    <p class="card-gancho">"5h30. começa o dia."</p>
-    <p class="card-ideia">Morning routine real — do acorda ao treino. Sem narração, só música e texto na tela. Mostra o lifestyle e atrai o público certo.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver estrutura de edição</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Cena 01]</p><p class="roteiro-linha">Acordando · "5h30. começa o dia."</p>
-      <p class="roteiro-cena">[Cena 02]</p><p class="roteiro-linha">Skincare · "rotina que não abro mão."</p>
-      <p class="roteiro-cena">[Cena 03]</p><p class="roteiro-linha">Look no espelho · "Vista Âme. do jeito certo."</p>
-      <p class="roteiro-cena">[Cena 04]</p><p class="roteiro-linha">Elevador · "pronta."</p>
-      <p class="roteiro-cena">[Cena 05]</p><p class="roteiro-linha">Carro cantando · "esse é o mood."</p>
-      <p class="roteiro-cena">[Cena 06]</p><p class="roteiro-linha">Entrando na academia · "sem desculpa."</p>
-      <p class="roteiro-cena">[Cena 07]</p><p class="roteiro-linha">Treino · "o treino não negocia."</p>
-      <p class="roteiro-cena">[Última cena]</p><p class="roteiro-linha">"essa é minha rotina. e ela está mudando."</p>
-    </div>
-  </div>
-
-  <!-- ROTINA 02 - SKINCARE -->
-  <div class="card" data-serie="rotina">
-    <div class="card-estilo">
-      <span class="estilo-tag tag-engajamento">Engajamento</span>
-      <span class="estilo-tag tag-autoridade">Autoridade</span>
-    </div>
-    <p class="card-ep">02</p>
-    <p class="card-gancho">"o que mudou minha pele — e eu precisava te contar"</p>
-    <p class="card-ideia">Ela fala do produto que transformou sua pele — escolhe o produto ela mesma — e dá dicas reais de quem usa. Conteúdo de menina para menina, gera muito compartilhamento.</p>
-    <div class="card-badges">
-      <span class="badge badge-reel">Reel</span>
-      <span class="badge badge-aprovado">✓ Aprovado</span>
-    </div>
-    <div class="card-perfis">
-      <span class="card-perfil">@alinepradoo__</span>
-    </div>
-    <div class="roteiro-toggle" onclick="toggleRoteiro(this)">
-      <span class="roteiro-toggle-label">Ver roteiro</span>
-      <span class="roteiro-cta">clique aqui</span>
-      <span class="roteiro-arrow">▾</span>
-    </div>
-    <div class="roteiro-body">
-      <p class="roteiro-cena">[Gancho na tela]</p>
-      <p class="roteiro-linha">"o que mudou minha pele — e eu precisava te contar"</p>
-      <p class="roteiro-cena">[Ela fala]</p>
-      <p class="roteiro-linha">"Eu testei muita coisa. Muito produto que promete e não entrega.<br><br>Mas quando eu comecei a usar [produto escolhido pela Aline] — eu vi diferença real.<br><br>Minha pele ficou [resultado dela]. E eu precisava contar pra vocês.<br><br>A dica que não pode faltar: [dica de como ela usa].<br><br>Manda nos comentários se vocês já usaram — ou me conta o que vocês estão usando."</p>
-      <p class="roteiro-cena">[Última cena]</p>
-      <p class="roteiro-linha">"dicas de quem usa. @alinepradoo__"</p>
-    </div>
-  </div>
-
-</div>
-
-<footer class="footer">
-  <p class="footer-brand">âme</p>
-  <p class="footer-text">Ecossistema Estratégico GGP · Gislaine Amorim · @gislaineamorims.mkt</p>
-</footer>
+<div class="notif" id="notif"></div>
 
 <script>
-  window.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.video-item').forEach(function(item, idx) {
-      item.dataset.idx = 'v_' + idx;
-    });
+// AUTH
+const SENHAS={ggp:'ggp2024ame',cliente:'aline2024'};
+let currentRole='ggp';
+
+function selectRole(r,btn){
+  currentRole=r;
+  document.querySelectorAll('.role-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function doLogin(){
+  const s=document.getElementById('senha').value;
+  const err=document.getElementById('login-err');
+  if(s===SENHAS[currentRole]){
+    err.style.display='none';
+    document.getElementById('tb-user').textContent=currentRole==='ggp'?'Gislaine · GGP':'Aline · Cliente';
+    const rb=document.getElementById('tb-role');
+    rb.textContent=currentRole==='ggp'?'GGP':'Cliente';
+    rb.className='tb-role '+(currentRole==='ggp'?'role-ggp':'role-cliente');
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    renderAll();
+    notify('Bem-vinda! 👋','ok');
+  } else {
+    err.style.display='block';
+    document.getElementById('senha').value='';
+  }
+}
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('senha').value='';
+}
+
+// VIEWS
+function showView(name,btn,filter){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tb-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  const tb=document.querySelector(`.tb-btn[data-view="${name}"]`);
+  if(tb)tb.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='roteiros'&&filter){
+    const rfBtn=document.querySelector(`.rf-btn[data-filter="${filter}"]`);
+    if(rfBtn){filterRot(filter,rfBtn);}
+  }
+  if(name==='feed')renderFeedGrid();
+  if(name==='dashboard')updateDashboard();
+}
+
+// NOTIFY
+function notify(msg,type='ok'){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.className='notif notif-'+type+' show';
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+
+// ═══ ROTEIROS DATA ═══
+const ROTEIROS=[
+  {id:1,tipo:'reels',serie:'a-aline',ep:'Série A · EP01',emoji:'🎬',fmt:'Reel · 60s',gancho:'"eu saí do CLT e não olhei para trás"',encerramento:'founder @vistaamee e @amewellness.co',perfis:['@alinepradoo__'],prio:'esta-semana',tags:['luz natural','câmera lenta','voz íntima'],legenda:'Tem dias que eu ainda não acredito que saí.\nMas eu sei exatamente por que saí.\n\nA história completa tá no vídeo.',cenas:[{l:'Gancho na tela',t:'"eu saí do CLT e não olhei para trás"'},{l:'Ela fala',t:'"Eu comecei a trabalhar com 14 anos. Vendedora. Família humilde.\n\nFui crescendo, virei gestora — mas por dentro eu sabia que queria algo meu.\n\nSaí do CLT, apostei na moda, abri a Vista Âme.\n\nCuidei mais de mim, do meu corpo — e nasceu uma segunda marca.\n\nBem-vinda."'},{l:'Última cena',t:'"founder @vistaamee e @amewellness.co"'}],grupos:[{label:'Ambiente',takes:['Ela de frente à câmera — ambiente clean, luz natural','Close no rosto enquanto fala — expressão natural']},{label:'Marcas',takes:['Take no showroom da Vista Âme — ela no meio das peças','Take com peça da Âme Wellness — ela usando','Última cena — texto na tela com os perfis das marcas']}],status:'aprovado',comments:[]},
+  {id:2,tipo:'reels',serie:'a-aline',ep:'Série A · EP02',emoji:'🎬',fmt:'Reel · 45s',gancho:'"1 ano. e isso é só o começo."',encerramento:'Âme House. em breve.',perfis:['@alinepradoo__','@vistaamee'],prio:'esta-semana',tags:['walking shot showroom','corte ritmado'],legenda:'Não são duas marcas separadas.\nÉ um ecossistema inteiro.\n\n@vistaamee e @amewellness.co — marca os dois.',cenas:[{l:'Gancho na tela',t:'"1 ano. e isso é só o começo."'},{l:'Ela fala',t:'"Há um ano eu abri as portas da Vista Âme.\n\nMas eu também mudei. Amadureci.\n\nEu não quero só uma loja. Eu quero uma experiência.\n\nPor isso anuncio a Âme House — moda e movimento no mesmo lugar.\n\nEssa é a nova era. E ela começa agora."'},{l:'Última cena',t:'"Âme House. em breve."'}],grupos:[{label:'Showroom',takes:['Ela andando pelo showroom — visão geral do espaço','Ela tocando nas peças, arrumando araras','Close nos detalhes das peças — tecido, tag, acabamento']},{label:'Obra · Âme House',takes:['Ela na obra do novo espaço — olhando, caminhando','Take do espaço vazio com potencial','Ela falando direto pra câmera — anúncio da Âme House']}],status:'aprovado',comments:[]},
+  {id:3,tipo:'reels',serie:'closet',ep:'Closet · 01',emoji:'👗',fmt:'Reel · 30s',gancho:'"o erro que toda mulher comete ao montar um look"',encerramento:'moda com intenção. @vistaamee',perfis:['@alinepradoo__','@vistaamee'],prio:'esta-semana',tags:['espelho corpo inteiro','transição rápida'],legenda:'Três looks. Uma semana.\nA última peça você encontra no showroom — ou manda um DM.\n\nLink na bio → @vistaamee',cenas:[{l:'Gancho na tela',t:'"o erro que toda mulher comete ao montar um look"'},{l:'Ela fala',t:'"A mulher pega uma peça incrível, combina com outra — e o look não funciona.\n\nO problema não é a roupa. É o equilíbrio.\n\nUma peça tem que ser protagonista. A outra, suporte.\n\n[mostra o look errado] — duas peças fortes brigando.\n[troca uma peça] — mesma roupa, outra história.\n\nIsso é o que eu penso quando seleciono cada peça pra Vista Âme."'},{l:'Última cena',t:'"moda com intenção. @vistaamee"'}],grupos:[{label:'Look errado',takes:['Ela com duas peças fortes juntas — mostrando o erro','Close nos detalhes do look errado — onde briga']},{label:'Look certo',takes:['Ela trocando uma peça ao vivo — transição','Look corrigido completo no espelho','Close na peça protagonista — detalhe do tecido']}],status:'aprovado',comments:[]},
+  {id:4,tipo:'feed',serie:'closet',ep:'Closet · 02',emoji:'👗',fmt:'Carrossel · 5 fotos',gancho:'"as peças que eu nunca devolvo"',encerramento:'peças que ficam. @vistaamee',perfis:['@alinepradoo__','@vistaamee'],prio:'proximo',tags:['flat lay editorial','detalhe de tecido','paleta neutra'],legenda:'Não compro por tendência.\nCompro pelo que vai durar.\n\nDM → @vistaamee',cenas:[{l:'Gancho na tela',t:'"as peças que eu nunca devolvo"'},{l:'Ela fala',t:'"[pega a primeira peça] Essa — o tecido cai de um jeito que qualquer corpo fica bem.\n[pega a segunda peça] Essa é daquelas que você não percebe o quanto usa.\n[pega a terceira peça] E essa — foi a primeira que escolhi pra Vista Âme.\n\nManda DM. Tenho pra você."'},{l:'Última cena',t:'"peças que ficam. @vistaamee"'}],grupos:[{label:'As 3 peças',takes:['Ela pegando a peça 01 no armário','Ela pegando a peça 02 — tocando no tecido','Ela pegando a peça 03 — favorita da Vista Âme']},{label:'Detalhes',takes:['Close no tecido de cada peça — qualidade visível','Ela usando cada peça — caimento no corpo','CTA final — ela olhando pra câmera, chamando pra DM']}],status:'aprovado',comments:[]},
+  {id:5,tipo:'reels',serie:'wellness',ep:'Wellness · EP01',emoji:'🤸',fmt:'Reel · 30s',gancho:'"eu criei a marca que eu sempre quis usar"',encerramento:'feito a dedo. pra você. @amewellness.co',perfis:['@amewellness.co','@alinepradoo__'],prio:'urgente',tags:['câmera lenta 60fps','academia','look activewear'],legenda:'Minha rotina de movimento sempre foi séria.\nA roupa que uso durante ela — agora também é.\n\n@amewellness.co · lista VIP aberta — link na bio.',cenas:[{l:'Gancho na tela',t:'"eu criei a marca que eu sempre quis usar"'},{l:'Ela fala',t:'"Eu treino há anos. E por anos eu usei activewear que prometia muito e entregava pouco.\n\nQueria uma peça minimalista, com tecnologia real, compressão de verdade.\n\nAí eu decidi criar. A Âme Wellness nasceu disso.\n\nEm breve você vai poder sentir isso também."'},{l:'Última cena',t:'"feito a dedo. pra você. @amewellness.co"'}],grupos:[{label:'Ela falando',takes:['Ela de frente à câmera com peça da Wellness','Close no rosto enquanto fala com convicção']},{label:'Produto',takes:['Close no tecido da peça — textura, compressão','Ela vestindo a peça — caimento em movimento','Take na academia usando a peça — treino real','Última cena — texto com @amewellness.co']}],status:'aprovado',comments:[]},
+  {id:6,tipo:'reels',serie:'wellness',ep:'Wellness · EP02',emoji:'🤸',fmt:'Reel · 45s',gancho:'"esse é o protótipo. primeira vez aqui."',encerramento:'lista VIP na bio.',perfis:['@alinepradoo__','@amewellness.co'],prio:'urgente',tags:['unboxing protótipo','detalhe de costura','close nas mãos'],legenda:'Esse é o protótipo da Âme Wellness.\nPrimeiro registro público.\n\nTecnologia nacional. Meu nome atrás.\n\nLista VIP — link na bio.',cenas:[{l:'Gancho',t:'"Esse é o protótipo. Primeira vez que apareço com ele aqui."'},{l:'Desenvolvimento',t:'"Esse tecido foi desenvolvido no Brasil. Compressão real.\n\nEu testei cada detalhe. A costura, o acabamento.\n\nEu coloquei meu nome nisso. Âme Wellness não é dropshipping. É meu."'},{l:'Fechamento',t:'"Drop 01 chegando. Lista VIP na bio."'}],grupos:[{label:'Produto',takes:['Protótipo sobre mesa neutra — primeira aparição','Close nas mãos segurando a peça','Close no tecido, costura e acabamento']},{label:'Aline',takes:['Expressão genuína de founder no reveal','Olha direto pra câmera no fechamento']}],status:'rascunho',comments:[]},
+  {id:7,tipo:'reels',serie:'rotina',ep:'Rotina Real · 01',emoji:'☀️',fmt:'Reel · 30s · sem voz',gancho:'"5h30. começa o dia."',encerramento:'essa é minha rotina. e ela está mudando.',perfis:['@alinepradoo__'],prio:'esta-semana',tags:['câmera subjetiva','morning light','clips de 2-3s'],legenda:'Não existe manhã perfeita.\nExiste decisão de aparecer — todos os dias.',cenas:[{l:'Cena 01',t:'Acordando · texto na tela: "5h30. começa o dia."'},{l:'Cena 02',t:'Skincare · texto: "rotina que não abro mão."'},{l:'Cena 03',t:'Look no espelho · texto: "Vista Âme. do jeito certo."'},{l:'Cena 04',t:'Elevador · texto: "pronta."'},{l:'Cena 05',t:'Carro cantando · texto: "esse é o mood."'},{l:'Cena 06',t:'Entrando na academia · texto: "sem desculpa."'},{l:'Cena 07',t:'Treino · texto: "o treino não negocia."'},{l:'Última cena',t:'texto: "essa é minha rotina. e ela está mudando."'}],grupos:[{label:'Manhã',takes:['Acordando na cama — luz natural entrando','No banheiro fazendo skincare no espelho','Espelho com look completo — Vista Âme','No elevador — de frente e saindo']},{label:'Deslocamento',takes:['Entrando no carro — colocando o cinto','Dirigindo cantando — energia, música alta','Close no rosto cantando no carro']},{label:'Academia',takes:['Entrando pela porta da academia com foco','Executando série — ângulo lateral','Close nas mãos, pés ou peça da Wellness em movimento']}],status:'aprovado',comments:[]},
+  {id:8,tipo:'feed',serie:'rotina',ep:'Rotina Real · 02',emoji:'🌙',fmt:'Reel · 25s (feed)',gancho:'"fim de semana + looks Vista Âme"',encerramento:'os looks estão na @vistaamee',perfis:['@alinepradoo__','@vistaamee'],prio:'proximo',tags:['luz dourada fim de tarde','showroom','câmera lenta'],legenda:'Bastidor real.\nSem filtro, sem roteiro.\n\n@vistaamee · DM pra visitar',cenas:[{l:'Sequência',t:'Cada look: 3s pose + close no detalhe da peça\nTransição no corte da música\nÚltima cena com @vistaamee'}],grupos:[{label:'Manhã',takes:['Acordando na cama — luz do sol forte','Na cozinha — qualquer momento','Skincare ou se arrumando no banheiro','Montando o look — escolhendo peça, calçando tênis','Detalhe do look — close no tênis, peça, acessório']},{label:'Saindo',takes:['No elevador — de frente e de perfil','Entrando no carro — colocando o cinto','Dirigindo cantando — energia, música alta','Close no rosto cantando no carro']},{label:'Academia',takes:['Chegando e entrando pela porta','Aquecimento ou alongamento','Executando série — ângulo lateral','Executando série — ângulo frontal','Close nas mãos segurando peso','Saindo da academia — satisfeita']},{label:'Looks Vista Âme',takes:['Look 01 completo no espelho — casual elegante','Look 02 completo no espelho — segunda opção']}],status:'aprovado',comments:[]},
+  {id:9,tipo:'reels',serie:'drop01',ep:'Drop 01 · Semana 1',emoji:'🔒',fmt:'Reel · 15s · Teaser',gancho:'"algo está chegando"',encerramento:'lista VIP — link na bio',perfis:['@amewellness.co'],prio:'urgente',tags:['foco desfocado','sombra de peça','trilha tensa'],legenda:'.',cenas:[{l:'Sem fala — só imagem + texto + trilha',t:'CLIP 1: Câmera desfocada sobre tecido.\nCLIP 2: Sombra de peça projetada na parede.\nCLIP 3: Close extremo em costura.\nCLIP 4: Mãos segurando algo — câmera corta antes de revelar.\nCLIP 5: Tela preta. Texto: "algo está chegando." + "lista VIP — link na bio"\n\nTRILHA: Piano minimalista ou ambient tenso.'}],grupos:[{label:'Takes necessários',takes:['Câmera desfocada sobre tecido — apenas textura','Sombra de peça projetada na parede','Close extremo em costura — fio, acabamento','Mãos segurando algo sem revelar (câmera corta antes)']}],status:'rascunho',comments:[]},
+  {id:10,tipo:'reels',serie:'drop01',ep:'Drop 01 · Semana 2',emoji:'📋',fmt:'Reel · 20s + Story',gancho:'"a lista VIP está aberta"',encerramento:'link na bio',perfis:['@amewellness.co','@alinepradoo__'],prio:'urgente',tags:['câmera frontal','tom íntimo','fundo clean'],legenda:'Lista VIP aberta.\nDrop 01 chegando — peças limitadas.\n\nQuem entra primeiro, garante primeiro.\nLink na bio → @amewellness.co',cenas:[{l:'Gancho',t:'"A lista VIP da Âme Wellness está aberta."'},{l:'Desenvolvimento',t:'"Quem entra agora — sabe antes. Compra antes. Garante antes.\n\nDrop 01 é limitado. Não vou repor na mesma semana. Link na bio."'},{l:'Fechamento + Story',t:'"É isso. Simples assim." (sorriso, corta)\n\nSTORY: Fundo escuro. Texto: "entrou na lista?"\nSticker de link → ENTRAR NA LISTA VIP'}],grupos:[{label:'Reel',takes:['Câmera frontal fixa — Aline olha direto','Tom íntimo, fundo clean, luz natural']},{label:'Story',takes:['Clip ou foto de peça desfocada como fundo','Sticker de link ativo no story']}],status:'rascunho',comments:[]},
+  {id:11,tipo:'reels',serie:'drop01',ep:'Drop 01 · Semana 3',emoji:'✨',fmt:'Reel · 45s · Reveal',gancho:'"Drop 01 — ao vivo"',encerramento:'link na bio → garante o seu',perfis:['@amewellness.co','@alinepradoo__'],prio:'urgente',tags:['produto completo','câmera 360','close no acabamento'],legenda:'Drop 01 — ao vivo.\n\nTecnologia nacional. Caimento premium. Edição limitada.\n\nLink na bio → garante o seu.\n@amewellness.co',cenas:[{l:'Gancho',t:'"Esse é o Drop 01. E eu vou te contar tudo sobre ele."'},{l:'Desenvolvimento',t:'"Tecnologia nacional. Compressão que segura sem apertar.\n\nEu usei por semanas antes de aprovar. Só lancei quando ficou exatamente como eu queria.\n\nIsso é a Âme Wellness. Activewear premium — feita aqui, pensada por mim."'},{l:'Fechamento',t:'Câmera 360: "Link na bio pra garantir o seu.\nQuem estava na lista VIP já recebeu o acesso."'}],grupos:[{label:'Produto',takes:['Produto final (não protótipo) em cena','Câmera 360 mostrando caimento no corpo','Close no tecido, costura e acabamento']},{label:'Preparação',takes:['Locação premium preparada','Câmera 60fps + tripé','Link de compra ativo na bio antes de publicar']}],status:'rascunho',comments:[]},
+  {id:12,tipo:'reels',serie:'amehouse',ep:'Âme House · Especial',emoji:'🏛️',fmt:'Reel · 30s',gancho:'"tem uma novidade grande chegando"',encerramento:'Âme House · em breve',perfis:['@alinepradoo__','@vistaamee','@amewellness.co'],prio:'proximo',tags:['espaço em transformação','voz em off emocional'],legenda:'Tem um projeto novo.\nAinda não acabou. Mas já está acontecendo.\n\nÂme House — em breve.\n@vistaamee · @amewellness.co',cenas:[{l:'Gancho',t:'Imagem do espaço. Câmera lenta. Voz: "Eu quero te mostrar alguma coisa."'},{l:'Desenvolvimento',t:'"Esse lugar ainda está tomando forma. Mas já tem nome. Já tem propósito.\n\nÂme House — onde a Vista Âme e a Âme Wellness vão existir juntas.\n\nE você está vendo antes de qualquer pessoa."'},{l:'Fechamento',t:'"Quando estiver pronto — você vai ser a primeira a saber."\ntexto: "Âme House · em breve"'}],grupos:[{label:'Espaço',takes:['Espaço em obras ou vazio — câmera lenta','Enquadramento amplo mostrando o potencial','Aline caminhando e olhando ao redor']},{label:'Aline',takes:['Voz em off gravada — tom emocional','Expressão genuína de quem está construindo algo']}],status:'rascunho',comments:[]}
+]
+
+const PRIO_C={urgente:'prio-urg',['esta-semana']:'prio-sem',proximo:'prio-prx'};
+const PRIO_L={urgente:'🔴 Urgente',['esta-semana']:'🟡 Esta semana',proximo:'🟢 Próximas semanas'};
+const ST_L={rascunho:'Rascunho',aprovado:'Aprovado ✓',alteracao:'Alteração pedida'};
+const ST_C={rascunho:'rsp-rascunho',aprovado:'rsp-aprovado',alteracao:'rsp-alteracao'};
+
+let rotFilter='todos';
+
+function filterRot(f,btn){
+  rotFilter=f;
+  document.querySelectorAll('.rf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRoteiros();
+}
+
+function renderRoteiros(){
+  const list=ROTEIROS.filter(r=>{
+    if(rotFilter==='todos')return true;
+    if(rotFilter==='reels')return r.tipo==='reels';
+    if(rotFilter==='feed')return r.tipo==='feed';
+    if(rotFilter==='aprovado')return r.status==='aprovado';
+    return r.prio===rotFilter;
   });
+  const el=document.getElementById('rot-list');
+  if(!list.length){el.innerHTML='<div class="empty-state"><div class="ico">📝</div><p>Nenhum roteiro neste filtro</p></div>';return;}
+  const SC={rascunho:'rsp-rascunho',aprovado:'rsp-aprovado',alteracao:'rsp-alteracao'};
+  const SL={rascunho:'Rascunho',aprovado:'Aprovado ✓',alteracao:'Alteração pedida'};
+  const PC={urgente:'prio-urg','esta-semana':'prio-sem',proximo:'prio-prx'};
+  const PL={urgente:'🔴 Urgente','esta-semana':'🟡 Esta semana',proximo:'🟢 Próximas semanas'};
+  el.innerHTML=list.map(r=>`
+    <div class="cont-card" id="cc-${r.id}">
+      <div class="cont-head" onclick="toggleRot(${r.id})">
+        <span class="cont-card-emoji">${r.emoji}</span>
+        <div style="flex:1;min-width:0;">
+          <div class="cont-card-ep">${r.ep} · ${r.fmt}</div>
+          <div class="cont-card-title">${r.gancho}</div>
+          <div class="cont-card-format">${r.perfis.join(' · ')}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;">
+          <span class="rot-status-pill ${SC[r.status]}">${SL[r.status]}</span>
+          <span class="rot-prio ${PC[r.prio]}">${PL[r.prio]}</span>
+        </div>
+        <span class="rot-chevron">▶</span>
+      </div>
+      <div class="rot-body">
+        <div class="inner-tabs">
+          <button class="it-btn active" onclick="switchTab(${r.id},'roteiro',this)">🎬 Roteiro</button>
+          <button class="it-btn" onclick="switchTab(${r.id},'takes',this)">📹 Takes (${r.grupos.reduce((a,g)=>a+g.takes.length,0)})</button>
+          <button class="it-btn" onclick="switchTab(${r.id},'legenda',this)">✍ Legenda</button>
+          <button class="it-btn" onclick="switchTab(${r.id},'aprovacao',this)">✓ Aprovação</button>
+        </div>
+        <div class="inner-panel active" id="ip-roteiro-${r.id}" style="padding:18px 20px;">
+          <div style="background:var(--white);border:1px solid var(--sand);border-radius:2px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--muted);">Encerra com: <strong style="color:var(--esp);">${r.encerramento}</strong></div>
+          ${r.cenas.map(c=>`<div style="margin-bottom:14px;"><div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px;">[${c.l}]</div><div style="font-size:12px;color:var(--muted);line-height:1.9;font-style:italic;background:var(--white);padding:12px 14px;border-radius:2px;border:1px solid var(--sand);">${c.t.replace(/\n/g,'<br>')}</div></div>`).join('')}
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">${r.tags.map(t=>`<span style="font-size:9px;color:var(--muted);background:var(--white);border:1px solid var(--sand);padding:2px 8px;border-radius:2px;">${t}</span>`).join('')}</div>
+        </div>
+        <div class="inner-panel" id="ip-takes-${r.id}" style="padding:18px 20px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:8px 12px;background:var(--white);border:1px solid var(--sand);border-radius:2px;">
+            <span style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);">📹 Vídeos a gravar</span>
+            <div style="flex:1;height:4px;background:var(--sand);border-radius:2px;overflow:hidden;"><div id="tpbf-${r.id}" style="height:100%;background:var(--green);border-radius:2px;transition:width .3s;width:0%"></div></div>
+            <span style="font-size:11px;font-weight:700;color:var(--esp);" id="tpbc-${r.id}">0/${r.grupos.reduce((a,g)=>a+g.takes.length,0)}</span>
+          </div>
+          ${r.grupos.map((g,gi)=>`
+            <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);font-weight:700;padding-bottom:6px;border-bottom:1px solid var(--sand);margin:14px 0 8px;">${g.label}</div>
+            ${g.takes.map((t,ti)=>`<div class="take-row" id="tr-${r.id}-${gi}-${ti}" onclick="toggleTake(${r.id},${gi},${ti},${r.grupos.reduce((a,g)=>a+g.takes.length,0)})"><div class="take-cb"></div><span class="take-txt">${t}</span></div>`).join('')}
+          `).join('')}
+        </div>
+        <div class="inner-panel" id="ip-legenda-${r.id}" style="padding:18px 20px;">
+          <div style="font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);padding-bottom:6px;border-bottom:1px solid var(--sand);margin-bottom:10px;">Legenda para postar</div>
+          <textarea class="leg-ta" id="leg-${r.id}" oninput="document.getElementById('lc-${r.id}').textContent=this.value.length">${r.legenda}</textarea>
+          <div class="leg-chars"><span id="lc-${r.id}">${r.legenda.length}</span> caracteres</div>
+        </div>
+        <div class="inner-panel" id="ip-aprovacao-${r.id}" style="padding:18px 20px;">
+          <div class="aprov-wrap">
+            <div class="aprov-row">
+              <input class="aprov-note" id="an-${r.id}" placeholder="Comentário ou pedido de alteração...">
+              <button class="btn-aprv" onclick="approveRot(${r.id},'aprovado')">✓ Aprovar</button>
+              <button class="btn-alt" onclick="approveRot(${r.id},'alteracao')">↺ Pedir alteração</button>
+            </div>
+            <div class="aprov-log" id="al-${r.id}">
+              ${(r.comments||[]).map(c=>`<div class="aprov-entry ${c.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${c.t==='aprovado'?'✓ Aprovado':'↺ Alteração'}</div><div>${c.txt}</div><div class="aprov-time">${c.ts}</div></div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
 
-  function filtrar(serie, btn) {
-    const allTabs = btn.closest('.tabs').querySelectorAll('.tab');
-    allTabs.forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.card, .serie-label').forEach(el => {
-      if (serie === 'todos') { el.classList.remove('hidden'); }
-      else { el.classList.toggle('hidden', el.dataset.serie !== serie); }
-    });
-  }
+function switchTab(cid,tab,btn){
+  const card=document.getElementById('cc-'+cid);
+  card.querySelectorAll('.it-btn').forEach(b=>b.classList.remove('active'));
+  card.querySelectorAll('.inner-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ip-'+tab+'-'+cid)?.classList.add('active');
+}
+function toggleTake(cid,gi,ti,total){
+  const row=document.getElementById('tr-'+cid+'-'+gi+'-'+ti);
+  if(!row)return;
+  row.classList.toggle('done');
+  const done=document.querySelectorAll('#cc-'+cid+' .take-row.done').length;
+  const pct=Math.round((done/total)*100);
+  const f=document.getElementById('tpbf-'+cid);const c=document.getElementById('tpbc-'+cid);
+  if(f)f.style.width=pct+'%';if(c)c.textContent=done+'/'+total;
+}
+function toggleRot(id){document.getElementById('rc-'+id)?.classList.toggle('open');}
+function updateLC(id){const ta=document.getElementById('leg-'+id);if(ta)document.getElementById('lc-'+id).textContent=ta.value.length;}
+function toggleCl(rid,idx){
+  const r=ROTEIROS.find(x=>x.id===rid);if(!r)return;
+  if(!r.cd)r.cd={};r.cd[idx]=!r.cd[idx];
+  const rows=document.querySelectorAll(`#cl-${rid} .cl-row`);
+  if(rows[idx])rows[idx].classList.toggle('done',r.cd[idx]);
+}
+function approveRot(rid,type){
+  const r=ROTEIROS.find(x=>x.id===rid);if(!r)return;
+  r.status=type;
+  const note=document.getElementById('an-'+rid)?.value.trim()||(type==='aprovado'?'Aprovado.':'Pede revisão.');
+  if(!r.comments)r.comments=[];
+  const ts=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' · hoje';
+  r.comments.unshift({t:type,txt:note,ts});
+  document.getElementById('an-'+rid).value='';
+  document.getElementById('al-'+rid).innerHTML=r.comments.map(c=>`<div class="aprov-entry ${c.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${c.t==='aprovado'?'✓ Aprovado':'↺ Alteração'}</div><div>${c.txt}</div><div class="aprov-time">${c.ts}</div></div>`).join('');
+  const sp=document.querySelector(`#rc-${rid} .rot-status-pill`);
+  if(sp){sp.textContent=ST_L[type];sp.className='rot-status-pill '+ST_C[type];}
+  updateDashboard();
+  notify(type==='aprovado'?'Roteiro aprovado ✓':'Alteração solicitada');
+}
+function fmtRot(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/^([A-ZÇÉÊ0-9][A-ZÇÉÊ\s·\-–\/()0-9]+:?)$/gm,'<strong>$1</strong>');}
 
-  function toggleVideos(btn) {
-    const arrow = btn.querySelector('.videos-arrow');
-    const body = btn.nextElementSibling;
-    arrow.classList.toggle('open');
-    body.classList.toggle('open');
-    const cta = btn.querySelector('.videos-cta');
-    if (cta) cta.textContent = body.classList.contains('open') ? 'fechar' : 'clique aqui';
-  }
+// CRIAÇÃO — FOTOS
+let creationItems=[];
+function handleUpload(e){
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{creationItems.push({id:Date.now()+Math.random(),src:ev.target.result,name:f.name,isVideo:f.type.startsWith('video'),status:'pendente',note:''});renderCreation();updateDashboard();};
+    r.readAsDataURL(f);
+  });e.target.value='';
+}
+function renderCreation(){
+  const g=document.getElementById('items-grid');
+  if(!creationItems.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ico">📸</div><p>Nenhum criativo ainda</p></div>';return;}
+  const sc={pendente:'cb-pend',aprovado:'cb-ok',alteracao:'cb-alt'};
+  const sl={pendente:'Pendente',aprovado:'Aprovado',alteracao:'Alteração'};
+  g.innerHTML=creationItems.map(item=>`
+    <div class="ci-item">
+      <div class="ci-thumb" onclick="openCriacaoModal('${item.id}')">
+        ${item.isVideo?`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:32px;opacity:.4;">🎬</div>`:
+        `<img src="${item.src}" alt="">`}
+      </div>
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-sp">
+          <span class="ci-badge ${sc[item.status]}">${sl[item.status]}</span>
+        </div>
+      </div>
+      <div class="ci-btns">
+        <button class="btn-xs bx-ok" onclick="setCriStatus('${item.id}','aprovado')">✓</button>
+        <button class="btn-xs bx-nok" onclick="setCriStatus('${item.id}','alteracao')">↺</button>
+        <button class="btn-xs bx-rm" onclick="removeCri('${item.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+function setCriStatus(id,s){const item=creationItems.find(x=>x.id==id);if(item){item.status=s;renderCreation();updateDashboard();notify(s==='aprovado'?'Aprovado ✓':'Alteração solicitada');}}
+function removeCri(id){creationItems=creationItems.filter(x=>x.id!=id);renderCreation();updateDashboard();}
+function openCriacaoModal(id){
+  const item=creationItems.find(x=>x.id==id);if(!item)return;
+  document.getElementById('modal-ttl').textContent=item.name;
+  document.getElementById('modal-bdy').innerHTML=`
+    ${item.isVideo?`<video src="${item.src}" controls style="width:100%;border-radius:2px;"></video>`:`<img src="${item.src}" class="modal-img" alt="">`}
+    <div class="modal-btns">
+      <button class="btn-primary" onclick="setCriStatus('${item.id}','aprovado');closeModalDirect();">✓ Aprovar</button>
+      <button class="btn-secondary" style="color:var(--red);border-color:var(--red);" onclick="setCriStatus('${item.id}','alteracao');closeModalDirect();">↺ Pedir alteração</button>
+    </div>`;
+  document.getElementById('modal-ov').classList.add('open');
+}
 
-  function toggleVideo(item) {
-    const check = item.querySelector('.video-check');
-    check.classList.toggle('checked');
-    item.classList.toggle('checked');
-  }
+// CRIAÇÃO — VÍDEOS / LINKS
+let videoLinks=[
+  {id:1,titulo:'Referência 1 — @gyoparanaiba bastidor',desc:'Série pessoal, founder content emocional',link:'',status:'pendente'},
+  {id:2,titulo:'Referência 2 — @tieactive treino',desc:'Founder usando activewear, câmera lenta',link:'',status:'pendente'},
+];
+function renderVideoLinks(){
+  const el=document.getElementById('video-links-list');
+  const sc={pendente:'cb-pend',aprovado:'cb-ok',alteracao:'cb-alt'};
+  const sl={pendente:'Pendente',aprovado:'Aprovada',alteracao:'Alteração'};
+  el.innerHTML=videoLinks.map(v=>`
+    <div class="vl-card" id="vl-${v.id}">
+      <div class="vl-icon">🎬</div>
+      <div class="vl-body">
+        <input class="vl-titulo-input" placeholder="Nome da referência ou vídeo..." value="${v.titulo}" oninput="updateVLTitulo(${v.id},this.value)">
+        <input class="vl-desc-input" placeholder="Breve descrição..." value="${v.desc}" oninput="updateVLDesc(${v.id},this.value)">
+        <div class="vl-link-row">
+          <input class="vl-link-input" placeholder="Link do Google Drive, YouTube ou Instagram..." value="${v.link}" oninput="updateVLLink(${v.id},this.value)">
+          <button class="btn-watch${v.link?'':' off'}" onclick="openVL(${v.id})">▶ Abrir</button>
+          <button class="btn-rm-vl" onclick="removeVL(${v.id})">✕</button>
+        </div>
+        <div class="vl-aprov-row">
+          <span class="vl-badge ci-badge ${sc[v.status]}">${sl[v.status]}</span>
+          <button class="btn-xs bx-ok" onclick="setVLStatus(${v.id},'aprovado')">✓ Aprovar</button>
+          <button class="btn-xs bx-nok" onclick="setVLStatus(${v.id},'alteracao')">↺ Alteração</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function updateVLTitulo(id,v){const vl=videoLinks.find(x=>x.id===id);if(vl)vl.titulo=v;}
+function updateVLDesc(id,v){const vl=videoLinks.find(x=>x.id===id);if(vl)vl.desc=v;}
+function updateVLLink(id,v){
+  const vl=videoLinks.find(x=>x.id===id);if(!vl)return;
+  vl.link=v.trim();
+  const btn=document.querySelector(`#vl-${id} .btn-watch`);
+  if(btn)btn.classList.toggle('off',!vl.link);
+}
+function openVL(id){const vl=videoLinks.find(x=>x.id===id);if(vl&&vl.link)window.open(vl.link,'_blank');}
+function removeVL(id){videoLinks=videoLinks.filter(x=>x.id!==id);renderVideoLinks();}
+function setVLStatus(id,s){const vl=videoLinks.find(x=>x.id===id);if(vl){vl.status=s;renderVideoLinks();notify(s==='aprovado'?'Referência aprovada ✓':'Alteração solicitada');}}
+function addVideoLink(){videoLinks.push({id:Date.now(),titulo:'',desc:'',link:'',status:'pendente'});renderVideoLinks();}
+function switchCriacaoTab(tab,btn){
+  document.querySelectorAll('.ct-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ct-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ct-'+tab).classList.add('active');
+}
 
-  function toggleRoteiro(toggle) {
-    const arrow = toggle.querySelector('.roteiro-arrow');
-    const body = toggle.nextElementSibling;
-    arrow.classList.toggle('open');
-    body.classList.toggle('open');
-    const cta = toggle.querySelector('.roteiro-cta');
-    if (cta) cta.textContent = body.classList.contains('open') ? 'fechar' : 'clique aqui';
+// MOODBOARD
+let moodItems=[];
+let moodFilter='todos';
+function handleMoodUpload(e){
+  const cat=moodFilter==='todos'?'referencia':moodFilter;
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{moodItems.push({id:Date.now()+Math.random(),src:ev.target.result,cat,approved:false});renderMood();updateDashboard();};
+    r.readAsDataURL(f);
+  });e.target.value='';
+}
+function filterMood(f,btn){
+  moodFilter=f;
+  document.querySelectorAll('.mc-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMood();
+}
+function renderMood(){
+  const g=document.getElementById('mood-grid');
+  const list=moodFilter==='todos'?moodItems:moodItems.filter(x=>x.cat===moodFilter);
+  const total=moodItems.length;
+  const appr=moodItems.filter(x=>x.approved).length;
+  document.getElementById('mood-count').textContent=total+' referências · '+appr+' aprovadas';
+  if(!list.length){g.innerHTML='<div class="mood-empty"><div class="ico">🖼</div><p>Nenhuma referência nesta categoria</p></div>';return;}
+  g.innerHTML=list.map(item=>`
+    <div class="mood-item${item.approved?' approved':''}" onclick="openMoodModal('${item.id}')">
+      <img src="${item.src}" alt="">
+      ${item.approved?'<div class="mood-ok-badge">✓</div>':''}
+      <div class="mood-overlay">
+        <div class="mood-top-actions">
+          <button class="ma-btn ma-ok" onclick="toggleMoodApprove(event,'${item.id}')">✓</button>
+          <button class="ma-btn ma-del" onclick="removeMood(event,'${item.id}')">✕</button>
+        </div>
+        <span class="mood-cat-tag">${item.cat}</span>
+      </div>
+    </div>`).join('');
+}
+function toggleMoodApprove(e,id){
+  e.stopPropagation();
+  const item=moodItems.find(x=>x.id==id);if(!item)return;
+  item.approved=!item.approved;renderMood();updateDashboard();
+  notify(item.approved?'Referência aprovada ✓':'Aprovação removida','info');
+}
+function removeMood(e,id){e.stopPropagation();moodItems=moodItems.filter(x=>x.id!=id);renderMood();updateDashboard();}
+function openMoodModal(id){
+  const item=moodItems.find(x=>x.id==id);if(!item)return;
+  document.getElementById('modal-ttl').textContent='Moodboard · '+item.cat;
+  document.getElementById('modal-bdy').innerHTML=`
+    <img src="${item.src}" class="modal-img" alt="">
+    <div class="modal-btns">
+      <button class="btn-primary" onclick="toggleMoodApprove({stopPropagation:()=>{}},'${item.id}');closeModalDirect();">${item.approved?'↺ Remover aprovação':'✓ Aprovar referência'}</button>
+    </div>`;
+  document.getElementById('modal-ov').classList.add('open');
+}
+
+// FEED PREVIEW
+const FEED_PERFIS={
+  'alinepradoo__':{av:'A',bio:'moda e movimento — do jeito certo\nfounder @vistaamee e @amewellness.co'},
+  'vistaamee':{av:'V',bio:'moda feminina premium · showroom SP\ncuradoria exclusiva · DM aberto'},
+  'amewellness.co':{av:'Â',bio:'activewear minimalista · Drop 01 chegando\n@alinepradoo__'}
+};
+let feedPosts={'alinepradoo__':[],'vistaamee':[],'amewellness.co':[]};
+let feedPerfil='alinepradoo__';
+let selectedPost=null;
+
+function switchFeedPerfil(h,btn){
+  feedPerfil=h;
+  document.querySelectorAll('.fp-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const p=FEED_PERFIS[h];
+  document.getElementById('ig-av').textContent=p.av;
+  document.getElementById('ig-uname').textContent=h;
+  document.getElementById('ig-cap-user').textContent=h;
+  selectedPost=null;
+  document.getElementById('ig-media').innerHTML='<div class="ig-media-ph"><span class="ico">📷</span><p>Selecione um post</p></div>';
+  document.getElementById('ig-cap').innerHTML=`<strong>${h}</strong> Selecione um post ao lado`;
+  renderFeedGrid();
+}
+function renderFeedGrid(){
+  const g=document.getElementById('feed-grid');
+  const posts=feedPosts[feedPerfil]||[];
+  let html='';
+  for(let i=0;i<9;i++){
+    if(i<posts.length){
+      const p=posts[i];
+      const sv=p.src&&(p.src.startsWith('data:video'));
+      html+=`<div class="fg-cell${selectedPost===i?' selected':''}" onclick="selectFeedPost(${i})">
+        ${sv?`<video src="${p.src}" muted style="width:100%;height:100%;object-fit:cover;"></video>`:`<img src="${p.src}" alt="">`}
+        ${p.status==='aprovado'?'<div class="fg-status fgs-ok">✓</div>':''}
+      </div>`;
+    } else if(i===posts.length){
+      html+=`<div class="feed-add-zone"><input type="file" accept="image/*,video/*" onchange="handleFeedUpload(event)"><span>＋</span><p>Adicionar</p></div>`;
+    } else {
+      html+=`<div class="fg-cell"><div class="fg-empty">·</div></div>`;
+    }
   }
+  g.innerHTML=html;
+}
+function handleFeedUpload(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    if(!feedPosts[feedPerfil])feedPosts[feedPerfil]=[];
+    feedPosts[feedPerfil].push({src:ev.target.result,legenda:'',status:'pendente',isVideo:f.type.startsWith('video')});
+    renderFeedGrid();notify('Post adicionado ao feed');
+  };
+  r.readAsDataURL(f);e.target.value='';
+}
+function selectFeedPost(i){
+  selectedPost=i;
+  const posts=feedPosts[feedPerfil]||[];
+  const p=posts[i];if(!p)return;
+  const area=document.getElementById('ig-media');
+  area.innerHTML=p.isVideo
+    ?`<video src="${p.src}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video>`
+    :`<img src="${p.src}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+  document.getElementById('ig-cap').innerHTML=`<strong>${feedPerfil}</strong> ${p.legenda||'Sem legenda ainda. Clique para editar.'}`;
+  renderFeedGrid();
+}
+
+// IDEIAS
+let ideias=[
+  {id:1,tipo:'roteiro',serie:'Série A',titulo:'De onde eu vim — virada de chave',desc:'Roteiro de Reel 60s. Aline conta como saiu do CLT.',tags:['história','pessoal','bastidor'],link:'',img:null,roteiro:'GANCHO\n"Eu já tive medo de falar sobre isso. Mas chegou a hora."\n\nDESENVOLVIMENTO\n"Trabalhei anos pra alguém. A Vista Âme nasceu de uma decisão."\n\nFECHAMENTO\n"Isso tá só começando."'},
+  {id:2,tipo:'video',serie:'Drop 01',titulo:'Teaser cinematográfico de produto',desc:'Como fazer um teaser sem revelar o produto. Foco em texturas e sombras.',tags:['teaser','produto','minimalista'],link:'',img:null,roteiro:''},
+  {id:3,tipo:'roteiro',serie:'Drop 01',titulo:'Lista VIP — anúncio direto para câmera',desc:'Reel 20s câmera frontal anunciando a abertura da lista VIP.',tags:['Drop 01','lista VIP','câmera frontal'],link:'',img:null,roteiro:'GANCHO\n"A lista VIP da Âme Wellness está aberta."\n\nDESENVOLVIMENTO\n"Quem entra agora — sabe antes. Garante antes."\n\nFECHAMENTO\n"É isso. Simples assim."'},
+  {id:4,tipo:'referencia',serie:'Identidade',titulo:'Paleta de cores — Âme Wellness',desc:'Creme, areia, espresso, dourado. Minimalismo premium.',tags:['paleta','identidade visual','minimalista'],link:'',img:null,roteiro:''},
+  {id:5,tipo:'roteiro',serie:'Wellness',titulo:'Primeiro reveal do protótipo',desc:'Reel 45s. Aline apresenta o protótipo com orgulho de founder.',tags:['produto','founder','reveal'],link:'',img:null,roteiro:'GANCHO\n"Esse é o protótipo. Primeira vez que apareço com ele aqui."\n\nDESENVOLVIMENTO\n"Esse tecido foi desenvolvido no Brasil. Eu coloquei meu nome nisso."\n\nFECHAMENTO\n"Lista VIP na bio."'},
+];
+let ideiasType='todos';
+let ideiasQ='';
+let newIdeiaImg=null;
+let showAddForm=false;
+
+function toggleAddForm(){showAddForm=!showAddForm;document.getElementById('add-form').classList.toggle('open',showAddForm);}
+function handleIdeiaImg(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{newIdeiaImg=ev.target.result;document.getElementById('ni-img-prev').innerHTML=`<img src="${ev.target.result}" style="width:100%;max-height:160px;object-fit:cover;border-radius:2px;margin-top:8px;">`};
+  r.readAsDataURL(f);e.target.value='';
+}
+function saveIdeia(){
+  const titulo=document.getElementById('ni-titulo').value.trim();
+  if(!titulo){notify('Preencha o título','warn');return;}
+  const tags=document.getElementById('ni-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  ideias.unshift({id:Date.now(),tipo:document.getElementById('ni-tipo').value,serie:document.getElementById('ni-serie').value,titulo,desc:document.getElementById('ni-desc').value,tags,link:document.getElementById('ni-link').value,img:newIdeiaImg,roteiro:document.getElementById('ni-desc').value});
+  ['ni-titulo','ni-serie','ni-link','ni-tags'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('ni-desc').value='';
+  document.getElementById('ni-img-prev').innerHTML='';
+  newIdeiaImg=null;showAddForm=false;
+  document.getElementById('add-form').classList.remove('open');
+  renderIdeias();updateDashboard();notify('Ideia adicionada ✓');
+}
+function filterIdeiasType(t,btn){ideiasType=t;document.querySelectorAll('.if-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderIdeias();}
+function filterIdeias(){ideiasQ=document.getElementById('ideias-search').value.toLowerCase();renderIdeias();}
+function renderIdeias(){
+  const g=document.getElementById('ideias-grid');
+  let list=ideias;
+  if(ideiasType!=='todos')list=list.filter(x=>x.tipo===ideiasType);
+  if(ideiasQ)list=list.filter(x=>x.titulo.toLowerCase().includes(ideiasQ)||x.serie.toLowerCase().includes(ideiasQ)||(x.tags||[]).some(t=>t.includes(ideiasQ)));
+  if(!list.length){g.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ico">💡</div><p>Nenhuma ideia encontrada</p></div>';return;}
+  const tm={roteiro:'ict-roteiro',video:'ict-video',foto:'ict-foto',referencia:'ict-referencia'};
+  const tl={roteiro:'Roteiro',video:'Vídeo ref.',foto:'Foto ref.',referencia:'Referência'};
+  const te={roteiro:'📝',video:'🎬',foto:'📸',referencia:'🎯'};
+  g.innerHTML=list.map(item=>`
+    <div class="ideia-card">
+      <div class="ic-thumb">
+        ${item.img?`<img src="${item.img}" alt="">`:`<div class="ic-thumb-ph"><span>${te[item.tipo]||'💡'}</span><p>${tl[item.tipo]}</p></div>`}
+        <span class="ic-type-badge ${tm[item.tipo]}">${tl[item.tipo]}</span>
+      </div>
+      <div class="ic-body">
+        <div class="ic-serie">${item.serie}</div>
+        <div class="ic-title">${item.titulo}</div>
+        <div class="ic-desc">${item.desc}</div>
+        <div class="ic-tags">${(item.tags||[]).map(t=>`<span class="ic-tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="ic-footer">
+        ${item.link?`<button class="btn-watch-ic" onclick="window.open('${item.link}','_blank')">▶ Abrir link</button>`:`<span style="font-size:10px;color:var(--taupe);">Sem link</span>`}
+        ${item.roteiro?`<button class="btn-expand" onclick="document.getElementById('ir-${item.id}').classList.toggle('open')">Ver roteiro</button>`:`<span></span>`}
+      </div>
+      ${item.roteiro?`<div class="ic-rot-body" id="ir-${item.id}"><div class="ic-rot-pre">${fmtRot(item.roteiro)}</div></div>`:''}
+    </div>`).join('');
+  document.getElementById('m-ideias').textContent=ideias.length;
+}
+
+// DASHBOARD
+function updateDashboard(){
+  const aprovados=ROTEIROS.filter(x=>x.status==='aprovado').length;
+  const pendentes=ROTEIROS.filter(x=>x.status==='rascunho'||x.status==='alteracao').length;
+  document.getElementById('m-aprovados').textContent=aprovados;
+  document.getElementById('m-pendentes').textContent=pendentes;
+  const moodTotal=moodItems.length;
+  const moodAppr=moodItems.filter(x=>x.approved).length;
+  document.getElementById('m-mood').textContent=moodTotal;
+  document.getElementById('m-ideias').textContent=ideias.length;
+  const total=12;
+  document.getElementById('pp-aprov').textContent=aprovados+'/'+total;
+  document.getElementById('pf-aprov').style.width=Math.round((aprovados/total)*100)+'%';
+  document.getElementById('pp-cri').textContent=creationItems.length+'/'+total;
+  document.getElementById('pf-cri').style.width=Math.min(Math.round((creationItems.length/total)*100),100)+'%';
+  document.getElementById('pp-mood').textContent=moodAppr+'/'+(moodTotal||0);
+  document.getElementById('pf-mood').style.width=(moodTotal?Math.round((moodAppr/moodTotal)*100):0)+'%';
+}
+
+// MODAL
+function closeModal(e){if(e.target===document.getElementById('modal-ov'))closeModalDirect();}
+function closeModalDirect(){document.getElementById('modal-ov').classList.remove('open');}
+
+// INIT
+function renderAll(){
+  renderRoteiros();
+  renderCreation();
+  renderVideoLinks();
+  renderMood();
+  renderFeedGrid();
+  renderIdeias();
+  updateDashboard();
+}
+// Set data-filter on rf-btns after DOM ready
+document.addEventListener('DOMContentLoaded',()=>{
+  const fs=['todos','reels','feed','urgente','esta-semana','proximo'];
+  document.querySelectorAll('.rf-btn').forEach((b,i)=>{if(fs[i])b.setAttribute('data-filter',fs[i]);});
+});
 </script>
 </body>
 </html>
