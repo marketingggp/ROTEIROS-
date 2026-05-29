@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GGP · Estratégia de Conteúdo — Perfil Âme</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA;--sand:#E8DDD0;--taupe:#C4B5A5;--espresso:#3A2F28;
+  --gold:#B8965A;--white:#FDFCFA;--muted:#8A7B6E;
+  --green:#3D7A52;--greenl:#E6F2EB;--red:#8A3A2A;--redl:#F2E8E8;
+  --blue:#2A5A8A;--bluel:#E0EAF5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--espresso);}
+.top-header{background:var(--espresso);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;flex-wrap:wrap;gap:8px;}
+.top-logo{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:4px;color:var(--taupe);text-transform:uppercase;}
+.top-title{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--cream);letter-spacing:2px;}
+.top-tag{font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;border:1px solid rgba(184,150,90,.4);padding:4px 10px;border-radius:20px;}
+.perfil-section{background:var(--white);border-bottom:1px solid var(--sand);padding:32px 40px;}
+.perfil-selector{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
+.ps-btn{padding:8px 18px;border:1px solid var(--sand);background:transparent;border-radius:20px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.ps-btn:hover,.ps-btn.active{background:var(--espresso);border-color:var(--espresso);color:var(--cream);}
+.perfil-card{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;}
+.perfil-avatar-wrap{position:relative;width:96px;height:96px;flex-shrink:0;}
+.perfil-avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--taupe));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:36px;color:white;font-weight:300;overflow:hidden;border:3px solid var(--sand);}
+.perfil-avatar img{width:100%;height:100%;object-fit:cover;}
+.perfil-avatar-upload{position:absolute;bottom:0;right:0;width:28px;height:28px;background:var(--espresso);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;border:2px solid var(--cream);overflow:hidden;}
+.perfil-avatar-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;border-radius:50%;}
+.perfil-info{display:flex;flex-direction:column;gap:10px;}
+.perfil-handle{font-size:20px;font-weight:600;color:var(--espresso);}
+.perfil-bio{font-size:13px;color:var(--muted);line-height:1.6;}
+.perfil-stats{display:flex;gap:24px;margin-top:4px;flex-wrap:wrap;}
+.ps-stat{display:flex;flex-direction:column;}
+.ps-n{font-size:16px;font-weight:600;color:var(--espresso);}
+.ps-l{font-size:10px;color:var(--taupe);letter-spacing:1px;text-transform:uppercase;}
+.perfil-status-row{display:flex;gap:8px;flex-wrap:wrap;}
+.p-pill{padding:4px 12px;border-radius:20px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:500;}
+.pill-ok{background:var(--greenl);color:var(--green);}
+.pill-alert{background:#FFF3E0;color:#B8600A;}
+.pill-drop{background:var(--bluel);color:var(--blue);}
+.main{padding:32px 40px;display:flex;flex-direction:column;gap:32px;}
+.block{background:var(--white);border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.block-header{padding:14px 20px;border-bottom:1px solid var(--sand);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.block-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--espresso);font-weight:600;}
+.block-body{padding:20px;}
+.ident-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ident-card{border:1px solid var(--sand);border-radius:2px;overflow:hidden;}
+.ident-card-header{padding:10px 14px;background:var(--cream);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--sand);}
+.ident-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.ident-img-zone{min-height:160px;background:var(--sand);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;}
+.ident-img-zone img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.ident-img-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:2;}
+.ident-placeholder{text-align:center;opacity:.4;position:relative;z-index:1;}
+.ident-placeholder .ico{font-size:28px;margin-bottom:6px;}
+.ident-placeholder p{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
+.ident-footer{padding:10px 14px;display:flex;align-items:center;gap:10px;border-top:1px solid var(--sand);}
+.ident-check-wrap{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.ident-cb{width:16px;height:16px;border:1.5px solid var(--taupe);border-radius:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.ident-check-wrap.checked .ident-cb{background:var(--green);border-color:var(--green);}
+.ident-check-wrap.checked .ident-cb::after{content:'';width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block;}
+.ident-check-lbl{font-size:11px;color:var(--muted);}
+.ident-check-wrap.checked .ident-check-lbl{color:var(--green);font-weight:500;}
+.ref-tabs{display:flex;gap:0;border-bottom:1px solid var(--sand);}
+.ref-tab{padding:12px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;transition:all .2s;}
+.ref-tab.active{color:var(--espresso);border-bottom-color:var(--gold);}
+.ref-panel{display:none;padding:20px;}
+.ref-panel.active{display:block;}
+.ref-photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;}
+.ref-photo-item{aspect-ratio:1;border-radius:2px;overflow:hidden;position:relative;background:var(--sand);}
+.ref-photo-item img{width:100%;height:100%;object-fit:cover;}
+.ref-photo-rm{position:absolute;top:3px;right:3px;width:18px;height:18px;background:rgba(58,47,40,.75);border:none;border-radius:50%;color:white;font-size:9px;cursor:pointer;display:none;align-items:center;justify-content:center;}
+.ref-photo-item:hover .ref-photo-rm{display:flex;}
+.ref-add-btn{aspect-ratio:1;border-radius:2px;border:2px dashed var(--sand);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;cursor:pointer;transition:all .2s;position:relative;background:transparent;}
+.ref-add-btn:hover{border-color:var(--gold);}
+.ref-add-btn input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.ref-add-btn span{font-size:20px;opacity:.35;}
+.ref-add-btn p{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--taupe);}
+.video-link-list{display:flex;flex-direction:column;gap:10px;}
+.video-link-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.vl-label{font-size:10px;letter-spacing:1px;color:var(--muted);min-width:160px;}
+.video-link-input{flex:1;min-width:180px;border:1px solid var(--sand);border-radius:2px;padding:9px 12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--espresso);outline:none;transition:border-color .2s;background:var(--white);}
+.video-link-input:focus{border-color:var(--gold);}
+.video-link-input::placeholder{color:var(--taupe);}
+.btn-watch{padding:9px 14px;background:var(--espresso);color:var(--cream);border:none;border-radius:2px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background .2s;}
+.btn-watch:hover{background:#2A1F18;}
+.btn-watch.off{background:var(--sand);color:var(--taupe);cursor:default;pointer-events:none;}
+.btn-rm-lnk{width:30px;height:30px;border:1px solid var(--sand);background:transparent;border-radius:2px;cursor:pointer;color:var(--taupe);font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.btn-rm-lnk:hover{background:var(--redl);border-color:var(--red);color:var(--red);}
+.btn-add-link{margin-top:6px;padding:8px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-add-link:hover{border-color:var(--gold);color:var(--espresso);}
+.cont-card{border-bottom:1px solid var(--sand);}
+.cont-card:last-child{border-bottom:none;}
+.cont-card-head{padding:14px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;transition:background .15s;}
+.cont-card-head:hover{background:var(--cream);}
+.cont-card-emoji{font-size:18px;flex-shrink:0;}
+.cont-card-info{flex:1;min-width:0;}
+.cont-card-ep{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);}
+.cont-card-title{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.3;}
+.cont-card-format{font-size:10px;color:var(--muted);margin-top:2px;}
+.cont-card-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+.cont-card-status{font-size:10px;font-weight:500;}
+.cont-prio{font-size:10px;}
+.cont-chevron{font-size:11px;color:var(--taupe);transition:transform .2s;flex-shrink:0;}
+.cont-card.open .cont-chevron{transform:rotate(90deg);}
+.cont-body{display:none;padding:20px;border-top:1px solid var(--sand);display:flex;flex-direction:column;gap:16px;background:var(--cream);}
+.cont-card.open .cont-body{display:flex;}
+.cont-card:not(.open) .cont-body{display:none;}
+.roteiro-pre{font-size:12px;line-height:1.9;color:var(--muted);white-space:pre-wrap;}
+.roteiro-pre strong{color:var(--espresso);font-weight:600;}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;}
+.stag{font-size:10px;color:var(--muted);background:var(--white);border:1px solid var(--sand);padding:3px 8px;border-radius:2px;}
+.divider{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe);padding:0 0 8px;border-bottom:1px solid var(--sand);margin-bottom:4px;}
+.leg-ta{width:100%;min-height:90px;border:1px solid var(--sand);border-radius:2px;padding:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--espresso);resize:vertical;outline:none;line-height:1.7;background:var(--white);transition:border-color .2s;}
+.leg-ta:focus{border-color:var(--gold);}
+.leg-chars{font-size:10px;color:var(--taupe);text-align:right;margin-top:4px;}
+.cl-wrap{display:flex;flex-direction:column;gap:7px;}
+.cl-row{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.cl-box{width:16px;height:16px;border:1.5px solid var(--taupe);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.cl-row.done .cl-box{background:var(--espresso);border-color:var(--espresso);}
+.cl-row.done .cl-box::after{content:'';width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block;}
+.cl-row.done .cl-txt{text-decoration:line-through;color:var(--taupe);}
+.cl-txt{font-size:12px;color:var(--muted);}
+.aprov-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.aprov-note{flex:1;min-width:140px;border:1px solid var(--sand);border-radius:2px;padding:9px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--espresso);outline:none;background:var(--white);transition:border-color .2s;}
+.aprov-note:focus{border-color:var(--gold);}
+.aprov-note::placeholder{color:var(--taupe);}
+.btn-aprv{padding:9px 16px;background:var(--green);color:white;border:none;border-radius:2px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;}
+.btn-aprv:hover{background:#2A6040;}
+.btn-alt{padding:9px 16px;background:transparent;color:var(--red);border:1.5px solid var(--red);border-radius:2px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;transition:all .2s;}
+.btn-alt:hover{background:var(--redl);}
+.aprov-log{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.aprov-entry{padding:8px 10px;border-radius:2px;font-size:11px;line-height:1.5;}
+.aprov-entry.ok{background:var(--greenl);border-left:3px solid var(--green);}
+.aprov-entry.nok{background:var(--redl);border-left:3px solid var(--red);}
+.aprov-who{font-weight:600;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px;}
+.aprov-time{font-size:9px;color:var(--taupe);margin-top:2px;}
+.precisa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;}
+.precisa-item{border:1px solid var(--sand);border-radius:2px;overflow:hidden;background:var(--white);display:flex;flex-direction:column;}
+.precisa-thumb{height:140px;background:var(--sand);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;cursor:pointer;}
+.precisa-thumb img,.precisa-thumb video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.precisa-thumb-ph{text-align:center;opacity:.4;position:relative;z-index:1;}
+.precisa-thumb-ph span{font-size:28px;display:block;}
+.precisa-thumb-ph p{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.precisa-upload-ov{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:3;}
+.precisa-info{padding:12px 14px;flex:1;}
+.precisa-serie{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);margin-bottom:4px;}
+.precisa-desc{font-size:11px;color:var(--espresso);line-height:1.5;}
+.precisa-footer{padding:10px 14px 14px;display:flex;flex-direction:column;gap:8px;}
+.precisa-check{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.precisa-cb{width:16px;height:16px;border:1.5px solid var(--taupe);border-radius:2px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.precisa-check.sent .precisa-cb{background:var(--green);border-color:var(--green);}
+.precisa-check.sent .precisa-cb::after{content:'';width:8px;height:5px;border-left:1.5px solid white;border-bottom:1.5px solid white;transform:rotate(-45deg) translateY(-1px);display:block;}
+.precisa-lbl{font-size:10px;color:var(--muted);letter-spacing:.5px;}
+.precisa-check.sent .precisa-lbl{color:var(--green);font-weight:500;}
+.precisa-btns{display:flex;gap:6px;}
+.btn-sm{padding:7px 12px;border:1px solid var(--sand);background:transparent;border-radius:2px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;position:relative;overflow:hidden;flex:1;text-align:center;}
+.btn-sm:hover{background:var(--espresso);border-color:var(--espresso);color:var(--cream);}
+.btn-sm input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.btn-sm-dl{padding:7px 10px;border:1px solid var(--sand);background:transparent;border-radius:2px;font-size:12px;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;transition:all .2s;flex-shrink:0;}
+.btn-sm-dl:hover{background:var(--espresso);border-color:var(--espresso);color:var(--cream);}
+.btn-add-ident{margin-top:16px;padding:8px 16px;border:1px dashed var(--sand);background:transparent;border-radius:2px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.btn-add-ident:hover{border-color:var(--gold);color:var(--espresso);}
+@media(max-width:800px){
+  .top-header,.perfil-section,.main{padding:16px 20px;}
+  .ident-grid{grid-template-columns:1fr;}
+  .perfil-card{grid-template-columns:1fr;text-align:center;}
+  .perfil-stats{justify-content:center;}
+  .precisa-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){.precisa-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="top-header">
+  <div class="top-logo">GGP Assessoria</div>
+  <div class="top-title">Estratégia de Conteúdo — Perfil Âme</div>
+  <div class="top-tag">Planejamento Ativo</div>
+</div>
+
+<!-- PERFIL -->
+<div class="perfil-section">
+  <div class="perfil-selector">
+    <button class="ps-btn active" onclick="switchPerfil('alinepradoo__',this)">@alinepradoo__</button>
+    <button class="ps-btn" onclick="switchPerfil('vistaamee',this)">@vistaamee</button>
+    <button class="ps-btn" onclick="switchPerfil('amewellness.co',this)">@amewellness.co</button>
+  </div>
+  <div class="perfil-card">
+    <div class="perfil-avatar-wrap">
+      <div class="perfil-avatar" id="pav"><span id="pav-letter">A</span></div>
+      <div class="perfil-avatar-upload">📷<input type="file" accept="image/*" onchange="uploadAvatar(event)"></div>
+    </div>
+    <div class="perfil-info">
+      <div class="perfil-handle" id="p-handle">@alinepradoo__</div>
+      <div class="perfil-bio" id="p-bio">moda e movimento — do jeito certo<br>founder @vistaamee e @amewellness.co</div>
+      <div class="perfil-stats">
+        <div class="ps-stat"><div class="ps-n" id="p-seg">2.599</div><div class="ps-l">seguidores</div></div>
+        <div class="ps-stat"><div class="ps-n" id="p-posts">12</div><div class="ps-l">posts</div></div>
+        <div class="ps-stat"><div class="ps-n" id="p-eng">4,2%</div><div class="ps-l">engaj.</div></div>
+      </div>
+      <div class="perfil-status-row">
+        <span class="p-pill pill-ok" id="pp1">✓ Bio aprovada</span>
+        <span class="p-pill pill-alert" id="pp2">⚡ Drop 01 urgente</span>
+        <span class="p-pill pill-drop" id="pp3">Lista VIP aberta</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- IDENTIDADE VISUAL -->
+<div class="block">
+  <div class="block-header">
+    <div class="block-title">🎨 Identidade Visual — Antes × Depois</div>
+    <span style="font-size:10px;color:var(--taupe)">Faça upload dos prints. Marque quando enviar no grupo.</span>
+  </div>
+  <div class="block-body">
+    <div class="ident-grid" id="ident-grid"></div>
+    <button class="btn-add-ident" onclick="addIdent()">+ Adicionar comparativo</button>
+  </div>
+</div>
+
+<!-- REFERÊNCIAS -->
+<div class="block">
+  <div class="block-header">
+    <div class="block-title">🔗 Referências de Conteúdo</div>
+  </div>
+  <div class="ref-tabs">
+    <button class="ref-tab active" onclick="switchRefTab('fotos',this)">📸 Fotos de Referência</button>
+    <button class="ref-tab" onclick="switchRefTab('videos',this)">🎬 Links de Vídeo</button>
+  </div>
+  <div class="ref-panel active" id="ref-panel-fotos">
+    <p style="font-size:11px;color:var(--taupe);margin-bottom:12px;">Screenshots, prints de perfis de referência, moodboards. Aline vai usar para fazer igual.</p>
+    <div class="ref-photo-grid" id="ref-photo-grid">
+      <div class="ref-add-btn"><input type="file" accept="image/*" multiple onchange="addRefPhotos(event)"><span>＋</span><p>Adicionar</p></div>
+    </div>
+  </div>
+  <div class="ref-panel" id="ref-panel-videos">
+    <p style="font-size:11px;color:var(--taupe);margin-bottom:14px;">Cole links de vídeo de referência. Aline clica em <strong>▶ Assistir</strong> e produz igual.</p>
+    <div class="video-link-list" id="video-link-list"></div>
+    <button class="btn-add-link" onclick="addVideoLink()">+ Adicionar link de vídeo</button>
+  </div>
+</div>
+
+<!-- REELS -->
+<div class="block">
+  <div class="block-header">
+    <div class="block-title">🎬 Reels</div>
+    <span style="font-size:10px;color:var(--taupe)">Roteiro completo + direção + aprovação</span>
+  </div>
+  <div id="reels-list"></div>
+</div>
+
+<!-- FEED -->
+<div class="block">
+  <div class="block-header">
+    <div class="block-title">🖼 Feed — Fotos e Carrossel</div>
+    <span style="font-size:10px;color:var(--taupe)">Posts estáticos e carrosséis</span>
+  </div>
+  <div id="feed-list"></div>
+</div>
+
+<!-- VOCÊ PRECISA FAZER -->
+<div class="block">
+  <div class="block-header">
+    <div class="block-title">📌 Você Precisa Fazer</div>
+    <span style="font-size:10px;color:var(--taupe)" id="precisa-counter">0 / 0 enviados</span>
+  </div>
+  <div class="block-body">
+    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Cada card abaixo é uma mídia que você precisa produzir e enviar. Faça o upload aqui e marque <strong style="color:var(--espresso)">✓ Enviado no grupo</strong> quando mandar no WhatsApp da GGP.</p>
+    <div class="precisa-grid" id="precisa-grid"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// PERFIS
+const PERFIS = {
+  'alinepradoo__':{letter:'A',seg:'2.599',posts:'12',eng:'4,2%',bio:'moda e movimento — do jeito certo<br>founder @vistaamee e @amewellness.co',pp1:'✓ Bio aprovada',pp2:'⚡ Drop 01 urgente',pp3:'Lista VIP aberta',av:null},
+  'vistaamee':{letter:'V',seg:'930',posts:'8',eng:'3,8%',bio:'moda feminina premium · showroom SP<br>curadoria exclusiva · DM aberto',pp1:'✓ Showroom ativo',pp2:'⚡ Sem tráfego pago',pp3:'Venda por DM',av:null},
+  'amewellness.co':{letter:'Â',seg:'105',posts:'2',eng:'6,1%',bio:'activewear minimalista · Drop 01 chegando<br>tecnologia nacional · @alinepradoo__',pp1:'🚀 Pré-lançamento',pp2:'⚡ Audiência em construção',pp3:'Drop 01 urgente',av:null}
+};
+let curPerfil = 'alinepradoo__';
+
+function switchPerfil(h,btn){
+  document.querySelectorAll('.ps-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); curPerfil=h;
+  const p=PERFIS[h];
+  document.getElementById('p-handle').textContent='@'+h;
+  document.getElementById('p-bio').innerHTML=p.bio;
+  document.getElementById('p-seg').textContent=p.seg;
+  document.getElementById('p-posts').textContent=p.posts;
+  document.getElementById('p-eng').textContent=p.eng;
+  document.getElementById('pp1').textContent=p.pp1;
+  document.getElementById('pp2').textContent=p.pp2;
+  document.getElementById('pp3').textContent=p.pp3;
+  const av=document.getElementById('pav');
+  av.innerHTML=p.av?`<img src="${p.av}" alt="">`:`<span>${p.letter}</span>`;
+}
+function uploadAvatar(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{PERFIS[curPerfil].av=ev.target.result;document.getElementById('pav').innerHTML=`<img src="${ev.target.result}" alt="">`;};
+  r.readAsDataURL(f);
+}
+
+// IDENTIDADE
+let identList=[
+  {id:1,label:'Feed atual — como está',img:null,checked:false},
+  {id:2,label:'Feed novo — como vai ficar',img:null,checked:false},
+  {id:3,label:'Bio atual — como está',img:null,checked:false},
+  {id:4,label:'Bio nova — como vai ficar',img:null,checked:false},
+];
+function renderIdent(){
+  document.getElementById('ident-grid').innerHTML=identList.map(c=>`
+    <div class="ident-card">
+      <div class="ident-card-header"><span class="ident-label">${c.label}</span></div>
+      <div class="ident-img-zone">
+        <input type="file" accept="image/*" onchange="uploadIdent(event,${c.id})">
+        ${c.img?`<img src="${c.img}" alt="">`:`<div class="ident-placeholder"><div class="ico">🖼</div><p>Clique para enviar</p></div>`}
+      </div>
+      <div class="ident-footer">
+        <div class="ident-check-wrap${c.checked?' checked':''}" onclick="toggleIdent(${c.id})">
+          <div class="ident-cb"></div>
+          <span class="ident-check-lbl">${c.checked?'✓ Enviado no grupo':'Marcar como enviado no grupo'}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function uploadIdent(e,id){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{identList.find(c=>c.id===id).img=ev.target.result;renderIdent();};
+  r.readAsDataURL(f);e.target.value='';
+}
+function toggleIdent(id){const c=identList.find(x=>x.id===id);c.checked=!c.checked;renderIdent();}
+function addIdent(){identList.push({id:Date.now(),label:'Comparativo '+(identList.length+1),img:null,checked:false});renderIdent();}
+
+// REF FOTOS
+let refPhotos=[];
+function addRefPhotos(e){
+  Array.from(e.target.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=ev=>{refPhotos.push(ev.target.result);renderRefPhotos();};
+    r.readAsDataURL(f);
+  });e.target.value='';
+}
+function renderRefPhotos(){
+  document.getElementById('ref-photo-grid').innerHTML=
+    refPhotos.map((src,i)=>`<div class="ref-photo-item"><img src="${src}" alt=""><button class="ref-photo-rm" onclick="removeRefPhoto(${i})">✕</button></div>`).join('')+
+    `<div class="ref-add-btn"><input type="file" accept="image/*" multiple onchange="addRefPhotos(event)"><span>＋</span><p>Adicionar</p></div>`;
+}
+function removeRefPhoto(i){refPhotos.splice(i,1);renderRefPhotos();}
+
+// REF VÍDEOS
+let videoLinks=[
+  {id:1,url:'',label:'@gyoparanaiba — Bastidor / Série pessoal'},
+  {id:2,url:'',label:'@tieactive — Founder content de treino'},
+];
+function renderVideoLinks(){
+  document.getElementById('video-link-list').innerHTML=videoLinks.map(v=>`
+    <div class="video-link-row" id="vlr-${v.id}">
+      <span class="vl-label">${v.label||'Referência'}</span>
+      <input class="video-link-input" placeholder="Cole o link aqui (Instagram, TikTok, YouTube...)" value="${v.url}" oninput="updateVL(${v.id},this.value)">
+      <button class="btn-watch${v.url?'':' off'}" onclick="watchLink(${v.id})">▶ Assistir</button>
+      <button class="btn-rm-lnk" onclick="removeVL(${v.id})">✕</button>
+    </div>`).join('');
+}
+function updateVL(id,val){
+  const v=videoLinks.find(x=>x.id===id);v.url=val.trim();
+  const btn=document.querySelector(`#vlr-${id} .btn-watch`);
+  if(btn)btn.classList.toggle('off',!v.url);
+}
+function watchLink(id){const v=videoLinks.find(x=>x.id===id);if(v&&v.url)window.open(v.url,'_blank');}
+function removeVL(id){videoLinks=videoLinks.filter(x=>x.id!==id);renderVideoLinks();}
+function addVideoLink(){videoLinks.push({id:Date.now(),url:'',label:''});renderVideoLinks();}
+function switchRefTab(tab,btn){
+  document.querySelectorAll('.ref-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.ref-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');document.getElementById('ref-panel-'+tab).classList.add('active');
+}
+
+// CONTEÚDOS
+const REELS=[
+  {id:1,ep:'Série A · EP01',emoji:'🎬',fmt:'Reel · 60s',titulo:'De onde eu vim e onde estou — a virada de chave',perfil:'@alinepradoo__',prio:'esta-semana',tags:['luz natural suave','câmera lenta','close de detalhes','voz íntima em off'],legenda:'Tem dias que eu ainda não acredito que saí.\nMas eu sei exatamente por que saí.\n\nA história completa tá no vídeo.',roteiro:'GANCHO (0–3s)\n"Eu já tive medo de falar sobre isso. Mas chegou a hora."\n\nDESENVOLVIMENTO (3–45s)\n"Trabalhei anos pra alguém. Acordava cedo, entregava resultado, voltava pra casa pensando no negócio dos outros. Não era ruim. Mas não era meu.\n\nSaí do CLT sem ter certeza. Só tinha uma coisa clara: eu sabia vender. Sabia curar. Sabia o que uma mulher sente quando veste algo que é dela de verdade.\n\nA Vista Âme nasceu disso. Não de um plano perfeito — de uma decisão.\n\nE hoje, construindo a Âme Wellness, entendi que não mudei de caminho. Só fui ficando mais inteira."\n\nFECHAMENTO (45–60s)\n"Isso aqui não é sobre duas marcas. É sobre uma mulher que decidiu parar de construir pra outros e começou a construir pra si mesma.\n\nSe você chegou até aqui — fica. Porque isso tá só começando."',checklist:['Roteiro revisado e aprovado','Locação definida (casa / closet)','Look escolhido (neutro, elegante)','Gravação realizada','Edição e legenda entregues'],status:'rascunho',comments:[]},
+  {id:2,ep:'Série A · EP02',emoji:'🎬',fmt:'Reel · 45s',titulo:'Construindo o ecossistema Âme — duas marcas, uma visão',perfil:'@alinepradoo__',prio:'esta-semana',tags:['walking shot','showroom ao fundo','tons neutros','corte ritmado'],legenda:'Não são duas marcas separadas.\nÉ um ecossistema inteiro — construído em cima de uma mulher só.\n\n@vistaamee e @amewellness.co — marca os dois.',roteiro:'GANCHO (0–3s)\nWalking shot entrando no showroom:\n"Duas marcas. Um público. Uma visão. Deixa eu te explicar."\n\nDESENVOLVIMENTO (3–35s)\n"A Vista Âme existe há anos. Showroom físico, curadoria exclusiva, cliente que volta porque sente a diferença.\n\nA Âme Wellness nasceu da minha rotina. Nunca encontrei uma peça que fosse premium de verdade. Então criei.\n\nUma audiência. Dois produtos. Uma só identidade."\n\nFECHAMENTO (35–45s)\n"É isso que estou construindo. E você está assistindo de dentro.\nSegue os dois perfis pra não perder nada."',checklist:['Roteiro revisado e aprovado','Gravar no showroom Vista Âme','Peças da Wellness visíveis no plano','Gravação realizada','Edição e legenda entregues'],status:'rascunho',comments:[]},
+  {id:5,ep:'Wellness · EP01',emoji:'🤸\u200d♀️',fmt:'Reel · 30s',titulo:'Minha rotina de movimento — por que fitness é parte do meu negócio',perfil:'@alinepradoo__ · @amewellness.co',prio:'urgente',tags:['academia ou parque','câmera lenta 60fps','look activewear Âme','luz quente'],legenda:'Minha rotina de movimento sempre foi séria.\nA roupa que uso durante ela — agora também é.\n\n@amewellness.co · lista VIP aberta — link na bio.',roteiro:'GANCHO (0–3s)\n"Fitness não é hobby pra mim. É parte do que eu construo."\n\nDESENVOLVIMENTO (3–22s)\nClips de treino + voz em off:\n"Eu treino porque me faz pensar melhor. Decidir melhor. Aparecer melhor.\n\nE por anos usei peças que não acompanhavam isso. Então parei de procurar e comecei a criar."\n\nFECHAMENTO (22–30s)\nClose na peça:\n"O que você está vendo vai virar produto em breve.\nLista VIP na bio — quem entra primeiro, garante primeiro."',checklist:['Peça Âme Wellness selecionada','Locação: academia ou parque','Câmera em 60fps configurada','Gravação realizada','CTA para lista VIP na legenda'],status:'rascunho',comments:[]},
+  {id:6,ep:'Wellness · EP02',emoji:'🤸\u200d♀️',fmt:'Reel · 45s',titulo:'Apresentando a Âme Wellness — a marca que nasceu da minha rotina',perfil:'@alinepradoo__ · @amewellness.co',prio:'urgente',tags:['unboxing de protótipo','detalhe de costura','close nas mãos','expressão genuína'],legenda:'Esse é o protótipo da Âme Wellness.\nPrimeiro registro público.\n\nTecnologia nacional. Caimento premium. Meu nome atrás.\n\nLista VIP aberta — link na bio.\n@amewellness.co',roteiro:'GANCHO (0–3s)\nMãos com protótipo sobre mesa neutra:\n"Esse é o protótipo. Primeira vez que apareço com ele aqui."\n\nDESENVOLVIMENTO (3–35s)\n"Esse tecido foi desenvolvido no Brasil. Compressão real, caimento que não cede depois de 3 lavagens.\n\nEu testei cada detalhe. A costura, o acabamento, o elástico.\n\n(pausa — olha pra câmera)\n\nEu coloquei meu nome nisso. Âme Wellness não é dropshipping. É meu."\n\nFECHAMENTO (35–45s)\n"Drop 01 chegando. Lista VIP na bio.\nQuem está lá dentro vai saber antes de todo mundo."',checklist:['Protótipo disponível para filmagem','Superfície neutra preparada','Gravação de close no tecido','Gravação realizada','CTA lista VIP ativo na bio'],status:'rascunho',comments:[]},
+  {id:7,ep:'Rotina Real · 01',emoji:'☀️',fmt:'Reel · 30s · sem voz',titulo:'Manhã de founder — do café à primeira reunião',perfil:'@alinepradoo__',prio:'esta-semana',tags:['câmera subjetiva','morning light','clips de 2–3s','trilha ambiente'],legenda:'Não existe manhã perfeita.\nExiste decisão de aparecer — todos os dias.',roteiro:'CLIP 1 — 3s\nMão segurando café. Luz da manhã.\nTexto: "6h30"\n\nCLIP 2 — 3s\nEspelho. Aline arrumando cabelo.\nTexto: "antes de qualquer reunião, cuido de mim"\n\nCLIP 3 — 3s\nMesa de trabalho.\nTexto: "agenda do dia"\n\nCLIP 4 — 3s\nWalking shot chegando no showroom.\nTexto: "a founder entra em cena"\n\nCLIP 5 — 3s\nDetalhe do showroom Vista Âme.\nTexto: "@vistaamee"\n\nCLIP 6 — 3s\nAline olha pra câmera com leve sorriso.\nTexto: "é assim todo dia"',checklist:['Lista de momentos a filmar','Trilha selecionada e aprovada','Gravação ao longo de 1 dia real','Edição com texto sobreposto','Publicação aprovada'],status:'rascunho',comments:[]},
+  {id:9,ep:'Drop 01 · Semana 1',emoji:'🔒',fmt:'Reel · 15s · Teaser',titulo:'Algo está chegando — teaser visual sem revelar o produto',perfil:'@amewellness.co',prio:'urgente',tags:['foco desfocado','sombra de peça','close de tecido','sem revelar produto','trilha tensa'],legenda:'.',roteiro:'SEM FALA. Só imagem + texto + trilha.\n\nCLIP 1 — 3s: Câmera desfocada sobre tecido.\nCLIP 2 — 3s: Sombra de uma peça na parede. Forma indefinida.\nCLIP 3 — 3s: Close extremo em costura.\nCLIP 4 — 3s: Mãos segurando algo. Câmera corta antes de revelar.\nCLIP 5 — 3s: Tela preta.\nTexto: "algo está chegando."\nTexto: "lista VIP — link na bio"\n\nTRILHA: Piano minimalista ou ambient tenso.',checklist:['Link lista VIP ativo na bio','Protótipo disponível','Texto de tela aprovado','Gravação realizada','Publicação agendada'],status:'rascunho',comments:[]},
+  {id:10,ep:'Drop 01 · Semana 2',emoji:'📋',fmt:'Reel · 20s + Story',titulo:'Lista VIP aberta — quem entrar primeiro tem acesso exclusivo',perfil:'@amewellness.co · @alinepradoo__',prio:'urgente',tags:['câmera frontal','tom íntimo','fundo clean','story com link'],legenda:'Lista VIP aberta.\nDrop 01 chegando — peças limitadas.\n\nQuem entra primeiro, garante primeiro.\nLink na bio → @amewellness.co',roteiro:'GANCHO (0–3s)\n"A lista VIP da Âme Wellness está aberta."\n\nDESENVOLVIMENTO (3–15s)\n"Quem entra agora — sabe antes. Compra antes. Garante antes.\nDrop 01 é limitado. Não vou repor na mesma semana.\nSe você quer a peça — entra na lista agora. Link na bio."\n\nFECHAMENTO (15–20s)\n"É isso. Simples assim." (sorriso leve, corta)\n\nSTORY (publicar junto):\nFundo escuro ou peça desfocada.\nTexto: "entrou na lista?"\nSticker de link → "ENTRAR NA LISTA VIP"',checklist:['Formulário lista VIP ativo','Roteiro aprovado','Reel gravado (câmera frontal)','Story com sticker de link','Publicado nos dois perfis'],status:'rascunho',comments:[]},
+  {id:11,ep:'Drop 01 · Semana 3',emoji:'✨',fmt:'Reel · 45s · Reveal',titulo:'Drop 01 — o primeiro reveal oficial da Âme Wellness',perfil:'@amewellness.co · @alinepradoo__',prio:'urgente',tags:['produto completo','Aline vestindo a peça','câmera 360','close no acabamento'],legenda:'Drop 01 — ao vivo.\n\nTecnologia nacional. Caimento premium. Edição limitada.\n\nLink na bio → garante o seu.\n@amewellness.co',roteiro:'GANCHO (0–3s)\n"Esse é o Drop 01. E eu vou te contar tudo sobre ele."\n\nDESENVOLVIMENTO (3–35s)\n"Tecnologia nacional. Compressão que segura sem apertar. Costura que não abre. Cor que não desbota.\n\nEu usei por semanas antes de aprovar. Testei no treino, no dia a dia, depois de lavar várias vezes.\n\nSó lancei quando ficou exatamente como eu queria.\n\nIsso é a Âme Wellness. Activewear premium — feita aqui, pensada por mim."\n\nFECHAMENTO (35–45s)\nCâmera 360:\n"Link na bio pra garantir o seu.\nQuem estava na lista VIP já recebeu o acesso."',checklist:['Produto final disponível','Locação premium preparada','Câmera 60fps + tripé','Gravação realizada','Link de compra ativo na bio'],status:'rascunho',comments:[]},
+  {id:12,ep:'Âme House · Especial',emoji:'🏛️',fmt:'Reel · 30s',titulo:'A casa que vai unir tudo — primeiro olhar para a Âme House',perfil:'@alinepradoo__ + ambas as marcas',prio:'proximo',tags:['espaço em transformação','voz em off emocional','câmera lenta','enquadramento amplo'],legenda:'Tem um projeto novo.\nAinda não acabou. Mas já está acontecendo.\n\nÂme House — em breve.\n@vistaamee · @amewellness.co',roteiro:'GANCHO (0–3s)\nImagem do espaço. Câmera lenta.\nVoz em off: "Eu quero te mostrar alguma coisa."\n\nDESENVOLVIMENTO (3–22s)\n"Esse lugar ainda está tomando forma. Mas já tem nome. Já tem propósito.\n\nÂme House — o espaço onde a Vista Âme e a Âme Wellness vão existir juntas. Moda e movimento. No mesmo lugar.\n\nÉ o projeto que está tomando mais da minha cabeça agora.\nE você está vendo antes de qualquer pessoa."\n\nFECHAMENTO (22–30s)\n"Quando estiver pronto — você vai ser a primeira a saber."\nTexto na tela: "Âme House · em breve"',checklist:['Espaço disponível para filmagem','Roteiro emocional aprovado','Gravação realizada','Trilha selecionada','Publicado nos 3 perfis'],status:'rascunho',comments:[]}
+];
+const FEED_POSTS=[
+  {id:101,ep:'Closet Âme · 01',emoji:'👗',fmt:'Reel · 30s (feed)',titulo:'O que estou usando esta semana — 3 looks, 1 peça Vista Âme',perfil:'@alinepradoo__ · @vistaamee',prio:'esta-semana',tags:['espelho corpo inteiro','transição rápida','luz de janela','fundo limpo'],legenda:'Três looks. Uma semana.\nA última peça você encontra no showroom — ou manda um DM.\n\nLink na bio → @vistaamee',roteiro:'LOOK 1 — Abertura\nPose no espelho, câmera lenta.\nTexto: "segunda" · Close no detalhe.\n\nLOOK 2 — Meio\nTransição rápida. Pose lateral.\nTexto: "quarta" · Close no tecido.\n\nLOOK 3 — Fechamento (peça Vista Âme)\nPose frontal + giro.\nTexto: "sexta — @vistaamee"\nClose na etiqueta ou detalhe exclusivo.',checklist:['3 looks montados e aprovados','1 peça Vista Âme inclusa','Locação: quarto ou closet','Gravação realizada','Marcação @vistaamee na legenda'],status:'rascunho',comments:[]},
+  {id:102,ep:'Closet Âme · 02',emoji:'👗',fmt:'Carrossel · 5 fotos',titulo:'Peças que valem o investimento — curadoria da semana',perfil:'@alinepradoo__ · @vistaamee',prio:'proximo',tags:['editorial flat lay','foto de detalhe','paleta neutra','textura de tecido'],legenda:'Não compro por tendência.\nCompro pelo que vai durar — no armário e no corpo.\n\nCada peça passa pela minha curadoria antes de chegar até você.\n\nDM pra saber sobre disponibilidade → @vistaamee',roteiro:'FOTO 1 — Capa\nLook completo, corpo inteiro.\nTexto: "peças que valem cada centavo"\n\nFOTO 2 — Detalhe de tecido. Sem texto.\n\nFOTO 3 — Detalhe de acabamento. Costura ou botão.\n\nFOTO 4 — Flat lay das peças.\nTexto: "curadoria @vistaamee"\n\nFOTO 5 — Aline com a peça principal.\nTexto: "quer saber onde encontrar? DM aberto."',checklist:['Peças selecionadas e separadas','Sessão de fotos flat lay','5 fotos editadas na paleta Âme','Legenda e CTA aprovados'],status:'rascunho',comments:[]},
+  {id:103,ep:'Rotina Real · 02',emoji:'🌙',fmt:'Reel · 25s (feed)',titulo:'Fim de tarde no showroom — o que ninguém vê por trás das peças',perfil:'@alinepradoo__',prio:'proximo',tags:['luz dourada fim de tarde','showroom Vista Âme','câmera lenta suave','bastidor real'],legenda:'Bastidor real.\nSem filtro, sem roteiro, sem encenação.\n\nÉ assim que a Vista Âme é construída — todos os dias.\n@vistaamee · DM pra visitar o showroom',roteiro:'GANCHO (0–3s)\nLuz dourada no showroom.\nTexto: "16h no showroom — o que você não vê"\n\nSEQUÊNCIA (3–20s)\nClip 1: Mãos organizando peças.\nTexto: "cada peça passou pela minha curadoria"\n\nClip 2: Aline olhando peça contra a luz.\nTexto: "antes de chegar até você"\n\nClip 3: Arara completa, luz dourada. Sem texto.\n\nClip 4: Aline olha pra câmera.\nTexto: "isso é a Vista Âme"\n\nFECHAMENTO (20–25s)\nTexto: "showroom SP · DM aberto"',checklist:['Agendar gravação no showroom','Horário: 16h–18h (luz dourada)','Showroom organizado','Gravação realizada','Edição e publicação aprovadas'],status:'rascunho',comments:[]}
+];
+
+const PRIO={
+  urgente:['🔴 Urgente','#8A3A2A'],
+  'esta-semana':['🟡 Esta semana','#8A7A2A'],
+  proximo:['🟢 Próximas semanas','#3D7A52']
+};
+const STATUS_L={rascunho:'Rascunho',pendente:'Aguardando',aprovado:'Aprovado ✓',alteracao:'Alteração pedida'};
+const STATUS_C={rascunho:'color:var(--muted)',pendente:'color:var(--gold)',aprovado:'color:var(--green)',alteracao:'color:var(--red)'};
+
+function fmtRoteiro(t){
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/^([A-ZÇÉÊ0-9][A-ZÇÉÊ\s·\-–\/()0-9]+:?)$/gm,'<strong>$1</strong>');
+}
+
+function renderCards(list,containerId){
+  document.getElementById(containerId).innerHTML=list.map(c=>{
+    const [pl,pc]=PRIO[c.prio]||PRIO['proximo'];
+    return `<div class="cont-card" id="cc-${c.id}">
+      <div class="cont-card-head" onclick="toggleCard(${c.id})">
+        <span class="cont-card-emoji">${c.emoji}</span>
+        <div class="cont-card-info">
+          <div class="cont-card-ep">${c.ep} · ${c.fmt}</div>
+          <div class="cont-card-title">${c.titulo}</div>
+          <div class="cont-card-format">${c.perfil}</div>
+        </div>
+        <div class="cont-card-meta">
+          <span class="cont-card-status" style="${STATUS_C[c.status]}">${STATUS_L[c.status]}</span>
+          <span class="cont-prio" style="color:${pc}">${pl}</span>
+        </div>
+        <span class="cont-chevron">▶</span>
+      </div>
+      <div class="cont-body">
+        <div class="tag-row">${c.tags.map(t=>`<span class="stag">${t}</span>`).join('')}</div>
+        <div>
+          <div class="divider">Legenda</div>
+          <textarea class="leg-ta" id="leg-${c.id}" oninput="updateLC(${c.id})">${c.legenda}</textarea>
+          <div class="leg-chars"><span id="lc-${c.id}">${c.legenda.length}</span> caracteres</div>
+        </div>
+        <div>
+          <div class="divider">Roteiro / Direção de câmera</div>
+          <div class="roteiro-pre">${fmtRoteiro(c.roteiro)}</div>
+        </div>
+        <div>
+          <div class="divider">Checklist de produção</div>
+          <div class="cl-wrap" id="cl-${c.id}">
+            ${c.checklist.map((item,i)=>`<div class="cl-row${c.cd&&c.cd[i]?' done':''}" onclick="toggleCl(${c.id},${i})"><div class="cl-box"></div><span class="cl-txt">${item}</span></div>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="divider">Aprovação da Cliente</div>
+          <div class="aprov-row">
+            <input class="aprov-note" id="an-${c.id}" placeholder="Comentário, observação ou pedido de alteração...">
+            <button class="btn-aprv" onclick="approve(${c.id},'aprovado')">✓ Aprovar</button>
+            <button class="btn-alt" onclick="approve(${c.id},'alteracao')">↺ Pedir alteração</button>
+          </div>
+          <div class="aprov-log" id="al-${c.id}">
+            ${(c.comments||[]).map(cm=>`<div class="aprov-entry ${cm.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${cm.t==='aprovado'?'✓ Aprovado':'↺ Alteração pedida'}</div><div>${cm.txt}</div><div class="aprov-time">${cm.ts}</div></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(id){document.getElementById('cc-'+id).classList.toggle('open');}
+function updateLC(id){const ta=document.getElementById('leg-'+id);document.getElementById('lc-'+id).textContent=ta.value.length;}
+function toggleCl(cid,idx){
+  const all=[...REELS,...FEED_POSTS];const c=all.find(x=>x.id===cid);if(!c)return;
+  if(!c.cd)c.cd={};c.cd[idx]=!c.cd[idx];
+  const rows=document.querySelectorAll(`#cl-${cid} .cl-row`);
+  if(rows[idx])rows[idx].classList.toggle('done',c.cd[idx]);
+}
+function approve(cid,type){
+  const all=[...REELS,...FEED_POSTS];const c=all.find(x=>x.id===cid);if(!c)return;
+  c.status=type;
+  const note=document.getElementById('an-'+cid)?.value.trim()||(type==='aprovado'?'Conteúdo aprovado.':'Pede revisão antes de publicar.');
+  if(!c.comments)c.comments=[];
+  const ts=new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+' · hoje';
+  c.comments.unshift({t:type,txt:note,ts});
+  document.getElementById('an-'+cid).value='';
+  document.getElementById('al-'+cid).innerHTML=c.comments.map(cm=>`<div class="aprov-entry ${cm.t==='aprovado'?'ok':'nok'}"><div class="aprov-who">${cm.t==='aprovado'?'✓ Aprovado':'↺ Alteração pedida'}</div><div>${cm.txt}</div><div class="aprov-time">${cm.ts}</div></div>`).join('');
+  const sel=document.querySelector(`#cc-${cid} .cont-card-status`);
+  if(sel){sel.textContent=STATUS_L[type];sel.style.cssText=STATUS_C[type];}
+}
+
+// VOCÊ PRECISA FAZER
+const PRECISA=[
+  {id:'p1',serie:'Série A · EP01',emoji:'🎬',desc:'Reel falado — você na câmera contando sua história de saída do CLT. Câmera lenta, luz natural, fundo limpo.',sent:false,media:null},
+  {id:'p2',serie:'Série A · EP02',emoji:'🎬',desc:'Reel walking shot no showroom Vista Âme. Você caminha e fala sobre o ecossistema Âme.',sent:false,media:null},
+  {id:'p3',serie:'Wellness · EP01',emoji:'🤸\u200d♀️',desc:'Clips de treino com a peça Âme Wellness. Academia ou parque, 60fps, luz quente.',sent:false,media:null},
+  {id:'p4',serie:'Wellness · EP02',emoji:'🤸\u200d♀️',desc:'Unboxing do protótipo Âme Wellness sobre mesa neutra. Close nas mãos, tecido e costura.',sent:false,media:null},
+  {id:'p5',serie:'Drop 01 · Teaser',emoji:'🔒',desc:'Clips com tecido desfocado, sombra de peça na parede e close em costura. Sem revelar o produto.',sent:false,media:null},
+  {id:'p6',serie:'Drop 01 · Lista VIP',emoji:'📋',desc:'Reel câmera frontal — você fala direto olhando pra câmera anunciando a lista VIP aberta.',sent:false,media:null},
+  {id:'p7',serie:'Drop 01 · Reveal',emoji:'✨',desc:'Reel com a peça final vestida — câmera 360, você apresenta o Drop 01 com orgulho.',sent:false,media:null},
+  {id:'p8',serie:'Closet · 01',emoji:'👗',desc:'3 looks no espelho — transição rápida. Inclua 1 peça Vista Âme no terceiro look.',sent:false,media:null},
+  {id:'p9',serie:'Closet · 02',emoji:'👗',desc:'Sessão flat lay das peças da semana sobre superfície neutra. 5 fotos para carrossel.',sent:false,media:null},
+  {id:'p10',serie:'Rotina Real · 01',emoji:'☀️',desc:'6 clips da sua manhã real: café, espelho, mesa de trabalho, chegando no showroom.',sent:false,media:null},
+  {id:'p11',serie:'Rotina Real · 02',emoji:'🌙',desc:'Clips no showroom Vista Âme entre 16h–18h aproveitando a luz dourada natural.',sent:false,media:null},
+  {id:'p12',serie:'Âme House',emoji:'🏛️',desc:'Imagens do novo espaço — mesmo que ainda em obras. Câmera lenta, enquadramento amplo.',sent:false,media:null},
+];
+
+function renderPrecisa(){
+  const sent=PRECISA.filter(x=>x.sent).length;
+  document.getElementById('precisa-counter').textContent=sent+' / '+PRECISA.length+' enviados';
+  document.getElementById('precisa-grid').innerHTML=PRECISA.map(p=>`
+    <div class="precisa-item">
+      <div class="precisa-thumb">
+        ${p.media?`<img src="${p.media}" alt="">`:`<div class="precisa-thumb-ph"><span>${p.emoji}</span><p>Sem mídia</p></div>`}
+        <input class="precisa-upload-ov" type="file" accept="image/*,video/*" onchange="uploadPrecisa(event,'${p.id}')">
+      </div>
+      <div class="precisa-info">
+        <div class="precisa-serie">${p.serie}</div>
+        <div class="precisa-desc">${p.desc}</div>
+      </div>
+      <div class="precisa-footer">
+        <div class="precisa-check${p.sent?' sent':''}" onclick="togglePrecisa('${p.id}')">
+          <div class="precisa-cb"></div>
+          <span class="precisa-lbl">${p.sent?'✓ Enviado no grupo':'Marcar enviado no grupo'}</span>
+        </div>
+        <div class="precisa-btns">
+          <div class="btn-sm">
+            ${p.media?'↺ Trocar mídia':'⬆ Enviar mídia'}
+            <input type="file" accept="image/*,video/*" onchange="uploadPrecisa(event,'${p.id}')">
+          </div>
+          ${p.media?`<button class="btn-sm-dl" onclick="dlPrecisa('${p.id}')" title="Baixar">⬇</button>`:''}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function togglePrecisa(id){const p=PRECISA.find(x=>x.id===id);p.sent=!p.sent;renderPrecisa();}
+function uploadPrecisa(e,id){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{PRECISA.find(x=>x.id===id).media=ev.target.result;renderPrecisa();};
+  r.readAsDataURL(f);e.target.value='';
+}
+function dlPrecisa(id){
+  const p=PRECISA.find(x=>x.id===id);if(!p||!p.media)return;
+  const a=document.createElement('a');a.href=p.media;a.download='ame-'+id+'.jpg';a.click();
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded',()=>{
+  renderIdent();
+  renderRefPhotos();
+  renderVideoLinks();
+  renderCards(REELS,'reels-list');
+  renderCards(FEED_POSTS,'feed-list');
+  renderPrecisa();
+});
+</script>
+</body>
+</html>
