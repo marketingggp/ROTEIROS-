@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Âme · Movimento Fundadoras</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'DM Sans',sans-serif;font-weight:300;background:#F8F5EF;color:#3D2B1F;-webkit-font-smoothing:antialiased}
+
+:root{
+  --mar:#1B2A4A; --off:#F8F5EF; --are:#C9B99A;
+  --cof:#3D2B1F; --cre:#EDE6D6; --wht:#FFFFFF;
+  --txt:#3D2B1F; --txt2:#5C3D2A; --gold:#8B6420;
+}
+
+/* ══ INDEX ══ */
+#index-page{min-height:100vh;background:var(--mar);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 28px 60px;position:relative;overflow:hidden}
+.idx-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.idx-bg span{font-size:320px;color:rgba(248,245,239,0.022);line-height:1}
+.idx-inner{position:relative;z-index:1;width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center}
+.idx-eye{font-size:10px;letter-spacing:.55em;text-transform:uppercase;color:#A8925A;font-weight:300;margin-bottom:36px}
+.idx-logo{font-size:80px;color:#F8F5EF;font-weight:400;line-height:.85;letter-spacing:-.02em;margin-bottom:8px}
+.idx-sub{font-size:10px;letter-spacing:.65em;text-transform:uppercase;color:#C8B99A;margin-bottom:52px}
+.idx-rule{width:1px;height:36px;background:#A8925A;margin-bottom:36px}
+.idx-label{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);font-weight:300;margin-bottom:20px}
+.idx-list{width:100%;display:flex;flex-direction:column;gap:1px}
+.idx-btn{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;background:rgba(248,245,239,0.05);border:.5px solid rgba(201,185,154,0.25);cursor:pointer;transition:background .18s;text-align:left;width:100%;font-family:'DM Sans',sans-serif;gap:16px}
+.idx-btn:hover,.idx-btn:active{background:rgba(201,185,154,0.12)}
+.idx-btn-left{display:flex;align-items:center;gap:16px}
+.idx-num{font-size:10px;letter-spacing:.3em;color:#A8925A;min-width:28px;flex-shrink:0}
+.idx-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;font-style:italic;color:#F8F5EF}
+.idx-arrow{color:#A8925A;font-size:14px;flex-shrink:0}
+.idx-foot{margin-top:44px;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#A8925A}
+
+/* ══ BACK BTN ══ */
+.back-btn{position:fixed;top:0;left:0;right:0;z-index:999;display:none;align-items:center;gap:10px;padding:14px 20px;background:rgba(27,42,74,0.97);backdrop-filter:blur(10px);border-bottom:.5px solid rgba(201,185,154,0.3);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--are)}
+.back-btn.visible{display:flex}
+.back-nome{font-size:10px;letter-spacing:.3em;color:#A8925A;margin-left:auto}
+
+/* ══ PORTAL ══ */
+#portal-page{display:none}
+#portal-page.visible{display:block}
+
+/* SPLASH */
+.p-splash{min-height:100vh;background:var(--mar);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 28px;position:relative;overflow:hidden}
+.p-splash-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.p-splash-bg span{font-size:300px;color:rgba(248,245,239,0.022);line-height:1}
+.p-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.p-eye{font-size:10px;letter-spacing:.52em;text-transform:uppercase;color:#A8925A;font-weight:300;margin-bottom:44px}
+.p-logo-mark{display:flex;flex-direction:column;align-items:center;margin-bottom:36px}
+.p-logo-sym{font-size:18px;color:#C8B99A;line-height:1;margin-bottom:2px}
+.p-logo-name{font-size:84px;color:#F8F5EF;font-weight:400;line-height:.85;letter-spacing:-.02em}
+.p-logo-sub{font-size:10px;letter-spacing:.65em;text-transform:uppercase;color:#C8B99A;font-weight:300;margin-top:10px}
+.p-rule{width:1px;height:44px;background:#A8925A;margin:0 auto 36px}
+.p-tag{font-size:9px;letter-spacing:.48em;text-transform:uppercase;color:var(--are);margin-bottom:14px}
+.p-welcome{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;font-style:italic;color:#F8F5EF;line-height:1.15}
+.p-foot{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:#A8925A}
+
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(27,42,74,0.97);backdrop-filter:blur(12px);border-bottom:.5px solid rgba(201,185,154,0.25);display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:52px}
+.topbar-logo{font-size:22px;color:#F8F5EF;font-weight:400;letter-spacing:-.01em}
+.topbar-tag{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--are)}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(27,42,74,0.97);backdrop-filter:blur(16px);border-top:.5px solid rgba(201,185,154,0.25);display:flex;padding-bottom:env(safe-area-inset-bottom,0)}
+.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:11px 4px 9px;gap:4px;cursor:pointer;border:none;background:transparent;color:#A8925A;transition:color .18s;font-family:'DM Sans',sans-serif}
+.nav-tab.active,.nav-tab:hover{color:var(--are)}
+.nav-tab.active .nav-dot{background:var(--are)}
+.nav-icon{font-size:16px;line-height:1}
+.nav-label{font-size:8px;letter-spacing:.28em;text-transform:uppercase;font-weight:400}
+.nav-dot{width:3px;height:3px;border-radius:50%;background:transparent;transition:background .18s}
+
+/* PÁGINAS */
+.ppage{display:none;flex-direction:column;padding-bottom:84px}
+.ppage.active{display:flex}
+
+/* ── HOME ── */
+.home-hero{background:var(--mar);border-bottom:.5px solid rgba(201,185,154,0.2);padding:40px 24px 36px}
+.h-eyebrow{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);font-weight:300;margin-bottom:20px}
+.h-headline{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:#F8F5EF;line-height:1.05;margin-bottom:16px}
+.h-headline em{font-style:italic}
+.h-sub{font-size:16px;line-height:1.8;color:#C8B99A;max-width:320px}
+
+.home-badge{margin:20px;background:rgba(201,185,154,0.1);border:.5px solid rgba(201,185,154,0.35);padding:26px 22px;display:flex;align-items:center;gap:18px}
+.badge-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;font-style:italic;color:var(--are);line-height:1;flex-shrink:0}
+.badge-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:5px}
+.badge-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#F8F5EF}
+.badge-sub{font-size:13px;color:#A8925A;margin-top:3px}
+
+.home-cards{padding:20px;display:flex;flex-direction:column;gap:1px}
+.home-card{background:rgba(248,245,239,0.05);border:.5px solid rgba(201,185,154,0.22);padding:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .18s;gap:16px}
+.home-card:hover,.home-card:active{background:rgba(201,185,154,0.1)}
+.home-card-num{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--are);margin-bottom:5px}
+.home-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:#F8F5EF}
+.home-card-arrow{color:#A8925A;font-size:15px;flex-shrink:0}
+
+/* ── CONVITE ── */
+.cv-hero{background:var(--mar);padding:40px 24px;border-bottom:.5px solid rgba(201,185,154,0.2)}
+.cv-tag{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);margin-bottom:20px}
+.cv-date-num{font-family:'Cormorant Garamond',serif;font-size:104px;font-weight:300;color:#F8F5EF;line-height:.82;letter-spacing:-.02em;margin-bottom:8px}
+.cv-date-month{font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);margin-bottom:24px}
+.cv-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;font-style:italic;color:#F8F5EF;line-height:1.2;margin-bottom:12px}
+.cv-desc{font-size:16px;line-height:1.85;color:#C8B99A}
+
+.cv-local{margin:20px;background:rgba(201,185,154,0.08);border:.5px solid rgba(201,185,154,0.3);padding:22px 20px}
+.cv-local-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:12px}
+.cv-local-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;font-style:italic;color:#F8F5EF;margin-bottom:6px}
+.cv-local-addr{font-size:15px;line-height:1.75;color:#C8B99A}
+.cv-local-time{margin-top:14px;padding-top:14px;border-top:.5px solid rgba(201,185,154,0.2);font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--are)}
+
+.prog-section{margin:0 20px 20px}
+.prog-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:16px}
+.prog-item{display:flex;gap:16px;padding:16px 0;border-bottom:.5px solid rgba(201,185,154,0.15)}
+.prog-time{font-size:12px;letter-spacing:.2em;color:var(--are);font-weight:500;min-width:50px;padding-top:2px;flex-shrink:0}
+.prog-name{font-size:16px;font-weight:500;color:var(--txt);margin-bottom:3px}
+.prog-desc{font-size:14px;color:var(--txt2);line-height:1.65}
+
+.carta-section{margin:20px;background:var(--off);border:.5px solid rgba(201,185,154,0.35);padding:26px 22px}
+.carta-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.carta-body{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;font-weight:300;color:var(--txt);line-height:1.85}
+.carta-body p{margin-bottom:16px}
+.carta-body p:last-child{margin-bottom:0}
+.carta-body .dest{font-size:22px;color:var(--mar);font-style:normal}
+.carta-ass{margin-top:22px;padding-top:18px;border-top:.5px solid rgba(201,185,154,0.3)}
+.carta-nome{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:var(--are)}
+.carta-cargo{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--txt2);margin-top:4px}
+
+/* Benefícios */
+.ben-section{margin:20px}
+.ben-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:16px}
+.ben-row{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:.5px solid rgba(201,185,154,0.2);background:var(--wht);padding-left:16px;padding-right:16px}
+.ben-row:first-of-type{border-top:.5px solid rgba(201,185,154,0.2)}
+.ben-icon{font-size:16px;flex-shrink:0;padding-top:2px}
+.ben-text{font-size:16px;line-height:1.72;color:var(--txt)}
+
+.cv-cta{margin:0 20px 20px;background:var(--are);padding:20px 22px;display:flex;align-items:center;justify-content:space-between}
+.cv-cta-text{font-size:13px;font-weight:500;color:var(--mar)}
+.cv-cta-sub{font-size:13px;color:rgba(27,42,74,0.6);margin-top:3px}
+.cv-cta-arrow{font-size:18px;color:var(--mar)}
+
+/* ── GUIA ── */
+.guia-hero{background:var(--mar);padding:40px 24px;border-bottom:.5px solid rgba(201,185,154,0.2)}
+.guia-tag{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);margin-bottom:20px}
+.guia-headline{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F8F5EF;line-height:1.05;margin-bottom:16px}
+.guia-headline em{font-style:italic}
+.guia-sub{font-size:16px;line-height:1.8;color:#C8B99A}
+
+.tipo-legend{display:flex;gap:1px;margin:20px}
+.tipo-chip{flex:1;padding:16px 14px;display:flex;flex-direction:column;gap:6px}
+.tipo-chip.dela{background:var(--cre);border-left:3px solid var(--are)}
+.tipo-chip.nos{background:var(--mar);border-left:3px solid rgba(201,185,154,0.5)}
+.tipo-chip-icon{font-size:15px}
+.tipo-chip-label{font-size:9px;letter-spacing:.35em;text-transform:uppercase;font-weight:500}
+.tipo-chip-label.dela{color:var(--gold)}
+.tipo-chip-label.nos{color:var(--are)}
+.tipo-chip-desc{font-size:12px;line-height:1.6;color:var(--txt2)}
+.tipo-chip-desc.nos{color:#C8B99A}
+
+.missao-group{margin:0 20px 26px}
+.missao-num-header{display:flex;align-items:flex-end;gap:12px;padding:22px 0 14px;border-bottom:.5px solid rgba(201,185,154,0.25);margin-bottom:10px}
+.mn-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;font-style:italic;color:rgba(201,185,154,0.2);line-height:1}
+.mn-tag{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.mn-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--txt)}
+.mn-sub{font-size:14px;color:var(--txt2);margin-top:3px}
+
+.bloco-card{border:.5px solid rgba(201,185,154,0.28);margin-bottom:1px}
+.bloco-card-header{padding:12px 16px;border-bottom:.5px solid rgba(201,185,154,0.2);display:flex;align-items:center}
+.bloco-card-header.dela{background:var(--cre)}
+.bloco-card-header.nos{background:var(--mar)}
+.bloco-card-type{font-size:9px;letter-spacing:.32em;text-transform:uppercase;font-weight:500}
+.bloco-card-type.ela{color:var(--gold)}
+.bloco-card-type.nos{color:var(--are)}
+.bloco-card-body{padding:16px;background:var(--wht)}
+.bloco-card-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--txt);margin-bottom:6px}
+.bloco-card-desc{font-size:15px;line-height:1.75;color:var(--txt2)}
+
+.checklist{border:.5px solid rgba(201,185,154,0.25);margin-bottom:1px}
+.checklist-header{padding:11px 16px;border-bottom:.5px solid rgba(201,185,154,0.2);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);background:var(--off)}
+.check-row{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-bottom:.5px solid rgba(201,185,154,0.15);background:var(--wht)}
+.check-row:last-child{border-bottom:none}
+.check-dot{width:5px;height:5px;border-radius:50%;background:var(--are);flex-shrink:0;margin-top:7px;opacity:.8}
+.check-main{font-size:15px;color:var(--txt);line-height:1.5}
+.check-hint{font-size:13px;color:var(--txt2);margin-top:3px;line-height:1.5}
+
+.dica{border-left:3px solid var(--are);padding:14px 16px;background:var(--cre);margin-bottom:1px}
+.dica-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.dica-text{font-size:15px;line-height:1.75;color:var(--txt2)}
+
+.quote-block{margin:20px;border-top:.5px solid rgba(201,185,154,0.3);border-bottom:.5px solid rgba(201,185,154,0.3);padding:30px 0;text-align:center}
+.quote-text{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;color:var(--txt);line-height:1.45;margin-bottom:14px}
+.quote-src{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold)}
+
+/* ── COMISSÃO ── */
+.com-hero{background:var(--mar);padding:40px 24px;border-bottom:.5px solid rgba(201,185,154,0.2)}
+.com-tag{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--are);margin-bottom:20px}
+.com-headline{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#F8F5EF;line-height:1.05;margin-bottom:16px}
+.com-headline em{font-style:italic}
+.com-sub{font-size:16px;line-height:1.8;color:#C8B99A}
+
+.com-pct-block{margin:20px;background:rgba(201,185,154,0.1);border:.5px solid rgba(201,185,154,0.35);padding:28px 22px;text-align:center}
+.com-pct-num{font-family:'Cormorant Garamond',serif;font-size:80px;font-weight:300;font-style:italic;color:var(--are);line-height:1}
+.com-pct-label{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:#A8925A;margin-top:4px}
+.com-pct-desc{font-size:15px;color:var(--off);margin-top:12px;line-height:1.75}
+
+.com-como-block{margin:20px}
+.com-como-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:16px}
+.com-como-card{background:var(--wht);border:.5px solid rgba(201,185,154,0.28);margin-bottom:1px;padding:20px 18px}
+.com-como-titulo{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:300;color:var(--txt);margin-bottom:6px}
+.com-como-desc{font-size:15px;line-height:1.75;color:var(--txt2)}
+.com-como-tag{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+
+.com-codigo-block{margin:20px;background:var(--mar);border:.5px solid rgba(201,185,154,0.3);padding:24px 20px}
+.com-codigo-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:12px}
+.com-codigo-exemplo{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;font-style:italic;color:var(--are);margin-bottom:8px}
+.com-codigo-desc{font-size:15px;line-height:1.75;color:#C8B99A}
+
+.com-regras-block{margin:0 20px 20px}
+.com-regras-label{font-size:9px;letter-spacing:.45em;text-transform:uppercase;color:#A8925A;margin-bottom:14px}
+.com-regra-row{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:.5px solid rgba(201,185,154,0.18)}
+.com-regra-row:last-child{border-bottom:none}
+.com-regra-dot{width:5px;height:5px;border-radius:50%;background:var(--are);flex-shrink:0;margin-top:7px}
+.com-regra-text{font-size:15px;color:var(--txt2);line-height:1.65}
+.com-regra-strong{color:var(--txt);font-weight:500}
+
+.closing-block{margin:20px;background:var(--cof);padding:36px 24px;text-align:center}
+.closing-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;font-weight:300;color:#EDE6D6;line-height:1.45;margin-bottom:22px}
+.closing-logo{font-size:40px;color:rgba(248,245,239,0.12);font-weight:400;letter-spacing:-.01em;margin-bottom:6px}
+.closing-sub{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:#A8925A}
+</style>
+</head>
+<body>
+
+<!-- VOLTAR -->
+<button class="back-btn" id="backBtn" onclick="voltarIndex()">
+  ← voltar
+  <span class="back-nome" id="backNome"></span>
+</button>
+
+<!-- ══ INDEX ══ -->
+<div id="index-page">
+  <div class="idx-bg"><span>â</span></div>
+  <div class="idx-inner">
+    <p class="idx-eye">Âme Wellness · Movimento Fundadoras · 2026</p>
+    <p class="idx-logo">âme</p>
+    <p class="idx-sub">wellness</p>
+    <div class="idx-rule"></div>
+    <p class="idx-label">Selecione seu nome</p>
+    <div class="idx-list" id="listaFundadoras"></div>
+    <p class="idx-foot">Drop 01 · Soul Motion · @amewellness.co</p>
+  </div>
+</div>
+
+<!-- ══ PORTAL ══ -->
+<div id="portal-page">
+
+  <!-- SPLASH -->
+  <div class="p-splash" id="p-splash">
+    <div class="p-splash-bg"><span>â</span></div>
+    <div class="p-inner">
+      <p class="p-eye">Âme Wellness · Movimento Fundadoras · 2026</p>
+      <div class="p-logo-mark">
+        <span class="p-logo-sym">^</span>
+        <span class="p-logo-name">âme</span>
+        <span class="p-logo-sub">wellness</span>
+      </div>
+      <div class="p-rule"></div>
+      <p class="p-tag">portal exclusivo para</p>
+      <p class="p-welcome" id="p-welcome-nome">—</p>
+    </div>
+    <p class="p-foot">Drop 01 · Soul Motion · by Aline Prado Sakamoto</p>
+  </div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="topbar-logo">âme</span>
+    <span class="topbar-tag" id="topbar-tag">Fundadora</span>
+  </div>
+
+  <!-- ── HOME ── -->
+  <div id="pp-home" class="ppage active">
+    <div class="home-hero">
+      <p class="h-eyebrow">Drop 01 · Soul Motion · 2026</p>
+      <h1 class="h-headline">Movimento<br><em>começa aqui.</em></h1>
+      <p class="h-sub">Tudo que você precisa para viver e compartilhar o Movimento Âme.</p>
+    </div>
+    <div class="home-badge">
+      <span class="badge-num" id="badge-num">nº —</span>
+      <div>
+        <p class="badge-label">Você é</p>
+        <p class="badge-title">Fundadora Âme</p>
+        <p class="badge-sub" id="badge-sub">escolhida desde o começo.</p>
+      </div>
+    </div>
+    <div class="home-cards">
+      <div class="home-card" onclick="goToP('convite')">
+        <div><p class="home-card-num">02 · Julho</p><p class="home-card-title">Convite do Evento</p></div>
+        <span class="home-card-arrow">→</span>
+      </div>
+      <div class="home-card" onclick="goToP('guia')">
+        <div><p class="home-card-num">4 missões</p><p class="home-card-title">Guia de Conteúdo</p></div>
+        <span class="home-card-arrow">→</span>
+      </div>
+      <div class="home-card" onclick="goToP('comissao')">
+        <div><p class="home-card-num">Código · Link · Pix</p><p class="home-card-title">Sua Comissão</p></div>
+        <span class="home-card-arrow">→</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONVITE ── -->
+  <div id="pp-convite" class="ppage">
+    <div class="cv-hero">
+      <p class="cv-tag">Primeiro Encontro das Fundadoras</p>
+      <p class="cv-date-num">02</p>
+      <p class="cv-date-month">Julho · 2026</p>
+      <p class="cv-title">Uma noite de yoga,<br>vinho & conexão.</p>
+      <p class="cv-desc">Uma noite intimista criada para reunir as mulheres que chegaram primeiro. Yoga, vinho, network e a apresentação oficial da coleção Soul Motion.</p>
+    </div>
+    <div class="cv-local">
+      <p class="cv-local-label">Local</p>
+      <p class="cv-local-name">Salão Gourmet</p>
+      <p class="cv-local-addr">Rua Francisco Bondança, 150<br>Vila Augusta · Guarulhos</p>
+      <p class="cv-local-time">19h · Pontualmente</p>
+    </div>
+    <div class="prog-section">
+      <p class="prog-label">Programação da noite</p>
+      <div class="prog-item"><span class="prog-time">19h00</span><div><p class="prog-name">Recepção & Welcome drink</p><p class="prog-desc">Chegada das Fundadoras, conhecer as outras mulheres do movimento.</p></div></div>
+      <div class="prog-item"><span class="prog-time">19h30</span><div><p class="prog-name">Prática de Yoga</p><p class="prog-desc">Uma prática especial vestindo a Soul Motion.</p></div></div>
+      <div class="prog-item"><span class="prog-time">20h30</span><div><p class="prog-name">Vinho & Conexões</p><p class="prog-desc">Momento para trocar e celebrar com quem chegou primeiro.</p></div></div>
+      <div class="prog-item"><span class="prog-time">21h00</span><div><p class="prog-name">Apresentação oficial · Drop 01</p><p class="prog-desc">O lançamento da coleção Soul Motion ao vivo.</p></div></div>
+      <div class="prog-item" style="border-bottom:none"><span class="prog-time">21h30</span><div><p class="prog-name">Encerramento & Surpresas</p><p class="prog-desc">Um presente especial para cada Fundadora.</p></div></div>
+    </div>
+
+    <div class="ben-section">
+      <p class="ben-label">Benefícios da Fundadora</p>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text">20% de desconto nos looks Âme</span></div>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text" id="ben-comissao">Comissão sobre vendas pelo seu cupom exclusivo</span></div>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text">Acesso antecipado a todos os lançamentos</span></div>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text">Convites prioritários para experiências e eventos</span></div>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text">Participação em campanhas oficiais da marca</span></div>
+      <div class="ben-row"><span class="ben-icon">🤍</span><span class="ben-text">Reconhecimento permanente como Fundadora Âme</span></div>
+    </div>
+
+    <div class="carta-section">
+      <p class="carta-label">Uma mensagem da Aline</p>
+      <div class="carta-body">
+        <p class="dest" id="carta-dest">Fundadora,</p>
+        <p>A Âme nasceu de um sonho muito pessoal. Mais do que criar roupas, queremos construir uma comunidade de mulheres que acreditam no movimento, no autocuidado e na força de se sentirem bem consigo mesmas.</p>
+        <p>Por isso, antes mesmo do lançamento oficial, escolhemos algumas mulheres que admiramos para caminharem conosco desde o primeiro passo.</p>
+        <p>Ficarei muito feliz em ter você ao nosso lado nesta história.</p>
+      </div>
+      <div class="carta-ass">
+        <p class="carta-nome">Aline Prado 🤍</p>
+        <p class="carta-cargo">Fundadora · Âme Wellness</p>
+      </div>
+    </div>
+    <div class="cv-cta">
+      <div><p class="cv-cta-text">Confirmar presença</p><p class="cv-cta-sub">Responda OK no direct da Aline</p></div>
+      <span class="cv-cta-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- ── GUIA ── -->
+  <div id="pp-guia" class="ppage">
+    <div class="guia-hero">
+      <p class="guia-tag">Guia de Conteúdo</p>
+      <h2 class="guia-headline">Suas<br><em>missões.</em></h2>
+      <p class="guia-sub">Você não precisa ser editora. Grave o que for real — a gente cuida do resto.</p>
+    </div>
+    <div class="tipo-legend">
+      <div class="tipo-chip dela">
+        <span class="tipo-chip-icon">🤍</span>
+        <span class="tipo-chip-label dela">Você posta</span>
+        <span class="tipo-chip-desc">No seu Instagram, do seu jeito</span>
+      </div>
+      <div class="tipo-chip nos">
+        <span class="tipo-chip-icon">✂️</span>
+        <span class="tipo-chip-label nos">Âme edita</span>
+        <span class="tipo-chip-desc nos">Você manda bruto pelo Drive</span>
+      </div>
+    </div>
+
+    <!-- M01 -->
+    <div class="missao-group">
+      <div class="missao-num-header">
+        <span class="mn-num">01</span>
+        <div><p class="mn-tag">Ao receber a bag</p><p class="mn-title">O unboxing.</p></div>
+      </div>
+      <div class="bloco-card"><div class="bloco-card-header dela"><span class="bloco-card-type ela">🤍 Você posta</span></div><div class="bloco-card-body"><p class="bloco-card-title">Stories do unboxing</p><p class="bloco-card-desc">Espontâneo — a bag chegando, a embalagem, o momento de abrir. Marque <strong>@amewellness.co</strong>.</p></div></div>
+      <div class="bloco-card"><div class="bloco-card-header nos"><span class="bloco-card-type nos">✂️ Âme edita · Drive</span></div><div class="bloco-card-body"><p class="bloco-card-title">Vídeo 1 — Abertura sem fala</p><p class="bloco-card-desc">Grave abrindo a bag do zero, mostrando cada item com calma. Sem fala. A equipe adiciona trilha e edição. Manda pelo Drive.</p></div></div>
+      <div class="checklist">
+        <div class="checklist-header">O que o vídeo precisa ter</div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Comece com a bag fechada</p><p class="check-hint">Deixe a revelação acontecer</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Mostre cada item com calma</p><p class="check-hint">Espelho, look, garrafa, manifesto</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Sem fala — só a reação natural</p><p class="check-hint">A equipe cuida da narração e da trilha</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Boa iluminação</p><p class="check-hint">Luz natural perto de janela é perfeita</p></div></div>
+      </div>
+      <div class="bloco-card"><div class="bloco-card-header nos"><span class="bloco-card-type nos">✂️ Âme edita · Drive</span></div><div class="bloco-card-body"><p class="bloco-card-title">Vídeo 2 — Fale sobre o Movimento</p><p class="bloco-card-desc">Um vídeo de 30 a 60 segundos com as suas palavras — o que significa ser Fundadora, o que te conecta com a Âme. Espontâneo é melhor que ensaiado.</p></div></div>
+      <div class="checklist">
+        <div class="checklist-header">O que falar — sem roteiro fixo, só guia</div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Que você faz parte do Movimento Âme</p><p class="check-hint">Do seu jeito, com as suas palavras</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">O que te conecta com movimento e autocuidado</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">O que significa ser Fundadora para você</p><p class="check-hint">Pode ser uma frase curta — o que vier de verdade</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">30 a 60 segundos · espontâneo é melhor</p></div></div>
+      </div>
+    </div>
+
+    <!-- M02 -->
+    <div class="missao-group">
+      <div class="missao-num-header">
+        <span class="mn-num">02</span>
+        <div><p class="mn-tag">No seu Instagram · 1x por mês</p><p class="mn-title">Vista o look.</p><p class="mn-sub">1 conteúdo por mês · ao longo de 3 meses</p></div>
+      </div>
+      <div class="bloco-card"><div class="bloco-card-header dela"><span class="bloco-card-type ela">🤍 Você posta</span></div><div class="bloco-card-body"><p class="bloco-card-title">Reel ou vídeo com o look Soul Motion</p><p class="bloco-card-desc">Grave do jeito que você já faz no seu perfil. Fale sobre a peça — o seu olhar, o seu estilo. Marque @amewellness.co e use seu cupom na legenda.</p></div></div>
+      <div class="checklist">
+        <div class="checklist-header">Pontos para cobrir</div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Tecido e conforto</p><p class="check-hint">Caimento, leveza, o que você sente ao vestir</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Design e acabamento</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">O que Soul Motion representa pra você</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Marque @amewellness.co e mencione seu cupom</p></div></div>
+      </div>
+      <div class="dica"><p class="dica-label">Combinado</p><p class="dica-text">Pedimos <strong>1 conteúdo por mês</strong>, ao longo de <strong>3 meses</strong>. Você estará com a Âme nesse período de lançamento — e tudo que você postar gera comissão pelo seu link personalizado.</p></div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">"não queremos conteúdo perfeito. queremos o seu olhar real sobre o que a Âme representa."</p>
+      <p class="quote-src">Âme Wellness · Movimento Fundadoras</p>
+    </div>
+
+    <!-- M03 -->
+    <div class="missao-group">
+      <div class="missao-num-header">
+        <span class="mn-num">03</span>
+        <div><p class="mn-tag">No dia 02 · antes de sair</p><p class="mn-title">O caminho.</p></div>
+      </div>
+      <div class="bloco-card"><div class="bloco-card-header dela"><span class="bloco-card-type ela">🤍 Você posta</span></div><div class="bloco-card-body"><p class="bloco-card-title">Stories do caminho pro evento</p><p class="bloco-card-desc">Preparação, look, expectativa, chegada. O movimento começa antes de entrar. Marque @amewellness.co.</p></div></div>
+    </div>
+
+    <!-- M04 -->
+    <div class="missao-group">
+      <div class="missao-num-header">
+        <span class="mn-num">04</span>
+        <div><p class="mn-tag">Durante o evento</p><p class="mn-title">Grave tudo.</p><p class="mn-sub">Só curta — a gente edita.</p></div>
+      </div>
+      <div class="bloco-card"><div class="bloco-card-header dela"><span class="bloco-card-type ela">🤍 Você posta</span></div><div class="bloco-card-body"><p class="bloco-card-title">Stories ao vivo</p><p class="bloco-card-desc">O que você quiser, no seu ritmo. Marque @amewellness.co.</p></div></div>
+      <div class="bloco-card"><div class="bloco-card-header nos"><span class="bloco-card-type nos">✂️ Âme edita · Drive</span></div><div class="bloco-card-body"><p class="bloco-card-title">Takes livres da experiência</p><p class="bloco-card-desc">Quanto mais takes, melhor a edição. Manda tudo bruto pelo Drive após o evento.</p></div></div>
+      <div class="checklist">
+        <div class="checklist-header">Momentos para gravar</div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Chegada e entrada no espaço</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Prática de yoga</p><p class="check-hint">Movimento, energia do grupo</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Vinho e conexão</p><p class="check-hint">As mulheres, a troca, os bastidores</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Apresentação Soul Motion</p></div></div>
+        <div class="check-row"><span class="check-dot"></span><div><p class="check-main">Depoimento espontâneo no final</p><p class="check-hint">30 segundos, sem roteiro</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMISSÃO ── -->
+  <div id="pp-comissao" class="ppage">
+    <div class="com-hero">
+      <p class="com-tag">Sua Comissão</p>
+      <h2 class="com-headline">Seu código.<br><em>Seu link. Seu Pix.</em></h2>
+      <p class="com-sub">Tudo que você gera fica registrado no seu nome. Simples, transparente e mensal.</p>
+    </div>
+
+    <div class="com-pct-block">
+      <p class="com-pct-num" id="com-pct-num">10%</p>
+      <p class="com-pct-label">de comissão por venda</p>
+      <p class="com-pct-desc" id="com-pct-desc">Para cada compra feita com o seu código ou pelo seu link, você recebe 10% do valor. O pagamento é feito mensalmente por Pix.</p>
+    </div>
+
+    <div class="com-como-block">
+      <p class="com-como-label">Como funciona</p>
+
+      <div class="com-como-card">
+        <p class="com-como-tag">Código de desconto</p>
+        <p class="com-como-titulo">Seu cupom exclusivo no site</p>
+        <p class="com-como-desc">Você terá um código único — qualquer pessoa que comprar usando ele conta como sua indicação. Você pode divulgar nos stories, na legenda, onde quiser.</p>
+      </div>
+
+      <div class="com-como-card">
+        <p class="com-como-tag">Link de compra</p>
+        <p class="com-como-titulo">Rastreamento direto pelo seu link</p>
+        <p class="com-como-desc">Além do cupom, você terá um link personalizado. Quem clicar e comprar pelo seu link — mesmo sem usar o cupom — também conta como sua venda.</p>
+      </div>
+
+      <div class="com-como-card">
+        <p class="com-como-tag">Controle</p>
+        <p class="com-como-titulo">Você acompanha tudo</p>
+        <p class="com-como-desc">Pela plataforma da Âme você consegue ver quantas pessoas usaram seu código e seu link, e o valor total gerado. Transparência total.</p>
+      </div>
+
+      <div class="com-como-card">
+        <p class="com-como-tag">Pagamento</p>
+        <p class="com-como-titulo">Pix todo mês</p>
+        <p class="com-como-desc">O pagamento da comissão é feito mensalmente por Pix, com base nas vendas confirmadas do mês anterior.</p>
+      </div>
+    </div>
+
+    <div class="com-codigo-block">
+      <p class="com-codigo-label">Exemplo do seu código</p>
+      <p class="com-codigo-exemplo" id="com-codigo-exemplo">AME[SEUNOME]</p>
+      <p class="com-codigo-desc">Seu código e link personalizados serão enviados por DM pela Aline antes do evento. Qualquer dúvida, fale diretamente com ela.</p>
+    </div>
+
+    <div class="com-regras-block">
+      <p class="com-regras-label">Combinados importantes</p>
+      <div class="com-regra-row"><span class="com-regra-dot"></span><span class="com-regra-text"><span class="com-regra-strong">Não é necessário exclusividade.</span> Você pode trabalhar com outras marcas normalmente.</span></div>
+      <div class="com-regra-row"><span class="com-regra-dot"></span><span class="com-regra-text">Pedimos <span class="com-regra-strong">1 conteúdo por mês</span>, ao longo de <span class="com-regra-strong">3 meses</span> de parceria.</span></div>
+      <div class="com-regra-row"><span class="com-regra-dot"></span><span class="com-regra-text">Os conteúdos precisam ser publicados dentro dos <span class="com-regra-strong">prazos combinados</span> pela Aline.</span></div>
+      <div class="com-regra-row"><span class="com-regra-dot"></span><span class="com-regra-text">O uso de imagens e vídeos nos canais da Âme sempre será <span class="com-regra-strong">aprovado por você antes</span> da publicação.</span></div>
+      <div class="com-regra-row"><span class="com-regra-dot"></span><span class="com-regra-text">Qualquer compra feita com seu código ou link gera comissão — <span class="com-regra-strong">independente de quem indicou</span>.</span></div>
+    </div>
+
+    <div class="closing-block">
+      <p class="closing-quote">"você não está entrando em uma campanha. você está entrando no início da história da Âme."</p>
+      <p class="closing-logo">âme</p>
+      <p class="closing-sub" id="closing-sub">Fundadoras · Drop 01 · @amewellness.co</p>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" onclick="goToP('home')" id="ptab-home">
+      <span class="nav-icon">⌂</span><span class="nav-label">Início</span><span class="nav-dot"></span>
+    </button>
+    <button class="nav-tab" onclick="goToP('convite')" id="ptab-convite">
+      <span class="nav-icon">◈</span><span class="nav-label">Evento</span><span class="nav-dot"></span>
+    </button>
+    <button class="nav-tab" onclick="goToP('guia')" id="ptab-guia">
+      <span class="nav-icon">✦</span><span class="nav-label">Guia</span><span class="nav-dot"></span>
+    </button>
+    <button class="nav-tab" onclick="goToP('comissao')" id="ptab-comissao">
+      <span class="nav-icon">◎</span><span class="nav-label">Comissão</span><span class="nav-dot"></span>
+    </button>
+  </nav>
+
+</div>
+
+<script>
+const fundadoras = [
+  { nome:"Dyane Santos",     primeiro:"Dyane",    comissao:"10%", num:"01" },
+  { nome:"Sarah Sâmela",    primeiro:"Sarah",    comissao:"10%", num:"02" },
+  { nome:"Erika Hernandez",  primeiro:"Erika",    comissao:"10%", num:"03" },
+  { nome:"Mah Oliveira",    primeiro:"Mah",      comissao:"10%", num:"04" },
+  { nome:"Juliana Reis",    primeiro:"Juliana",  comissao:"10%", num:"05" },
+  { nome:"Marina Alves",    primeiro:"Marina",   comissao:"10%", num:"06" },
+  { nome:"Letycia Mendes",  primeiro:"Letycia",  comissao:"10%", num:"07" },
+  { nome:"Mirella Sordi",   primeiro:"Mirella",  comissao:"10%", num:"08" },
+  { nome:"Rayana Lira",     primeiro:"Rayana",   comissao:"10%", num:"09" },
+  { nome:"Isabel Andrade",  primeiro:"Isabel",   comissao:"10%", num:"10" },
+  { nome:"Amanda Alves",    primeiro:"Amanda",   comissao:"10%", num:"11" },
+  { nome:"Magna Silva",     primeiro:"Magna",    comissao:"10%", num:"12" },
+  { nome:"Dai Gorga",       primeiro:"Dai",      comissao:"10%", num:"13" },
+  { nome:"Simone Alves",    primeiro:"Simone",   comissao:"10%", num:"14" },
+  { nome:"Patrícia Moreno", primeiro:"Patrícia", comissao:"10%", num:"15" },
+  { nome:"Roberta Oliveira",primeiro:"Roberta",  comissao:"20%", num:"16" },
+  { nome:"Ivani Cavalcante",primeiro:"Ivani",    comissao:"10%", num:"17" },
+];
+
+// Monta lista
+const lista = document.getElementById('listaFundadoras');
+fundadoras.forEach((f, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'idx-btn';
+  btn.innerHTML = `<div class="idx-btn-left"><span class="idx-num">0${f.num}</span><span class="idx-name">${f.nome}</span></div><span class="idx-arrow">→</span>`;
+  btn.onclick = () => abrirPortal(i);
+  lista.appendChild(btn);
+});
+
+function abrirPortal(idx) {
+  const f = fundadoras[idx];
+  const pct = f.comissao;
+  const primeiroUp = f.primeiro.toUpperCase().replace(/\s.*/,'');
+
+  // Preenche dados
+  document.getElementById('p-welcome-nome').textContent = f.nome;
+  document.getElementById('topbar-tag').textContent = f.primeiro;
+  document.getElementById('badge-num').textContent = 'nº ' + f.num;
+  document.getElementById('badge-sub').textContent = f.nome + ' · escolhida desde o começo.';
+  document.getElementById('carta-dest').textContent = f.primeiro + ',';
+  document.getElementById('ben-comissao').textContent = pct + ' de comissão sobre vendas pelo seu cupom e link exclusivos';
+  document.getElementById('com-pct-num').textContent = pct;
+  document.getElementById('com-pct-desc').textContent = `Para cada compra feita com o seu código ou pelo seu link, você recebe ${pct} do valor. O pagamento é feito mensalmente por Pix.`;
+  document.getElementById('com-codigo-exemplo').textContent = 'AME' + primeiroUp;
+  document.getElementById('closing-sub').textContent = 'Fundadora nº ' + f.num + ' · Drop 01 · @amewellness.co';
+  document.getElementById('backNome').textContent = f.nome;
+
+  // Mostra portal
+  document.getElementById('index-page').style.display = 'none';
+  document.getElementById('portal-page').style.display = 'block';
+  document.getElementById('backBtn').classList.add('visible');
+  goToP('home');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function voltarIndex() {
+  document.getElementById('portal-page').style.display = 'none';
+  document.getElementById('index-page').style.display = 'flex';
+  document.getElementById('backBtn').classList.remove('visible');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function goToP(pag) {
+  document.querySelectorAll('.ppage').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('pp-' + pag).classList.add('active');
+  document.getElementById('ptab-' + pag).classList.add('active');
+  const splash = document.getElementById('p-splash');
+  const offset = pag === 'home' ? 0 : (splash ? splash.offsetHeight + 52 : 0);
+  window.scrollTo({top: offset, behavior:'instant'});
+}
+</script>
+</body>
+</html>
