@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>âme · escolha sua voz</title>
+<meta name="description" content="Ouça o áudio da Âme na voz que preferir.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
+  :root {
+    --marinho: #1a2e4a;
+    --off-white: #f5f2ee;
+    --dourado: #b8956a;
+    --dourado-light: #d4b48a;
+    --marrom: #5a3e2b;
+    --marrom-claro: #7a5a40;
+    --areia: #c9b49a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--off-white);
+    font-family: 'Crimson Pro', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+
+  .page {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .top-bar {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--dourado), transparent);
+    margin-bottom: 40px;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--marinho);
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+  .logo span { color: var(--dourado); }
+
+  .headline-eyebrow {
+    color: var(--marrom);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+
+  .headline-main {
+    color: var(--marinho);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  /* CHOICE STEP */
+  .choice-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .voice-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 22px;
+    background: var(--marinho);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .voice-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 2px;
+    background: var(--dourado);
+  }
+  .voice-card:hover { background: var(--marrom); }
+  .voice-card:active { transform: scale(0.98); }
+
+  .voice-icon {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 1px solid var(--dourado);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--dourado-light);
+  }
+
+  .voice-text { flex: 1; }
+  .voice-title {
+    color: var(--off-white);
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .voice-sub {
+    color: var(--areia);
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  .voice-arrow { color: var(--dourado); font-size: 16px; flex-shrink: 0; }
+
+  /* PLAYER STEP */
+  .player-wrap {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+  .player-wrap.active { display: flex; }
+
+  .player-card {
+    width: 100%;
+    background: var(--marinho);
+    padding: 32px 26px;
+    position: relative;
+    overflow: hidden;
+  }
+  .player-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 2px;
+    background: var(--dourado);
+  }
+
+  .player-eyebrow {
+    color: var(--dourado-light);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .player-title {
+    color: var(--off-white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  audio {
+    width: 100%;
+    height: 40px;
+    filter: invert(0.9) sepia(0.2) saturate(1.5) hue-rotate(180deg);
+  }
+
+  .tap-play {
+    display: none;
+    width: 100%;
+    padding: 14px;
+    margin-top: 16px;
+    background: var(--dourado);
+    border: none;
+    color: var(--marinho);
+    font-family: 'Crimson Pro', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .tap-play.show { display: block; }
+
+  .switch-link {
+    color: var(--marrom);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--dourado);
+    padding-bottom: 2px;
+    cursor: pointer;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .footer-mark {
+    margin-top: 44px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.55;
+  }
+  .footer-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--dourado); }
+  .footer-line { width: 60px; height: 1px; background: var(--dourado); }
+  .footer-text {
+    color: var(--marrom);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="top-bar"></div>
+  <div class="logo">Â<span>me</span></div>
+
+  <div class="headline-eyebrow">um convite em áudio</div>
+  <div class="headline-main" id="headline">Escolha a voz<br>que você quer ouvir</div>
+
+  <!-- STEP 1 · CHOICE -->
+  <div class="choice-wrap" id="choice-wrap">
+    <button class="voice-card" onclick="playVoice('masculina')">
+      <span class="voice-icon">♂</span>
+      <span class="voice-text">
+        <span class="voice-title">Voz Masculina</span>
+        <span class="voice-sub">Toque para ouvir</span>
+      </span>
+      <span class="voice-arrow">→</span>
+    </button>
+    <button class="voice-card" onclick="playVoice('feminina')">
+      <span class="voice-icon">♀</span>
+      <span class="voice-text">
+        <span class="voice-title">Voz Feminina</span>
+        <span class="voice-sub">Toque para ouvir</span>
+      </span>
+      <span class="voice-arrow">→</span>
+    </button>
+  </div>
+
+  <!-- STEP 2 · PLAYER -->
+  <div class="player-wrap" id="player-wrap">
+    <div class="player-card">
+      <div class="player-eyebrow" id="player-eyebrow">tocando agora</div>
+      <div class="player-title" id="player-title">Voz Masculina</div>
+      <audio id="audio-player" controls></audio>
+      <button class="tap-play" id="tap-play" onclick="forcePlay()">▶ Toque para ouvir</button>
+    </div>
+    <button class="switch-link" onclick="backToChoice()">← ouvir a outra voz</button>
+  </div>
+
+  <div class="footer-mark">
+    <span class="footer-dot"></span>
+    <span class="footer-line"></span>
+    <span class="footer-text">Âme</span>
+  </div>
+</div>
+
+<script>
+  var AUDIO_SRC = {
+    masculina: 'audio/voz-masculina.mp3',
+    feminina:  'audio/voz-feminina.mp3'
+  };
+  var LABELS = {
+    masculina: 'Voz Masculina',
+    feminina:  'Voz Feminina'
+  };
+
+  var player = document.getElementById('audio-player');
+  var choiceWrap = document.getElementById('choice-wrap');
+  var playerWrap = document.getElementById('player-wrap');
+  var tapPlay = document.getElementById('tap-play');
+
+  function playVoice(voice) {
+    document.getElementById('player-title').textContent = LABELS[voice];
+    player.src = AUDIO_SRC[voice];
+    choiceWrap.style.display = 'none';
+    playerWrap.classList.add('active');
+    tapPlay.classList.remove('show');
+
+    var playPromise = player.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function () {
+        tapPlay.classList.add('show');
+      });
+    }
+
+    if (history.pushState) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('voz', voice);
+      history.pushState({}, '', url);
+    }
+  }
+
+  function forcePlay() {
+    player.play();
+    tapPlay.classList.remove('show');
+  }
+
+  function backToChoice() {
+    player.pause();
+    playerWrap.classList.remove('active');
+    choiceWrap.style.display = 'flex';
+    if (history.pushState) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete('voz');
+      history.pushState({}, '', url);
+    }
+  }
+
+  (function autoStartFromLink() {
+    var params = new URLSearchParams(window.location.search);
+    var voz = params.get('voz');
+    if (voz === 'masculina' || voz === 'feminina') {
+      playVoice(voz);
+    }
+  })();
+</script>
+
+</body>
+</html>
