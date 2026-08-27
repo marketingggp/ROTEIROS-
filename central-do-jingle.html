@@ -1,0 +1,852 @@
+<title>Central do Jingle</title>
+<meta name="description" content="Ouça o jingle oficial de Samuel, 4001, na voz masculina ou feminina, e compartilhe.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  :root{
+    --navy-950:#050f2e;
+    --navy-900:#0a1a4b;
+    --navy-800:#0f2a72;
+    --navy-700:#1a4fb0;
+    --navy-glow:#2f6fd6;
+    --gold-300:#ffdd88;
+    --gold-500:#f6bb00;
+    --gold-600:#dd9f00;
+    --paper:#faf7f1;
+    --paper-dim:#efe9de;
+    --ink:#0b1440;
+    --ink-soft:#5b6486;
+    --line:#e4ddd0;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{background:var(--navy-950);}
+
+  body{
+    font-family:'Poppins',system-ui,sans-serif;
+    color:var(--paper);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-x:hidden;
+  }
+
+  a,button{font-family:inherit;}
+
+  .page{
+    width:100%;
+    max-width:520px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    width:100%;
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 15% -10%, var(--navy-glow) 0%, transparent 55%),
+      linear-gradient(160deg, var(--navy-900) 0%, var(--navy-950) 65%, #030a22 100%);
+    padding:38px 26px 46px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+    isolation:isolate;
+  }
+
+  .hero-ribbon{
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:linear-gradient(100deg, var(--gold-600) 0%, var(--gold-500) 40%, transparent 41%);
+    clip-path:polygon(0 8%, 22% 8%, 4% 62%, 0 62%);
+    opacity:0.9;
+  }
+
+  .eq-decor{
+    position:absolute;
+    top:0; right:-6px; bottom:0;
+    width:64px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-end;
+    gap:3px;
+    padding:0 6px 18px 0;
+    z-index:-1;
+    opacity:0.55;
+  }
+  .eq-decor span{
+    width:5px;
+    border-radius:2px;
+    background:linear-gradient(180deg, var(--gold-500), var(--navy-glow));
+    animation:eqbounce 1.8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .eq-decor span{ animation:none; } }
+
+  .eyebrow-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .icon-wave{ color:var(--gold-400,var(--gold-500)); opacity:0.9; }
+
+  .hero-title{
+    font-weight:800;
+    font-size:26px;
+    letter-spacing:1px;
+    line-height:1.15;
+    color:var(--paper);
+    text-transform:uppercase;
+  }
+  .hero-title strong{
+    display:block;
+    font-weight:900;
+    font-size:52px;
+    letter-spacing:0.5px;
+    color:var(--gold-500);
+    line-height:1.05;
+    margin-top:2px;
+    text-wrap:balance;
+  }
+
+  .hero-sub{
+    margin-top:18px;
+    font-size:14px;
+    font-weight:400;
+    color:#dbe2f5;
+    line-height:1.6;
+  }
+  .hero-sub strong{
+    display:block;
+    font-weight:700;
+    color:var(--paper);
+    letter-spacing:0.3px;
+  }
+
+  /* ============ APP CARD ============ */
+  .app-card{
+    width:100%;
+    background:var(--paper);
+    border-radius:26px 26px 0 0;
+    margin-top:-22px;
+    box-shadow:0 -18px 44px rgba(3,8,28,0.35);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+    z-index:1;
+  }
+
+  .candidate{
+    display:flex;
+    flex-direction:column;
+    padding:26px 22px 20px;
+    gap:16px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .candidate-top{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .candidate-photo{
+    width:84px;
+    height:84px;
+    border-radius:50%;
+    object-fit:cover;
+    flex-shrink:0;
+    border:3px solid var(--gold-500);
+    box-shadow:0 6px 18px rgba(11,20,64,0.18);
+  }
+
+  .ballot{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    column-gap:10px;
+    row-gap:2px;
+    align-items:baseline;
+  }
+  .ballot-number{
+    font-weight:900;
+    font-size:30px;
+    color:var(--gold-600);
+    letter-spacing:0.5px;
+    grid-row:1; grid-column:1;
+  }
+  .ballot-name{
+    font-weight:800;
+    font-size:26px;
+    color:var(--ink);
+    grid-row:1; grid-column:2;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .ballot-name svg{ color:var(--gold-500); width:16px; height:16px; }
+  .ballot-cargo{
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--gold-600);
+    grid-row:2; grid-column:1;
+    white-space:nowrap;
+  }
+  .ballot-prof{
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink-soft);
+    grid-row:2; grid-column:2;
+  }
+
+  .tagline{
+    font-size:13.5px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    font-weight:400;
+  }
+  .tagline em{
+    font-style:normal;
+    font-weight:700;
+    color:var(--navy-800);
+  }
+
+  /* ============ PLAYER ============ */
+  .player-section{ padding:20px 22px 6px; }
+
+  .player-card{
+    background:linear-gradient(155deg, var(--navy-800) 0%, var(--navy-900) 70%, var(--navy-950) 100%);
+    border-radius:18px;
+    padding:20px 20px 16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .player-card::after{
+    content:'';
+    position:absolute; inset:0;
+    border-radius:18px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06);
+    pointer-events:none;
+  }
+
+  .badge-oficial{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--gold-500);
+    color:var(--navy-950);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 11px;
+    border-radius:20px;
+  }
+
+  .track-title{
+    margin-top:12px;
+    font-size:20px;
+    font-weight:700;
+    color:var(--paper);
+  }
+
+  .player-row{
+    margin-top:16px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .waveform{
+    flex:1;
+    height:40px;
+    display:flex;
+    align-items:center;
+    gap:2.5px;
+    overflow:hidden;
+  }
+  .waveform span{
+    flex:1 1 auto;
+    min-width:2.5px;
+    border-radius:2px;
+    background:linear-gradient(180deg, var(--gold-300), var(--gold-600));
+    opacity:0.85;
+    transform-origin:center;
+  }
+  .waveform.is-playing span{ animation:wavepulse 1.1s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){ .waveform.is-playing span{ animation:none; } }
+
+  .play-btn{
+    flex-shrink:0;
+    width:58px; height:58px;
+    border-radius:50%;
+    border:2px solid var(--gold-500);
+    background:var(--paper);
+    color:var(--navy-900);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 0 0 6px rgba(246,187,0,0.14), 0 0 22px rgba(246,187,0,0.35);
+    transition:transform .15s ease, box-shadow .25s ease;
+  }
+  .play-btn:hover{ transform:scale(1.04); }
+  .play-btn:active{ transform:scale(0.96); }
+  .play-btn svg{ width:22px; height:22px; }
+  .play-btn .icon-play{ margin-left:3px; }
+
+  .progress-wrap{ margin-top:18px; }
+  .progress-bar{
+    height:5px;
+    border-radius:3px;
+    background:rgba(255,255,255,0.16);
+    cursor:pointer;
+    position:relative;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--gold-600), var(--gold-300));
+  }
+  .time-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:7px;
+    font-size:11px;
+    color:#b9c2e0;
+    font-variant-numeric:tabular-nums;
+  }
+
+  .transport-row{
+    margin-top:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 4px;
+  }
+  .t-btn{
+    background:none;
+    border:none;
+    color:#aab4d6;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:34px; height:34px;
+    border-radius:50%;
+    transition:color .2s ease, background .2s ease;
+  }
+  .t-btn:hover{ color:var(--paper); }
+  .t-btn.is-active{ color:var(--gold-500); }
+  .t-btn svg{ width:17px; height:17px; }
+  .t-btn--main{
+    width:40px; height:40px;
+    background:var(--paper);
+    color:var(--navy-900);
+  }
+  .t-btn--main:hover{ color:var(--navy-900); background:var(--gold-300); }
+  .t-btn--main svg{ width:16px; height:16px; }
+
+  /* ============ CTA ============ */
+  .cta-row{
+    display:flex;
+    gap:10px;
+    padding:18px 22px 4px;
+  }
+  .btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:13px 14px;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.3px;
+    cursor:pointer;
+    border:none;
+  }
+  .btn svg{ width:16px; height:16px; }
+  .btn-primary{
+    background:var(--gold-500);
+    color:var(--navy-950);
+    box-shadow:0 8px 18px rgba(246,187,0,0.28);
+  }
+  .btn-primary:hover{ background:var(--gold-300); }
+  .btn-outline{
+    background:transparent;
+    color:var(--navy-900);
+    border:1.5px solid var(--navy-800);
+  }
+  .btn-outline:hover{ background:rgba(15,42,114,0.06); }
+
+  /* ============ OTHER VERSION ============ */
+  .other-section{ padding:18px 22px 6px; }
+  .badge-outline{
+    display:inline-block;
+    font-size:9.5px;
+    font-weight:800;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--navy-800);
+    border:1px solid var(--navy-800);
+    padding:4px 10px;
+    border-radius:20px;
+    margin-bottom:10px;
+  }
+  .version-row{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:13px 16px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .version-row:hover{ background:#e7e0d1; }
+  .version-title{
+    flex:1;
+    font-size:15px;
+    font-weight:700;
+    color:var(--ink);
+  }
+  .mini-wave{
+    display:flex;
+    align-items:center;
+    gap:2px;
+    height:20px;
+    width:70px;
+    flex-shrink:0;
+  }
+  .mini-wave span{
+    flex:1;
+    border-radius:2px;
+    background:var(--navy-700);
+    opacity:0.5;
+  }
+  .mini-play{
+    flex-shrink:0;
+    width:32px; height:32px;
+    border-radius:50%;
+    background:var(--navy-900);
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .mini-play svg{ width:12px; height:12px; margin-left:2px; }
+
+  /* ============ BOTTOM NAV ============ */
+  .bottom-nav{
+    margin-top:20px;
+    display:flex;
+    border-top:1px solid var(--line);
+  }
+  .nav-item{
+    flex:1;
+    background:none;
+    border:none;
+    padding:14px 4px 16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    font-size:10px;
+    font-weight:600;
+    color:#a4a89a;
+    cursor:pointer;
+    letter-spacing:0.2px;
+  }
+  .nav-item svg{ width:19px; height:19px; }
+  .nav-item.active{ color:var(--navy-900); }
+  .nav-item.active svg{ color:var(--gold-600); }
+
+  /* ============ FOOTER ============ */
+  .page-footer{
+    width:100%;
+    background:linear-gradient(180deg, var(--navy-950) 0%, #030a22 100%);
+    padding:34px 24px 42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:14px;
+  }
+  .heart-badge{
+    width:44px; height:44px;
+    border:1.5px solid var(--gold-500);
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold-500);
+    transform:rotate(45deg);
+  }
+  .heart-badge svg{ width:18px; height:18px; transform:rotate(-45deg); }
+  .page-footer p{ font-size:14px; color:#dbe2f5; line-height:1.6; }
+  .page-footer strong{ color:var(--gold-500); font-weight:800; font-size:16px; }
+
+  /* ============ TOAST ============ */
+  .toast{
+    position:fixed;
+    left:50%;
+    bottom:22px;
+    transform:translate(-50%, 12px);
+    background:var(--navy-950);
+    color:var(--paper);
+    border:1px solid var(--gold-600);
+    padding:11px 18px;
+    border-radius:30px;
+    font-size:12.5px;
+    font-weight:600;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+    z-index:50;
+    white-space:nowrap;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%, 0); }
+
+  @media (max-width:360px){
+    .hero-title strong{ font-size:44px; }
+    .ballot-number{ font-size:26px; }
+    .ballot-name{ font-size:22px; }
+  }
+</style>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-ribbon" aria-hidden="true"></div>
+    <div class="eq-decor" aria-hidden="true">
+      <span style="height:30%; animation-delay:0s;"></span>
+      <span style="height:70%; animation-delay:.15s;"></span>
+      <span style="height:45%; animation-delay:.3s;"></span>
+      <span style="height:85%; animation-delay:.45s;"></span>
+      <span style="height:55%; animation-delay:.6s;"></span>
+      <span style="height:38%; animation-delay:.75s;"></span>
+      <span style="height:66%; animation-delay:.9s;"></span>
+      <span style="height:25%; animation-delay:1.05s;"></span>
+    </div>
+
+    <div class="eyebrow-row">
+      <svg class="icon-wave" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h2M7 8v8M11 5v14M15 8v8M19 10v4M21 12h0"/></svg>
+    </div>
+
+    <h1 class="hero-title">Central do<strong>Jingle</strong></h1>
+    <p class="hero-sub">A música que representa<strong>nossa história e nossa luta.</strong></p>
+  </div>
+
+  <div class="app-card">
+
+    <div class="candidate">
+      <div class="candidate-top">
+        <img class="candidate-photo" src="assets/samuel-4001-foto.jpg" alt="Samuel, enfermeiro, candidato a deputado federal">
+        <div class="ballot">
+          <span class="ballot-number">4001</span>
+          <span class="ballot-name">Samuel <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.1C.6 8.7 2.1 5 5.6 5c2 0 3.4 1.1 4.4 2.6C11 6.1 12.4 5 14.4 5c3.5 0 5 3.7 3.6 6.9C19.5 16.4 12 21 12 21z"/></svg></span>
+          <span class="ballot-cargo">Deputado Federal</span>
+          <span class="ballot-prof">Enfermeiro</span>
+        </div>
+      </div>
+      <p class="tagline">Experiência pra <em>cuidar</em> e coragem pra <em>representar</em>.</p>
+    </div>
+
+    <div class="player-section">
+      <div class="player-card">
+        <span class="badge-oficial">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9-6.3 3.9 1.7-7-5.4-4.7 7.1-.6z"/></svg>
+          Jingle Oficial
+        </span>
+        <h2 class="track-title" id="track-title">Voz Masculina</h2>
+
+        <div class="player-row">
+          <div class="waveform" id="waveform" aria-hidden="true"></div>
+          <button class="play-btn" id="play-btn" aria-label="Tocar jingle">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="time-row">
+            <span id="time-current">0:00</span>
+            <span id="time-total">0:00</span>
+          </div>
+        </div>
+
+        <div class="transport-row">
+          <button class="t-btn" id="shuffle-btn" aria-label="Aleatório" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+          </button>
+          <button class="t-btn" id="prev-btn" aria-label="Faixa anterior">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM20 6v12l-8.5-6z"/></svg>
+          </button>
+          <button class="t-btn t-btn--main" id="playpause-btn" aria-label="Tocar ou pausar">
+            <svg class="icon-play2" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="t-btn" id="next-btn" aria-label="Próxima faixa">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 6h-2v12h2zM4 6v12l8.5-6z"/></svg>
+          </button>
+          <button class="t-btn" id="repeat-btn" aria-label="Repetir" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <button class="btn btn-primary" id="ouvir-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-3a9 9 0 0 1 18 0v3"/><path d="M21 14v2a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2zM3 14v2a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z"/></svg>
+        Ouvir
+      </button>
+      <button class="btn btn-outline" id="share-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a3 3 0 1 0-2.83-4H15a3 3 0 0 0 .06 2.06L8.9 9.51a3 3 0 1 0 0 4.98l6.17 3.45A3 3 0 1 0 16 16l-6.17-3.45a3 3 0 0 0 0-1.1L16 8z"/></svg>
+        Compartilhar
+      </button>
+    </div>
+
+    <div class="other-section">
+      <span class="badge-outline">Outra versão</span>
+      <button class="version-row" id="switch-voice-btn">
+        <span class="version-title" id="other-track-title">Voz Feminina</span>
+        <span class="mini-wave" aria-hidden="true">
+          <span style="height:35%"></span><span style="height:70%"></span><span style="height:50%"></span><span style="height:90%"></span><span style="height:40%"></span><span style="height:65%"></span><span style="height:30%"></span><span style="height:80%"></span><span style="height:45%"></span><span style="height:60%"></span>
+        </span>
+        <span class="mini-play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </button>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-tab="jingle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        Jingle
+      </button>
+      <button class="nav-item" data-tab="campanha">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Campanha
+      </button>
+      <button class="nav-item" data-tab="propostas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+        Propostas
+      </button>
+      <button class="nav-item" data-tab="mais">
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+        Mais
+      </button>
+    </nav>
+  </div>
+
+  <div class="page-footer">
+    <div class="heart-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.1C.6 8.7 2.1 5 5.6 5c2 0 3.4 1.1 4.4 2.6C11 6.1 12.4 5 14.4 5c3.5 0 5 3.7 3.6 6.9C19.5 16.4 12 21 12 21z"/></svg>
+    </div>
+    <p>Ouça. Compartilhe.<br><strong>Vamos juntos!</strong></p>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<audio id="audio-player" preload="metadata"></audio>
+
+<script>
+(function(){
+  var TRACKS = {
+    masculina: { label: 'Voz Masculina', src: "audio/voz-masculina.mp3" },
+    feminina:  { label: 'Voz Feminina',  src: "audio/voz-feminina.mp3" }
+  };
+
+  var audio = document.getElementById('audio-player');
+  var current = 'masculina';
+  var loadedFor = null;
+
+  var trackTitle = document.getElementById('track-title');
+  var otherTrackTitle = document.getElementById('other-track-title');
+  var waveform = document.getElementById('waveform');
+  var playBtn = document.getElementById('play-btn');
+  var playPauseBtn = document.getElementById('playpause-btn');
+  var progressBar = document.getElementById('progress-bar');
+  var progressFill = document.getElementById('progress-fill');
+  var timeCurrent = document.getElementById('time-current');
+  var timeTotal = document.getElementById('time-total');
+  var ouvirBtn = document.getElementById('ouvir-btn');
+  var switchBtn = document.getElementById('switch-voice-btn');
+  var prevBtn = document.getElementById('prev-btn');
+  var nextBtn = document.getElementById('next-btn');
+  var shuffleBtn = document.getElementById('shuffle-btn');
+  var repeatBtn = document.getElementById('repeat-btn');
+  var shareBtn = document.getElementById('share-btn');
+  var toast = document.getElementById('toast');
+
+  // build waveform bars once
+  var BAR_COUNT = 34;
+  var heights = [];
+  for (var i = 0; i < BAR_COUNT; i++) {
+    var h = 20 + Math.round(Math.abs(Math.sin(i * 1.7)) * 70);
+    heights.push(h);
+    var bar = document.createElement('span');
+    bar.style.height = h + '%';
+    bar.style.animationDelay = (i * 0.045) + 's';
+    waveform.appendChild(bar);
+  }
+
+  function otherVoice(v) { return v === 'masculina' ? 'feminina' : 'masculina'; }
+
+  function fmtTime(sec) {
+    if (!isFinite(sec) || sec < 0) sec = 0;
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function setPlayIcons(isPlaying) {
+    var pauseSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>';
+    var playSvg = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    playBtn.innerHTML = isPlaying ? pauseSvg : playSvg;
+    playPauseBtn.innerHTML = isPlaying ? pauseSvg : playSvg;
+    waveform.classList.toggle('is-playing', isPlaying);
+  }
+
+  function loadTrack(voice, opts) {
+    opts = opts || {};
+    current = voice;
+    trackTitle.textContent = TRACKS[voice].label;
+    otherTrackTitle.textContent = TRACKS[otherVoice(voice)].label;
+    if (loadedFor !== voice) {
+      audio.src = TRACKS[voice].src;
+      loadedFor = voice;
+    }
+    if (history.pushState) {
+      try {
+        var url = new URL(window.location.href);
+        url.searchParams.set('voz', voice);
+        history.pushState({}, '', url);
+      } catch (e) {}
+    }
+    if (opts.autoplay) {
+      var p = audio.play();
+      if (p !== undefined) p.catch(function(){ setPlayIcons(false); });
+    }
+  }
+
+  function togglePlay() {
+    if (loadedFor !== current) loadTrack(current);
+    if (audio.paused) {
+      var p = audio.play();
+      if (p !== undefined) p.catch(function(){});
+    } else {
+      audio.pause();
+    }
+  }
+
+  playBtn.addEventListener('click', togglePlay);
+  playPauseBtn.addEventListener('click', togglePlay);
+  ouvirBtn.addEventListener('click', togglePlay);
+
+  switchBtn.addEventListener('click', function () {
+    loadTrack(otherVoice(current), { autoplay: true });
+  });
+  nextBtn.addEventListener('click', function () {
+    loadTrack(otherVoice(current), { autoplay: !audio.paused || loadedFor === null ? true : false });
+  });
+  prevBtn.addEventListener('click', function () {
+    loadTrack(otherVoice(current), { autoplay: !audio.paused });
+  });
+
+  shuffleBtn.addEventListener('click', function () {
+    var active = shuffleBtn.classList.toggle('is-active');
+    shuffleBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  repeatBtn.addEventListener('click', function () {
+    audio.loop = !audio.loop;
+    repeatBtn.classList.toggle('is-active', audio.loop);
+    repeatBtn.setAttribute('aria-pressed', audio.loop ? 'true' : 'false');
+  });
+
+  audio.addEventListener('play', function () { setPlayIcons(true); });
+  audio.addEventListener('pause', function () { setPlayIcons(false); });
+  audio.addEventListener('ended', function () { setPlayIcons(false); progressFill.style.width = '0%'; });
+  audio.addEventListener('timeupdate', function () {
+    if (audio.duration) {
+      progressFill.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+    }
+    timeCurrent.textContent = fmtTime(audio.currentTime);
+  });
+  audio.addEventListener('loadedmetadata', function () {
+    timeTotal.textContent = fmtTime(audio.duration);
+  });
+
+  progressBar.addEventListener('click', function (e) {
+    if (!audio.duration) return;
+    var rect = progressBar.getBoundingClientRect();
+    var ratio = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+  });
+
+  var toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2200);
+  }
+
+  shareBtn.addEventListener('click', function () {
+    var shareData = {
+      title: 'Central do Jingle · Samuel 4001',
+      text: 'Ouça o jingle oficial de Samuel, 4001, na voz masculina ou feminina:',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      navigator.share(shareData).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareData.url).then(function () {
+        showToast('Link copiado!');
+      }).catch(function () {
+        showToast('Não foi possível copiar o link');
+      });
+    } else {
+      showToast('Copie o link da barra de endereço para compartilhar');
+    }
+  });
+
+  document.querySelectorAll('.nav-item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.dataset.tab === 'jingle') return;
+      showToast('Em breve');
+    });
+  });
+
+  (function initFromLink() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var voz = params.get('voz');
+      if (voz === 'masculina' || voz === 'feminina') {
+        loadTrack(voz, { autoplay: true });
+        return;
+      }
+    } catch (e) {}
+    trackTitle.textContent = TRACKS[current].label;
+    otherTrackTitle.textContent = TRACKS[otherVoice(current)].label;
+  })();
+})();
+</script>
