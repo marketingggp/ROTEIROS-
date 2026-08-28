@@ -38,22 +38,22 @@ CHARACTER_ID fixo por personagem. Nunca alterar durante o projeto. Manter seed/r
 | `CHAR_VALENTINA_v01` | Valentina | `personagens/valentina-ref.png` (close-up) + `personagens/valentina-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
 | `CHAR_THEO_v01` | Theo | `personagens/theo-ref.png` | ✅ Aprovada |
 | `CHAR_LUCIA_v01` | Dona Lúcia | `personagens/lucia-ref.jpg` (close-up) + `personagens/lucia-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
-| `CHAR_LUCAS_v01` | Lucas | — | ⚠️ **PENDENTE** — nenhuma imagem anexada |
-| `CHAR_MARIANA_v01` | Mariana | — | ⚠️ **PENDENTE** — nenhuma imagem anexada |
+| `CHAR_LUCAS_v01` | Lucas | `personagens/lucas-ref.png` (close-up) + `personagens/lucas-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
+| `CHAR_MARIANA_v01` | Mariana | `personagens/mariana-ref.png` (close-up) + `personagens/mariana-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
 
-> **GUARDIAN — nota de auditoria permanente:** Lucas e Mariana têm descrição textual aprovada (abaixo) mas **nenhuma character reference fornecida**. Regra de Samuel ("se a ferramenta não conseguir preservar o personagem, não gerar; compor o ativo aprovado depois") se aplica por extensão a qualquer personagem sem imagem: takes desses dois devem ser marcados `PENDENTE DE VERIFICAÇÃO` até que uma foto/render oficial seja aprovado e salvo em `personagens/`. Enquanto isso, produção pode seguir com os 6 personagens já referenciados (Samuel, Rafael, André, Valentina, Theo, Dona Lúcia) sem travar o episódio 001 (ver Plano B no roteiro).
+> **GUARDIAN — nota de auditoria permanente:** Elenco completo — os 8 personagens (Samuel, Rafael, André, Valentina, Theo, Dona Lúcia, Lucas, Mariana) têm character reference aprovada com CHARACTER_ID fixo. Nenhum take do Vídeo 001 permanece `PENDENTE DE VERIFICAÇÃO` por falta de referência visual.
 
 ### Samuel — ativo protegido
 Elo entre todos os personagens. Representa cuidado, escuta, experiência, representação, saúde, liderança pública. Personalidade: humano, próximo, seguro, acolhedor, positivo, não teatral. Preservar rosto, cabelo, sorriso, tom de pele, idade aparente, proporção facial. Pode melhorar iluminação/nitidez/animação/integração de cenário — nunca substituir identidade.
 
-### Lucas (sem imagem — descrição textual)
-Jovem. Representa juventude, educação, oportunidades, primeiro emprego, futuro. Visual: cabelo castanho volumoso, moletom, mochila, estética urbana jovem. Personalidade: curioso, inteligente, otimista, questionador.
+### Lucas — `personagens/lucas-ref.png` + `personagens/lucas-ref-corpo.png`
+Jovem. Representa juventude, educação, oportunidades, primeiro emprego, futuro. Visual: cabelo castanho volumoso e ondulado, moletom verde-petróleo com cordão bege, mochila preta, calça jeans, tênis preto e branco, estética urbana jovem. Sorriso confiante e leve. Personalidade: curioso, inteligente, otimista, questionador.
 
 ### Dona Lúcia — `personagens/lucia-ref.jpg` + `personagens/lucia-ref-corpo.png`
 Pessoa idosa. Representa idosos, saúde, respeito, dignidade, envelhecimento com qualidade. Visual: cabelos grisalhos cacheados curtos, óculos de armação marrom, brincos e colar dourados discretos, cardigã bege sobre blusa creme, calça marrom, mocassim marrom. Sorriso largo e expressivo. Personalidade: carinhosa, sábia, bem-humorada, direta, afetiva.
 
-### Mariana (sem imagem — descrição textual)
-Mãe do Theo. Representa famílias, maternidade, acolhimento, mães atípicas, rotina de cuidado. Visual: mulher adulta, cabelos escuros, camiseta verde, jeans. Personalidade: forte, acolhedora, determinada, realista.
+### Mariana — `personagens/mariana-ref.png` + `personagens/mariana-ref-corpo.png`
+Mãe do Theo. Representa famílias, maternidade, acolhimento, mães atípicas, rotina de cuidado. Visual: mulher adulta, cabelos longos castanho-escuros ondulados, camiseta verde-oliva gola V, calça jeans, sapatilha bege. Sorriso caloroso. Personalidade: forte, acolhedora, determinada, realista.
 
 ### Theo — `personagens/theo-ref.png`
 Criança. Representa infância, autismo, inclusão, acolhimento. Visual: menino, cabelo cacheado, camiseta azul (estampa de peças de quebra-cabeça colorida). Autismo tratado com respeito: sem comportamento estereotipado, sem infantilização além da idade, sem uso do autismo como recurso dramático.
