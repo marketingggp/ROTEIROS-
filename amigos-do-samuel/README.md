@@ -97,10 +97,10 @@ no distorted typography
 |---|---|---|---|
 | 001 | Todos (apresentação) | Abertura da série | `video-001-apresentacao/roteiro.md` |
 | 002 | Lucas | Juventude e primeiro emprego | `episodio-002-lucas/roteiro.md` |
-| 003 | Dona Lúcia | Saúde e dignidade na terceira idade | — |
-| 004 | Mariana + Theo | Autismo, famílias e inclusão | — |
-| 005 | André | Acessibilidade e autonomia | — |
-| 006 | Valentina | Respeito e dignidade | — |
-| 007 | Rafael | Valorização dos profissionais da saúde | — |
+| 003 | Dona Lúcia | Saúde e dignidade na terceira idade | `episodio-003-dona-lucia/roteiro.md` |
+| 004 | Mariana + Theo | Autismo, famílias e inclusão | `episodio-004-mariana-theo/roteiro.md` |
+| 005 | André | Acessibilidade e autonomia | `episodio-005-andre/roteiro.md` |
+| 006 | Valentina | Respeito e dignidade | `episodio-006-valentina/roteiro.md` |
+| 007 | Rafael | Valorização dos profissionais da saúde | `episodio-007-rafael/roteiro.md` (fecho de temporada) |
 
-Cada episódio a partir do 002 deve fechar o arco: **história humana → problema → papel da política → o que um deputado federal pode fazer → continuação da série**.
+Cada episódio a partir do 002 deve fechar o arco: **história humana → problema → papel da política → o que um deputado federal pode fazer → continuação da série**. Todos os episódios 002–007 usam a mesma fórmula de quatro verbos institucionais (**propor, fiscalizar, destinar recursos, representar**) e o mesmo cuidado jurídico: nenhuma lei, programa, artigo ou número específico é citado por nome em nenhum roteiro — qualquer citação nominal futura entra como `PENDENTE DE VERIFICAÇÃO` até checagem factual/jurídica formal.
