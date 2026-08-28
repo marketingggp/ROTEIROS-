@@ -93,14 +93,14 @@ no distorted typography
 
 ## 6. Episódios da série
 
-| Episódio | Personagem | Tema |
-|---|---|---|
-| 001 | Todos (apresentação) | Abertura da série |
-| 002 | Lucas | Juventude e primeiro emprego |
-| 003 | Dona Lúcia | Saúde e dignidade na terceira idade |
-| 004 | Mariana + Theo | Autismo, famílias e inclusão |
-| 005 | André | Acessibilidade e autonomia |
-| 006 | Valentina | Respeito e dignidade |
-| 007 | Rafael | Valorização dos profissionais da saúde |
+| Episódio | Personagem | Tema | Roteiro |
+|---|---|---|---|
+| 001 | Todos (apresentação) | Abertura da série | `video-001-apresentacao/roteiro.md` |
+| 002 | Lucas | Juventude e primeiro emprego | `episodio-002-lucas/roteiro.md` |
+| 003 | Dona Lúcia | Saúde e dignidade na terceira idade | — |
+| 004 | Mariana + Theo | Autismo, famílias e inclusão | — |
+| 005 | André | Acessibilidade e autonomia | — |
+| 006 | Valentina | Respeito e dignidade | — |
+| 007 | Rafael | Valorização dos profissionais da saúde | — |
 
 Cada episódio a partir do 002 deve fechar o arco: **história humana → problema → papel da política → o que um deputado federal pode fazer → continuação da série**.
