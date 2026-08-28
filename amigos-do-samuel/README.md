@@ -35,13 +35,13 @@ CHARACTER_ID fixo por personagem. Nunca alterar durante o projeto. Manter seed/r
 | `CHAR_SAMUEL_OFFICIAL_v01` | Samuel | `personagens/samuel-oficial.png` (fotografia real aprovada) | ✅ Aprovada |
 | `CHAR_RAFAEL_v01` | Rafael | `personagens/rafael-ref.png` | ✅ Aprovada |
 | `CHAR_ANDRE_v01` | André | `personagens/andre-ref.png` | ✅ Aprovada |
-| `CHAR_VALENTINA_v01` | Valentina | `personagens/valentina-ref.png` | ✅ Aprovada |
+| `CHAR_VALENTINA_v01` | Valentina | `personagens/valentina-ref.png` (close-up) + `personagens/valentina-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
 | `CHAR_THEO_v01` | Theo | `personagens/theo-ref.png` | ✅ Aprovada |
+| `CHAR_LUCIA_v01` | Dona Lúcia | `personagens/lucia-ref.jpg` (close-up) + `personagens/lucia-ref-corpo.png` (corpo inteiro) | ✅ Aprovada |
 | `CHAR_LUCAS_v01` | Lucas | — | ⚠️ **PENDENTE** — nenhuma imagem anexada |
-| `CHAR_LUCIA_v01` | Dona Lúcia | — | ⚠️ **PENDENTE** — nenhuma imagem anexada |
 | `CHAR_MARIANA_v01` | Mariana | — | ⚠️ **PENDENTE** — nenhuma imagem anexada |
 
-> **GUARDIAN — nota de auditoria permanente:** Lucas, Dona Lúcia e Mariana têm descrição textual aprovada (abaixo) mas **nenhuma character reference fornecida**. Regra de Samuel ("se a ferramenta não conseguir preservar o personagem, não gerar; compor o ativo aprovado depois") se aplica por extensão a qualquer personagem sem imagem: takes desses três devem ser marcados `PENDENTE DE VERIFICAÇÃO` até que uma foto/render oficial seja aprovado e salvo em `personagens/`. Enquanto isso, produção pode seguir com os 5 personagens já referenciados sem travar o episódio 001 (ver Plano B no roteiro).
+> **GUARDIAN — nota de auditoria permanente:** Lucas e Mariana têm descrição textual aprovada (abaixo) mas **nenhuma character reference fornecida**. Regra de Samuel ("se a ferramenta não conseguir preservar o personagem, não gerar; compor o ativo aprovado depois") se aplica por extensão a qualquer personagem sem imagem: takes desses dois devem ser marcados `PENDENTE DE VERIFICAÇÃO` até que uma foto/render oficial seja aprovado e salvo em `personagens/`. Enquanto isso, produção pode seguir com os 6 personagens já referenciados (Samuel, Rafael, André, Valentina, Theo, Dona Lúcia) sem travar o episódio 001 (ver Plano B no roteiro).
 
 ### Samuel — ativo protegido
 Elo entre todos os personagens. Representa cuidado, escuta, experiência, representação, saúde, liderança pública. Personalidade: humano, próximo, seguro, acolhedor, positivo, não teatral. Preservar rosto, cabelo, sorriso, tom de pele, idade aparente, proporção facial. Pode melhorar iluminação/nitidez/animação/integração de cenário — nunca substituir identidade.
@@ -49,8 +49,8 @@ Elo entre todos os personagens. Representa cuidado, escuta, experiência, repres
 ### Lucas (sem imagem — descrição textual)
 Jovem. Representa juventude, educação, oportunidades, primeiro emprego, futuro. Visual: cabelo castanho volumoso, moletom, mochila, estética urbana jovem. Personalidade: curioso, inteligente, otimista, questionador.
 
-### Dona Lúcia (sem imagem — descrição textual)
-Pessoa idosa. Representa idosos, saúde, respeito, dignidade, envelhecimento com qualidade. Visual: cabelos grisalhos curtos, óculos, roupa bege, aparência acolhedora. Personalidade: carinhosa, sábia, bem-humorada, direta, afetiva.
+### Dona Lúcia — `personagens/lucia-ref.jpg` + `personagens/lucia-ref-corpo.png`
+Pessoa idosa. Representa idosos, saúde, respeito, dignidade, envelhecimento com qualidade. Visual: cabelos grisalhos cacheados curtos, óculos de armação marrom, brincos e colar dourados discretos, cardigã bege sobre blusa creme, calça marrom, mocassim marrom. Sorriso largo e expressivo. Personalidade: carinhosa, sábia, bem-humorada, direta, afetiva.
 
 ### Mariana (sem imagem — descrição textual)
 Mãe do Theo. Representa famílias, maternidade, acolhimento, mães atípicas, rotina de cuidado. Visual: mulher adulta, cabelos escuros, camiseta verde, jeans. Personalidade: forte, acolhedora, determinada, realista.

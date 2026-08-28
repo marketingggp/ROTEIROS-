@@ -49,7 +49,7 @@ Notação usada: `[SCENE] [SHOT] [CAM] [ACTION] [DIALOGUE] [SFX] [MUSIC] [TRANSI
 - **[MUSIC]** Segue crescendo de forma linear e discreta.
 - **[TRANSITION → TK03]** Match cut pelo movimento do último personagem (Rafael) para o próximo plano.
 - **[TEXT]** Nenhum.
-- **[GUARDIAN]** André somente com cadeira de rodas visível e coerente; Lucas/Dona Lúcia/Mariana **pendentes de referência** — ver Plano B (seção R).
+- **[GUARDIAN]** André somente com cadeira de rodas visível e coerente; Lucas/Mariana **pendentes de referência** — ver Plano B (seção R). Dona Lúcia já aprovada.
 
 ### TK03 — SCENE 03 · 00:06–00:09 (3s)
 - **[SHOT]** Montagem cruzada, planos médios em ambientes reais (rua, corredor, casa).
@@ -84,7 +84,12 @@ Notação usada: `[SCENE] [SHOT] [CAM] [ACTION] [DIALOGUE] [SFX] [MUSIC] [TRANSI
 - **[MUSIC]** Base.
 - **[TRANSITION → TK06]** Hard cut.
 - **[DURATION]** 4s.
-- **[GUARDIAN]** `CHAR_LUCIA_v01` **sem imagem de referência** — take **PENDENTE DE VERIFICAÇÃO** (seção R).
+- **[GUARDIAN]** `CHAR_LUCIA_v01` aprovado (`personagens/lucia-ref.jpg` + `personagens/lucia-ref-corpo.png`) — preservar cabelo grisalho cacheado curto, óculos de armação marrom, cardigã bege, sorriso largo.
+
+### TK05B — cobertura adicional · DONA LÚCIA (plano geral, opcional)
+- **[SHOT]** Plano geral, corpo inteiro, usando `personagens/lucia-ref-corpo.png` como referência.
+- **[USO]** Cutaway opcional para TK03 (montagem cotidiana) ou B-roll de segurança caso o take de close (TK05) precise de plano alternativo.
+- **[GUARDIAN]** Preservar cardigã bege, calça marrom, mocassim marrom, postura ereta e receptiva.
 
 ### TK06 — SCENE 06 · MARIANA + THEO · 00:17–00:22 (5s)
 - **[SHOT]** Plano médio dos dois, dois-shot.
@@ -233,7 +238,7 @@ Prompts em inglês (padrão das ferramentas de geração), com nota de sincroniz
 **TK01 —** `CHAR_SAMUEL_OFFICIAL_v01` reference. Cinematic medium shot, 35mm, soft frontal tracking shot following a Black man in his 40s wearing white medical scrubs with a stethoscope, walking through a bright, contemporary Brazilian public health clinic hallway, warm natural light from large windows, shallow depth of field, documentary handheld feel (very subtle), he turns his head slightly toward camera in the last third of the shot, calm confident expression, photoreal skin detail preserved from reference. Portuguese (Brazil) lip sync: "Eu quero te apresentar algumas pessoas."
 *Negative adicional:* no exaggerated smile hold, no stopping mid-walk abruptly.
 
-**TK02 —** Six rapid micro-shots (~0.5s each), close/medium-close, 50mm, clean cuts, consistent soft daylight across all six, each subject centered and looking naturally into or near camera, subtle motion (breathing, blinking, small head turn), no repeated framing. Use each character's own reference image: `CHAR_LUCAS_v01`, `CHAR_LUCIA_v01`, `CHAR_MARIANA_v01`+`CHAR_THEO_v01`, `CHAR_ANDRE_v01`, `CHAR_VALENTINA_v01`, `CHAR_RAFAEL_v01`.
+**TK02 —** Six rapid micro-shots (~0.5s each), close/medium-close, 50mm, clean cuts, consistent soft daylight across all six, each subject centered and looking naturally into or near camera, subtle motion (breathing, blinking, small head turn), no repeated framing. Use each character's own reference image: `CHAR_LUCAS_v01` (⚠️ pendente), `CHAR_LUCIA_v01`, `CHAR_MARIANA_v01` (⚠️ pendente)+`CHAR_THEO_v01`, `CHAR_ANDRE_v01`, `CHAR_VALENTINA_v01`, `CHAR_RAFAEL_v01`.
 *Negative adicional:* no jump cuts that break character identity, no motion blur smear.
 
 **TK03 —** Six medium shots, 35mm, subtle lateral tracking, each character in a plausible everyday Brazilian environment (street, clinic hallway, home), natural walking or small task motion, consistent lighting logic per environment.
@@ -241,7 +246,8 @@ Prompts em inglês (padrão das ferramentas de geração), com nota de sincroniz
 
 **TK04 —** `CHAR_LUCAS_v01` reference (⚠️ pendente — ver seção R). Medium close-up, 50mm, slow continuous push-in, young man with voluminous brown hair, hoodie, backpack strap visible, blurred urban Brazilian street background, natural confident curious expression, direct eye contact with camera. PT-BR lip sync: "Eu sou o Lucas. E quero falar sobre oportunidade para quem está começando."
 
-**TK05 —** `CHAR_LUCIA_v01` reference (⚠️ pendente — ver seção R). Medium close-up, 50mm, subtle lateral tracking, elderly woman with short gray hair, glasses, beige clothing, warm blurred background, gentle affectionate expression, small nod on "dignidade". PT-BR lip sync: "Eu sou a Dona Lúcia. E quero envelhecer com saúde, respeito e dignidade."
+**TK05 —** `CHAR_LUCIA_v01` reference (`personagens/lucia-ref.jpg` + `personagens/lucia-ref-corpo.png`). Medium close-up, 50mm, subtle lateral tracking, elderly woman with short curly gray hair, brown-framed glasses, gold stud earrings and thin necklace, beige cardigan over cream top, warm blurred clinic-hallway background, wide expressive smile, gentle affectionate expression, small nod on "dignidade". PT-BR lip sync: "Eu sou a Dona Lúcia. E quero envelhecer com saúde, respeito e dignidade."
+*Negative adicional:* no glasses distortion, no cardigan color shift.
 
 **TK06 —** `CHAR_MARIANA_v01` (⚠️ pendente) + `CHAR_THEO_v01` reference. Medium two-shot, 50mm, subtle push-in, adult woman with dark hair and green t-shirt with her hand resting gently on the shoulder of a curly-haired boy in a blue t-shirt with a colorful puzzle-piece print, blurred home/park background, natural warm interaction, boy looking around naturally without exaggerated expression. PT-BR lip sync (Mariana only): "Eu sou Mariana. Esse é o Theo. Inclusão precisa acontecer também na vida real."
 *Negative adicional:* no stereotyped repetitive gestures on the boy, no overacting.
@@ -313,10 +319,10 @@ Para a versão de 30–35s: remover TK03 por completo (a locução de TK03 pode 
 
 ## R. PLANO B SE O TAKE FALHAR
 
-- **Falha de identidade facial em qualquer personagem com referência aprovada** (Samuel, Theo, André, Valentina, Rafael): não aceitar o take. Regerar com peso maior de character reference; se a ferramenta não conseguir preservar o rosto, não gerar — compor o ativo aprovado sobre um plano neutro (fundo/ambiente gerado, personagem inserido em pós-produção).
-- **Lucas, Dona Lúcia, Mariana — sem referência aprovada (TK02, TK03, TK04, TK05, TK06):** duas opções, nesta ordem de preferência:
-  1. **Recomendado:** pausar a geração desses takes específicos até receber foto/render oficial de cada um; produzir e publicar os demais blocos do vídeo, ou adiar o vídeo 001 completo até as 3 referências chegarem (mantém consistência entre os 8 personagens desde a estreia da série).
-  2. **Alternativa se houver urgência de publicação:** manter os takes desses três personagens só em voz + card tipográfico com nome e tema (sem mostrar rosto gerado), reaproveitando o mesmo card visual da seção O sem o plano de rosto — evita inventar aparência não aprovada. Trocar por seus rostos reais assim que a referência for aprovada, sem alterar o restante da timeline.
+- **Falha de identidade facial em qualquer personagem com referência aprovada** (Samuel, Theo, André, Valentina, Rafael, Dona Lúcia): não aceitar o take. Regerar com peso maior de character reference; se a ferramenta não conseguir preservar o rosto, não gerar — compor o ativo aprovado sobre um plano neutro (fundo/ambiente gerado, personagem inserido em pós-produção).
+- **Lucas, Mariana — sem referência aprovada (dentro de TK02, TK03, TK04, TK06):** duas opções, nesta ordem de preferência:
+  1. **Recomendado:** pausar a geração desses takes específicos até receber foto/render oficial de cada um; produzir e publicar os demais blocos do vídeo, ou adiar o vídeo 001 completo até as 2 referências restantes chegarem (mantém consistência entre os 8 personagens desde a estreia da série).
+  2. **Alternativa se houver urgência de publicação:** manter os takes desses dois personagens só em voz + card tipográfico com nome e tema (sem mostrar rosto gerado), reaproveitando o mesmo card visual da seção O sem o plano de rosto — evita inventar aparência não aprovada. Trocar por seus rostos reais assim que a referência for aprovada, sem alterar o restante da timeline.
 - **Falha de lip sync:** encurtar a frase antes de aceitar artefato de boca (nunca o contrário).
 - **Cadeira de rodas do André com deformação/desaparecimento:** rejeitar o take; regerar fixando a cadeira como elemento obrigatório do frame, nunca gerar o corpo sem ela.
 - **Logo 4001 recriado incorretamente por IA:** nunca usar a versão gerada; compor o arquivo oficial em pós-produção.
@@ -328,7 +334,7 @@ Para a versão de 30–35s: remover TK03 por completo (a locução de TK03 pode 
 ✅ Logo tratado como ativo protegido, uso apenas do arquivo oficial. ✅ "4001" e "Samuel" preservados em toda a assinatura. ✅ Paleta oficial respeitada nos textos/tipografia; roupas individuais mantêm cor própria. ✅ Nenhuma recriação da marca por IA prevista.
 
 **[PERSONAGENS]**
-✅ Samuel, Theo, André, Valentina, Rafael com character reference única e CHARACTER_ID fixo. ⚠️ **Lucas, Dona Lúcia e Mariana sem imagem de referência** — risco de deriva de identidade caso sejam gerados sem aprovação prévia; tratado na seção R. ✅ Cadeira do André marcada como continuidade obrigatória. ✅ Autismo do Theo tratado sem estereótipo e sem fala adulta.
+✅ Samuel, Theo, André, Valentina, Rafael, Dona Lúcia com character reference única e CHARACTER_ID fixo (Valentina e Dona Lúcia já com close-up + corpo inteiro). ⚠️ **Lucas e Mariana sem imagem de referência** — risco de deriva de identidade caso sejam gerados sem aprovação prévia; tratado na seção R. ✅ Cadeira do André marcada como continuidade obrigatória. ✅ Autismo do Theo tratado sem estereótipo e sem fala adulta.
 
 **[CONTINUIDADE]**
 ✅ Ordem de entrada dos personagens mantida entre TK02/TK03 (flash) e TK04–TK09 (close individual). ✅ Direção de olhar de cada close aponta para a câmera, coerente com o corte seguinte. ✅ Ambientes e iluminação definidos por cena, sem contradição entre planos do mesmo personagem.
@@ -342,13 +348,13 @@ Para a versão de 30–35s: remover TK03 por completo (a locução de TK03 pode 
 **[POLÍTICO/JURÍDICO]**
 ✅ Nenhuma lei, número ou dado citado neste vídeo — é um vídeo de apresentação de elenco, não de proposta. ✅ Frase "Brasil que queremos construir" mantida deliberadamente genérica, sem promessa específica. ✅ Nenhuma diferenciação entre propor/fiscalizar/destinar recursos/representar é necessária aqui pois não há proposta concreta — ponto a reforçar nos episódios 002–007, que tratam de temas específicos.
 
-**Veredito Guardian:** ✅ **APROVADO PARA PRODUÇÃO com ressalva** — takes de Lucas, Dona Lúcia e Mariana (TK02, TK03, TK04, TK05, TK06) ficam com status `PENDENTE DE VERIFICAÇÃO` até a chegada das referências visuais desses três personagens. Os blocos com Samuel, Theo, André, Valentina e Rafael estão liberados para geração imediata.
+**Veredito Guardian:** ✅ **APROVADO PARA PRODUÇÃO com ressalva** — dentro de TK02, TK03, TK04 (Lucas) e TK06 (Mariana) ficam com status `PENDENTE DE VERIFICAÇÃO` até a chegada das referências visuais desses dois personagens. Os blocos com Samuel, Theo, André, Valentina, Rafael e **Dona Lúcia (TK05, já aprovada)** estão liberados para geração imediata.
 
 ## T. CHECKLIST FINAL DE RENDER
 
 - [ ] `CHAR_SAMUEL_OFFICIAL_v01` usado em TK01, TK10, TK12 sem deriva de identidade
-- [ ] `CHAR_THEO_v01`, `CHAR_ANDRE_v01`, `CHAR_VALENTINA_v01`, `CHAR_RAFAEL_v01` usados corretamente em seus takes
-- [ ] Referências de Lucas, Dona Lúcia e Mariana aprovadas **ou** Plano B (seção R) aplicado
+- [ ] `CHAR_THEO_v01`, `CHAR_ANDRE_v01`, `CHAR_VALENTINA_v01`, `CHAR_RAFAEL_v01`, `CHAR_LUCIA_v01` usados corretamente em seus takes
+- [ ] Referências de Lucas e Mariana aprovadas **ou** Plano B (seção R) aplicado
 - [ ] Cadeira de rodas do André presente e coerente em todos os frames do TK07
 - [ ] Logo 4001 = arquivo oficial, não gerado por IA
 - [ ] Negative prompt global aplicado em todos os 12 takes
